@@ -1,0 +1,8 @@
+FrameWidth:		400
+FrameHeight:	300
+FrameRate:		60
+PositionX:		-0.76833103586615281
+PositionY:		-0.10763293884119845
+MaxZoom(10^x):	2
+ZoomSpeed:		1.01
+MaxIteration:	512
