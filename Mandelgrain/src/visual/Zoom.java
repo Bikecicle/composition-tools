@@ -5,15 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.Control;
-
-import csnd6.Soundfile;
-import ddf.minim.AudioMetaData;
-import ddf.minim.AudioPlayer;
-import ddf.minim.Minim;
-import ddf.minim.MultiChannelBuffer;
-import ddf.minim.spi.AudioRecordingStream;
+import ddf.minim.*;
 import processing.core.PApplet;
 
 public class Zoom extends PApplet {
@@ -27,9 +19,11 @@ public class Zoom extends PApplet {
 	public int dim = 256;
 
 	public static String filename = "data/zooms/test.mz";
+	public static String soundFilename = "data/sounds/test.wav";
 
 	public static ObjectInputStream in = null;
-	public static AudioPlayer audio;
+	public static Minim minim;
+	public static AudioPlayer sound;
 	
 	public static void main(String[] args) {
 		if ( args.length > 0 ) {
@@ -47,7 +41,6 @@ public class Zoom extends PApplet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		audio = null;
 		PApplet.main("visual.Zoom");
 	}
 
@@ -60,9 +53,13 @@ public class Zoom extends PApplet {
 		palette.add(new ColorTag(0, 0, 0, 0));
 		palette.add(new ColorTag(255, 255, 255, dim / 2));
 		frameRate(fps);
+		minim = new Minim(this);
+		sound = minim.loadFile(soundFilename);
+		sound.loop();
 	}
 
 	public void draw() {
+		
 		loadPixels();
 		try {
 			for (int i = 0; i < viewWidth; i++) {

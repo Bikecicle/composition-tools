@@ -2,7 +2,7 @@ GENERAL
 Resolution:		100
 PositionX:		-0.76833103586615281
 PositionY:		-0.10763293884119845
-MaxZoom:		3
+MaxZoom:		5
 ZoomSpeed:		1.01
 MaxIteration:	2048
 
@@ -12,4 +12,4 @@ MaxFrequency:	1000
 Duration:		10
 Attack:			3
 Decay:			3
-Overlap:		5
+Overlap:		7

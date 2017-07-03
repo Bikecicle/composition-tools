@@ -46,7 +46,7 @@ public class RenderGrains {
         
 
         Csound c = new Csound();
-        c.SetOption("-oC:/Users/Griffin/Projects/Csound/test.wav");
+        c.SetOption("-oC:/Users/Griffin/git/sound/Mandelgrain/data/sounds/test.wav");
         c.CompileOrc(orc);
         c.ReadScore(sco);
         c.Start();
