@@ -56,7 +56,7 @@ public class RenderGrains {
         t.Join();
         
         c.Stop();
-        c.Cleanup();           
+        c.Cleanup();
 
     }
 }
