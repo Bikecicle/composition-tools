@@ -1,5 +1,5 @@
 GENERAL
-Resolution:		100
+Resolution:		1000
 PositionX:		-0.76833103586615281
 PositionY:		-0.10763293884119845
 MaxZoom:		3
@@ -7,9 +7,9 @@ ZoomSpeed:		1.01
 MaxIteration:	2048
 
 GRAIN
+TotalGrains:	50000
 MinFrequency:	20
 MaxFrequency:	1000
 Duration:		10
-Attack:			3
-Decay:			3
-Overlap:		3
+Attack:			2
+Decay:			2

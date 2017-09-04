@@ -38,7 +38,7 @@ public class RenderGrains {
         String sco = null;
 		try {
 			orc = new Scanner(new File("config/grainplot.orc")).useDelimiter("\\Z").next();
-			sco = new Scanner(new File("data/grains/test.sco")).useDelimiter("\\Z").next();
+			sco = new Scanner(new File("data/streams/test.sco")).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,7 +46,7 @@ public class RenderGrains {
         
 
         Csound c = new Csound();
-        c.SetOption("-oC:/Users/Griffin/git/sound/Mandelgrain/data/sounds/test.wav");
+        c.SetOption("-oC:/Users/Griffin/git/sound/Mandelgrain/data/sounds/test4.wav");
         c.CompileOrc(orc);
         c.ReadScore(sco);
         c.Start();

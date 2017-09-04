@@ -23,7 +23,12 @@ public class Grain {
 
 	public String statement(int resolution) {
 		return "i" + instrumentId + " " + (start / 1000.0) + " " + (duration / 1000.0) + " "
-				+ String.format("%." + Integer.toString((int) Math.ceil(Math.log10(resolution * 100))) + "f", amplitude) + " " + frequency + " " + (attack / 1000.0) + " "
-				+ (decay / 1000.0);
+				+ String.format("%." + Integer.toString((int) Math.ceil(Math.log10(resolution * 100))) + "f", amplitude)
+				+ " " + frequency + " " + (attack / 1000.0) + " " + (decay / 1000.0);
+	}
+
+	public String statement() {
+		return "i" + instrumentId + " " + (start / 1000.0) + " " + (duration / 1000.0) + " " + amplitude + " "
+				+ frequency + " " + (attack / 1000.0) + " " + (decay / 1000.0);
 	}
 }
