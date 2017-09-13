@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import utility.TimeInterval;
 
 public class MandelzoomGen {
 
@@ -113,11 +112,9 @@ public class MandelzoomGen {
 				}
 			}
 			scale *= zoomSpeed;
-			timeGuess = (long) (timeGuess * 0.8 + (Calendar.getInstance().getTimeInMillis() - start) * 0.2);
-			TimeInterval eta = new TimeInterval(timeGuess * (totalFrames - l));
 
 			double progress = Math.round(10000.0 * l / totalFrames) / 100.0;
-			System.out.println("Progress: " + progress + "% ETA: " + eta.toString());
+			System.out.println("Progress: " + progress + "%");
 		}
 		try {
 			out.close();

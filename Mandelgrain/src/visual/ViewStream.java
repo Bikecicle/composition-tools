@@ -14,7 +14,7 @@ public class ViewStream extends PApplet{
 	private static double fMin = 20;
 	private static double fMax = 1000;
 	
-	private static double duration = 11.6;
+	private static double duration = 40;
 	
 	public static void main(String[] args) {
 		PApplet.main("visual.ViewStream");
@@ -28,14 +28,13 @@ public class ViewStream extends PApplet{
 		background(255);
 		loadPixels();
 		try {
-			Scanner in = new Scanner(new File("data/streams/test.sco"));
+			Scanner in = new Scanner(new File("data/grains/test.sco"));
 			in.nextLine();
 			String line = in.nextLine();
 			while (line.startsWith("i")) {
 				String[] grain = line.split(" ");
 				int x = (int) (Double.valueOf(grain[1]) / duration * viewWidth);
-				int y = (int) ((Double.valueOf(grain[4]) - fMin) / (fMax - fMin) * viewHeight);
-				System.out.println(x + " " + y + " " + pixels.length + " " + (x + (y * viewWidth)));
+				int y = viewHeight - 1 - (int) ((Double.valueOf(grain[4]) - fMin) / (fMax - fMin) * viewHeight);
 				int i = x + (y * viewWidth);
 				pixels[i] = color(0);
 				line = in.nextLine();

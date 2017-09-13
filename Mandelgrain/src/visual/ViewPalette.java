@@ -12,6 +12,8 @@ public class ViewPalette extends PApplet{
 	
 	public static void main(String[] args) {
 		palette = new Palette(dim);
+		palette.add(new ColorTag(0, 0, 0, 0));
+		palette.add(new ColorTag(255, 255, 255, dim));
 
 		PApplet.main("visual.ViewPalette");
 	}
