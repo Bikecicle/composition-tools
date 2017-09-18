@@ -23,11 +23,10 @@ public class Filter {
 		System.out.println("Table loaded");
 
 		table = edgeDetection(table, 32);
-		/*for (int i = 0; i < 8; i++) {
-			table = blur(table);
-		}
-		table = pulseLimiter(table);
-		*/
+		/*
+		 * for (int i = 0; i < 8; i++) { table = blur(table); } table =
+		 * pulseLimiter(table);
+		 */
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(output));
 			out.writeObject(table);
@@ -127,12 +126,12 @@ public class Filter {
 			for (int j = 0; j < res; j++) {
 				if (table[i][j] == 1) {
 					if ((i == 0 || table[i - 1][j] == 0) && (i == steps - 1 || table[i + 1][j] == 0)
-							&& (j == 0 || table[i][j - 1] == 0) && (j == res - 1 || table[i][j + 1] == 0)){
+							&& (j == 0 || table[i][j - 1] == 0) && (j == res - 1 || table[i][j + 1] == 0)) {
 						newTable[i][j] = 0;
 					} else {
 						newTable[i][j] = 1;
 					}
-						
+
 				}
 			}
 		}

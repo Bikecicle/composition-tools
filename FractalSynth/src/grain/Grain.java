@@ -1,7 +1,7 @@
 package grain;
 
 public class Grain {
-
+	
 	public static final int DEFAULT_IID = 1;
 	public static final float DEFAULT_DUR = 0.01f;
 	public static final float DEFAULT_ATT = 0.003f;

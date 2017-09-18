@@ -1,11 +1,11 @@
 package visual;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import processing.core.PApplet;
+import table.Table;
 
 public class ViewTable extends PApplet {
 
@@ -21,15 +21,16 @@ public class ViewTable extends PApplet {
 
 	public static String filename = "C:/Users/Griffin/git/sound/FractalSynth/tables/t1/t1.table";
 	public static String imagename = "C:/Users/Griffin/git/sound/FractalSynth/tables/t1/t1.jpg";
-	public static int[][] table;
+	public static Table table;
 
 	public static void main(String[] args) {
 		if (args.length > 0) {
-			filename = "data/tables/" + args[0];
+			filename = args[0];
+			imagename = args[1];
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
-			table = ((Table) in.readObject()).data;
+			table = (Table) in.readObject();
 			in.close();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -43,8 +44,8 @@ public class ViewTable extends PApplet {
 	}
 
 	public void setup() {
-		steps = table.length;
-		res = table[0].length;
+		steps = table.data.length;
+		res = table.data[0].length;
 		maxIteration = findMaxIteration();
 		xScale = 1.0 * steps / viewWidth;
 		yScale = 1.0 * res / viewHeight;
@@ -59,8 +60,13 @@ public class ViewTable extends PApplet {
 		loadPixels();
 		for (int i = 0; i < viewWidth; i++) {
 			for (int j = 0; j < viewHeight; j++) {
-				//pixels[i + (viewHeight - j - 1) * viewWidth] = colorArray(palette.get(table[(int) (i * xScale)][(int) (j * yScale)]));
-				pixels[i + (viewHeight - j - 1) * viewWidth] = color(table[(int) (i * xScale)][(int) (j * yScale)] * 255);
+				if (maxIteration == 1) {
+					pixels[i + (viewHeight - j - 1) * viewWidth] = color(
+							table.data[(int) (i * xScale)][(int) (j * yScale)] * 255);
+				} else {
+					pixels[i + (viewHeight - j - 1) * viewWidth] = colorArray(
+							palette.get(table.data[(int) (i * xScale)][(int) (j * yScale)]));
+				}
 			}
 		}
 		updatePixels();
@@ -70,13 +76,13 @@ public class ViewTable extends PApplet {
 	private int colorArray(int[] a) {
 		return color(a[0], a[1], a[2]);
 	}
-	
+
 	private int findMaxIteration() {
 		int max = 0;
-		for (int i = 0; i < steps; i ++)  {
-			for (int j = 0; j < res; j ++) {
-				if (table[i][j] > max)
-					max = table[i][j];
+		for (int i = 0; i < steps; i++) {
+			for (int j = 0; j < res; j++) {
+				if (table.data[i][j] > max)
+					max = table.data[i][j];
 			}
 		}
 		return max;
