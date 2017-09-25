@@ -11,18 +11,18 @@ public class ViewStream extends PApplet{
 	private static int viewWidth = 1000;
 	private static int viewHeight = 1000;
 	
-	private static double fMin = 20;
-	private static double fMax = 1000;
+	private static double fMin = 1.0/40;
+	private static double fMax = 1.0/1;
 	
-	private static double duration = 40;
+	private static double duration = 50;
 	
-	private static String filename;
-	private static String imagename;
+	private static String scoreFile = "C:/Users/Griffin/git/sound/FractalSynth/projects/498/layers/default.sco";
+	private static String imageFile = "C:/Users/Griffin/git/sound/FractalSynth/projects/498/images/default.jpg";
 	
 	public static void main(String[] args) {
 		if (args.length > 0) {
-			filename = args[0];
-			imagename = args[1];
+			scoreFile = args[0];
+			imageFile = args[1];
 		}
 		PApplet.main("visual.ViewStream");
 	}
@@ -32,30 +32,31 @@ public class ViewStream extends PApplet{
 	}
 
 	public void setup() {
+		background(255);
+		loadPixels();
+		Scanner score = null;
+		try {
+			score = new Scanner(new File(scoreFile));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		score.nextLine();
+		String line = score.nextLine();
+		while (line.startsWith("i")) {
+			String[] grain = line.split(" ");
+			int x = (int) (Double.valueOf(grain[1]) / duration * viewWidth);
+			int y = viewHeight - (int) ((Double.valueOf(grain[2]) - fMin) / (fMax - fMin) * viewHeight);
+			int i = x + (y * viewWidth);
+			pixels[i] = color(0);
+			line = score.nextLine();
+		}
+		score.close();
+		updatePixels();
+		save(imageFile);
 		noLoop();
 	}
 
 	public void draw() {
-		background(255);
-		loadPixels();
-		try {
-			Scanner in = new Scanner(new File(filename));
-			in.nextLine();
-			String line = in.nextLine();
-			while (line.startsWith("i")) {
-				String[] grain = line.split(" ");
-				int x = (int) (Double.valueOf(grain[1]) / duration * viewWidth);
-				int y = viewHeight - 1 - (int) ((Double.valueOf(grain[4]) - fMin) / (fMax - fMin) * viewHeight);
-				int i = x + (y * viewWidth);
-				pixels[i] = color(0);
-				line = in.nextLine();
-			}
-			in.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		updatePixels();
-		save(imagename);
+		
 	}
 }

@@ -34,10 +34,30 @@ public class Table implements Serializable {
 		filters = new ArrayList<String>();
 	}
 
-	public int get(int t, int f, int tRes, int fRes) {
+	public Table(String name, Table other) {
+		this.name = name;
+		this.tRes = other.tRes;
+		this.fRes = other.fRes;
+		this.zoomVel = other.zoomVel;
+		this.zoomMax = other.zoomMax;
+		this.kMax = other.kMax;
+		this.posX = other.posX;
+		this.posY = other.posY;
+		double dur = Math.log(Math.pow(10, zoomMax)) / Math.log(zoomVel + 1);
+		int len = (int) (dur * tRes);
+		data = new int[len][fRes];
+		filters = new ArrayList<String>();
+	}
+
+	public int get(int t, int f, int tRes, int fRes, double zoomVel) {
 		// Scale time and frequency frames from given resolution to table's
 		// resolution
-		return data[(int) (1.0 * t / tRes * this.tRes)][(int) (1.0 * f / fRes * this.fRes)];
+		return data[(int) (1.0 * t / tRes * this.tRes * zoomVel / this.zoomVel)][(int) (1.0 * f / fRes * this.fRes)];
+	}
+
+	public int get(double t, int f, int fMin, int fMax, double zoomVel) {
+		// Proper time value given here
+		return data[(int) (t * this.tRes * zoomVel / this.zoomVel)][(int) (1.0 * (f - fMin) / (fMax - fMin) * (this.fRes - 1))];
 	}
 
 	public int getMaxDensity() {
@@ -53,12 +73,16 @@ public class Table implements Serializable {
 		return maxDen;
 	}
 
+	public int lenth() {
+		return data.length;
+	}
+
 	@Override
 	public String toString() {
 		double dur = Math.log(Math.pow(10, zoomMax)) / Math.log(zoomVel + 1);
-		String str = "Name: " + name + "\n" + "Duration: " + dur + " sec at x" + (zoomVel + 1) + "/sec\n" + "Resolution: "
-				+ tRes + " steps/sec | " + fRes + " steps/2pi\n" + "Max iteration: " + kMax + "\n" + "Position: " + posX
-				+ " | " + posY + "\n" + "Applied filters: \n";
+		String str = "Name: " + name + "\n" + "Duration: " + dur + " sec at x" + (zoomVel + 1) + "/sec\n"
+				+ "Resolution: " + tRes + " steps/sec | " + fRes + " steps/2pi\n" + "Max iteration: " + kMax + "\n"
+				+ "Position: " + posX + " | " + posY + "\n" + "Applied filters: \n";
 		if (filters.size() > 0) {
 			for (int i = 0; i < filters.size(); i++) {
 				str += (i + 1) + ") " + filters.get(i) + "\n";

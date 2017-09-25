@@ -20,13 +20,21 @@ public class Layer implements Serializable {
 		sequence.addAll(matrix);
 	}
 	
-	public String toScore() {
-		String score = "f1 0 4096 10 1\n";
+	public int getFMin() {
+		int fMin = Integer.MAX_VALUE;
 		for (Grain g : sequence) {
-			score += g.statement() + "\n";
+			if (g.freq < fMin)
+				fMin = g.freq;
 		}
-		score += "e\n";
-		return score;
+		return fMin;
 	}
 	
+	public int getFMax() {
+		int fMax = 0;
+		for (Grain g : sequence) {
+			if (g.freq > fMax)
+				fMax = g.freq;
+		}
+		return fMax;
+	}
 }

@@ -12,14 +12,19 @@ import csnd6.CsoundPerformanceThread;
 public class Performer {
 
 	@SuppressWarnings("resource")
-	public static void render(String sco, String out) {
+	public static void main(String[] args) {
+		
+		String scoFile = args[0];
+		String out = args[1];
         csnd6.csoundInitialize(
                 csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
         
         String orc = null;
+        String sco = null;
         
 		try {
 			orc = new Scanner(new File("config/grainplot.orc")).useDelimiter("\\Z").next();
+			sco = new Scanner(new File(scoFile)).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
