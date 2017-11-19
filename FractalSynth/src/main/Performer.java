@@ -14,8 +14,21 @@ public class Performer {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		
-		String scoFile = args[0];
-		String out = args[1];
+		String orcFile = null;
+		String scoFile = null;
+		String out = null;
+		if (args.length == 2) {
+			orcFile = "config/grainplot.orc";
+			scoFile = args[0];
+			out = args[1];
+		} else {
+			File path = new File("");
+			String mainDir = path.getAbsolutePath().replace("\\", "/") + "/";
+			orcFile = mainDir + "debug/debug_orchestra.orc";
+			scoFile = mainDir + "debug/debug_score.sco";
+			out = mainDir + "debug/debug_out.wav";
+		}
+		
         csnd6.csoundInitialize(
                 csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
         
@@ -23,7 +36,7 @@ public class Performer {
         String sco = null;
         
 		try {
-			orc = new Scanner(new File("config/grainplot.orc")).useDelimiter("\\Z").next();
+			orc = new Scanner(new File(orcFile)).useDelimiter("\\Z").next();
 			sco = new Scanner(new File(scoFile)).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

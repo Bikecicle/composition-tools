@@ -72,8 +72,19 @@ public class Table implements Serializable {
 		}
 		return maxDen;
 	}
+	
+	public int getMaxIteration() {
+		int max = 0;
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < fRes; j++) {
+				if (data[i][j] > max)
+					max = data[i][j];
+			}
+		}
+		return max;
+	}
 
-	public int lenth() {
+	public int length() {
 		return data.length;
 	}
 

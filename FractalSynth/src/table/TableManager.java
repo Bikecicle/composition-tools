@@ -11,12 +11,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.openmbean.OpenDataException;
-
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;
-import visual.ViewTable;
 
 public class TableManager {
 
@@ -84,7 +81,7 @@ public class TableManager {
 		
 		// Render and save a visualization of the table
 		String[] args = { tablePath, imagePath };
-		new MediaThread(Medium.tableViewer, args).run();
+		new Thread(new MediaThread(Medium.tableViewer, args)).start();
 	}
 
 	public void deleteTable(String name) {
@@ -119,34 +116,6 @@ public class TableManager {
 				table.data[i][j] = k;
 			}
 			scale *= zoomVel / tRes + 1;
-			double progress = Math.round(10000.0 * i / table.data.length) / 100.0;
-			System.out.println("Progress: " + progress + "%");
-		}
-		saveTable(table);
-		tableList.add(name);
-	}
-	
-	public void generateTable(String name, Table original) {
-		Table table = new Table(name, original);
-		double scale = 1.0;
-		double angleStep = 2.0 * Math.PI / original.fRes;
-		for (int i = 0; i < table.data.length; i++) {
-			for (int j = 0; j < original.fRes; j++) {
-				double angle = angleStep * j;
-				double x0 = Math.cos(angle) * 2.0 / scale + original.posX;
-				double y0 = Math.sin(angle) * 2.0 / scale + original.posY;
-				int k = 0;
-				double x = 0.0;
-				double y = 0.0;
-				while ((x * x + y * y) < 4 && k < original.kMax) {
-					double xtemp = x * x - y * y + x0;
-					y = 2 * x * y + y0;
-					x = xtemp;
-					k++;
-				}
-				table.data[i][j] = k;
-			}
-			scale *= original.zoomVel / original.tRes + 1;
 			double progress = Math.round(10000.0 * i / table.data.length) / 100.0;
 			System.out.println("Progress: " + progress + "%");
 		}

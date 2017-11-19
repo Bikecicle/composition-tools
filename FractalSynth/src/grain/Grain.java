@@ -8,6 +8,7 @@ public class Grain implements Serializable {
 
 	public static final int DEFAULT_IID = 1;
 	public static final float DEFAULT_DUR = 0.01f;
+	public static final float DEFAULT_AMP = 0.01f;
 	public static final int DEFAULT_FREQ = 60;
 	public static final float DEFAULT_ATT = 0.001f;
 	public static final float DEFAULT_DEC = 0.001f;

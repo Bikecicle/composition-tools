@@ -5,7 +5,6 @@ import java.util.List;
 
 import grain.GrainManager;
 import grain.Modulator;
-import table.EdgeDetection;
 import table.Filter;
 import table.Table;
 import table.TableManager;
@@ -54,8 +53,16 @@ public class FractalSynth {
 		tableManager.generateTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
 	}
 	
-	public void addTable(String name, String other) {
-		tableManager.generateTable(name, tableManager.getTable(other));
+	public void addTable(String name, String otherName) {
+		Table other = tableManager.getTable(otherName);
+		int tRes = other.tRes;
+		int fRes = other.fRes;
+		double zoomVel = other.zoomVel;
+		int zoomMax = other.zoomMax;
+		int kMax = other.kMax;
+		double posX = other.posX;
+		double posY = other.posY;
+		tableManager.generateTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
 	}
 
 	public String getTableProperties(String name) {
@@ -79,9 +86,14 @@ public class FractalSynth {
 		}
 		return false;
 	}
+	
+	public static void deleteFile(String path) {
+		File dir = new File(path);
+		dir.delete();
+	}
 
 	public String getActiveLayerName() {
-		return grainManager.getActiveLayer().name;
+		return grainManager.active.name;
 	}
 
 	public void saveLayers() {
@@ -91,11 +103,9 @@ public class FractalSynth {
 	public void visualizeLayers() {
 		grainManager.visualizeLayers();
 	}
-
-	public void renderLayer(String name, String filename) {
-		grainManager.save();
-		System.out.println("Rendering " + name + "...");
-		grainManager.render(name, filename);
+	
+	public void renderAll(String title) {
+		grainManager.renderAll(title);
 	}
 
 	public void clearLayer() {
@@ -107,10 +117,36 @@ public class FractalSynth {
 	}
 
 	public int getActiveLayerFMax() {
-		return grainManager.getActiveLayer().getFMax();
+		return grainManager.active.getFMax();
 	}
 
 	public int getActiveLayerFMin() {
-		return grainManager.getActiveLayer().getFMin();
+		return grainManager.active.getFMin();
+	}
+
+	public boolean renameLayer(String name) {
+		return grainManager.renameLayer(name);
+	}
+
+	public boolean changeActiveLayer(String name) {
+		return grainManager.setActiveLayer(name);
+		
+	}
+
+	public boolean newLayer(String name) {
+		return grainManager.newLayer(name);
+	}
+
+	public List<String> getLayerNames() {
+		return grainManager.layerNames;
+	}
+	
+	public void clear() {
+		grainManager.removeAll();
+	}
+	
+	public void executeScript(String path) {
+		ScriptReader scriptReader = new ScriptReader(path, this);
+		scriptReader.execute();
 	}
 }

@@ -2,14 +2,16 @@ package main;
 
 import java.util.Scanner;
 
-import javax.print.DocFlavor.INPUT_STREAM;
-import javax.swing.plaf.synth.SynthSpinnerUI;
-
+import grain.Inflate;
 import grain.RandomShift;
 import table.Cutoff;
+import table.Amplify;
 import table.Blur;
 import table.Denoise;
+import table.Differentiate;
 import table.EdgeDetection;
+import table.Invert;
+import table.Power;
 import table.PulseLimiter;
 import table.Table;
 
@@ -19,7 +21,7 @@ public class UI {
 	private static Scanner in;
 
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
+		in = new Scanner(System.in);
 		startup();
 		mainMenu();
 	}
@@ -96,7 +98,9 @@ public class UI {
 
 	private static void filter(String name) {
 		System.out.println("Apply filter to " + name);
-		System.out.println("(E)dge detection, (B)lur, (P)ulse limiter, (D)enoise, (C)utoff (X)-back");
+		System.out.println(
+				"(E)dge detection, (B)lur, (P)ulse limiter, (D)enoise, (C)utoff, di(F)ferentiate,\n"
+				+ "(A)mplify, p(O)wer, (I)nvert, (X)-back");
 		String action = in.nextLine();
 		if (action.toLowerCase().startsWith("e")) {
 			System.out.println("Threshold:");
@@ -112,6 +116,18 @@ public class UI {
 			System.out.println("Threshold:");
 			int threshold = in.nextInt();
 			fractalSynth.filterTable(name, new Cutoff(threshold));
+		} else if (action.toLowerCase().startsWith("f")) {
+			fractalSynth.filterTable(name, new Differentiate());
+		} else if (action.toLowerCase().startsWith("a")) {
+			System.out.println("Gain:");
+			double gain = in.nextDouble();
+			fractalSynth.filterTable(name, new Amplify(gain));
+		} else if (action.toLowerCase().startsWith("o")) {
+			System.out.println("Exponent:");
+			double exponent = in.nextDouble();
+			fractalSynth.filterTable(name, new Power(exponent));
+		} else if (action.toLowerCase().startsWith("i")) {
+			fractalSynth.filterTable(name, new Invert());
 		} else if (action.toLowerCase().startsWith("x")) {
 			tableMenu();
 		} else {
@@ -154,29 +170,45 @@ public class UI {
 	private static void grainMenu() {
 		String active = fractalSynth.getActiveLayerName();
 		System.out.println("Grain menu - Active layer: " + active);
+		System.out.println("All layers:");
+		for (String layer : fractalSynth.getLayerNames())
+			System.out.println(" - " + layer);
 		System.out.println(
-				"(G)enerate, (M)odify, select (L)ayer, (N)ew layer, (C)lear layer, (V)isualize, (R)ender, (S)ave, (X)-back");
+				"(G)enerate, (M)odify, r(E)name layer, (C)lear layer, select (L)ayer, (N)ew layer, (V)isualize, (R)ender, (S)ave, (X)-back");
 		String action = in.nextLine();
 		if (action.toLowerCase().startsWith("g")) {
 			generateGrains();
 		} else if (action.toLowerCase().startsWith("m")) {
 			modifyLayer();
-		} else if (action.toLowerCase().startsWith("l")) {
-			selectLayer();
-		} else if (action.toLowerCase().startsWith("n")) {
-			newLayer();
+		} else if (action.toLowerCase().startsWith("e")) {
+			System.out.println("New name:");
+			String name = in.nextLine();
+			boolean success = fractalSynth.renameLayer(name);
+			if (success)
+				System.out.println("Active layer successfully renamed");
+			else
+				System.out.println("Error: name already in use");
+			grainMenu();
 		} else if (action.toLowerCase().startsWith("c")) {
 			fractalSynth.clearLayer();
+			grainMenu();
+		} else if (action.toLowerCase().startsWith("l")) {
+			System.out.println("Layer name:");
+			String name = in.nextLine();
+			fractalSynth.changeActiveLayer(name);
+			grainMenu();
+		} else if (action.toLowerCase().startsWith("n")) {
+			System.out.println("New layer name:");
+			String name = in.nextLine();
+			fractalSynth.newLayer(name);
 			grainMenu();
 		} else if (action.toLowerCase().startsWith("v")) {
 			fractalSynth.visualizeLayers();
 			grainMenu();
 		} else if (action.toLowerCase().startsWith("r")) {
-			System.out.println("Render layer:");
-			String layer = in.nextLine();
-			System.out.println("Output filename:");
-			String filename = in.nextLine();
-			fractalSynth.renderLayer(layer, filename);
+			System.out.println("Output name:");
+			String title = in.nextLine();
+			fractalSynth.renderAll(title);;
 			grainMenu();
 		} else if (action.toLowerCase().startsWith("s")) {
 			fractalSynth.saveLayers();
@@ -199,12 +231,10 @@ public class UI {
 			System.out.println("Zoom velocity (*/sec)");
 			double zoomVel = in.nextDouble();
 			in.nextLine();
-			int fMin = fractalSynth.getActiveLayerFMin();
-			int fMax = fractalSynth.getActiveLayerFMax();
 			System.out.println("Source table name:");
 			String name = in.nextLine();
 			Table table = fractalSynth.getTable(name);
-			int count = fractalSynth.applyMod(new RandomShift(rMax, fMin, fMax, zoomVel, table));
+			int count = fractalSynth.applyMod(new RandomShift(rMax, zoomVel, table));
 			System.out.println("Complete - " + count + " grains modified");
 			modifyLayer();
 		} else if (mod.toLowerCase().startsWith("s")) {
@@ -212,6 +242,18 @@ public class UI {
 		} else if (mod.toLowerCase().startsWith("v")) {
 			modifyLayer();
 		} else if (mod.toLowerCase().startsWith("i")) {
+			System.out.println("Minimum grain duration (sec):");
+			double dMin = in.nextDouble();
+			System.out.println("Maximum grain duration (sec):");
+			double dMax = in.nextDouble();
+			System.out.println("Zoom velocity");
+			double zoomVel = in.nextDouble();
+			in.nextLine();
+			System.out.println("Source table name:");
+			String name = in.nextLine();
+			Table table = fractalSynth.getTable(name);
+			int count = fractalSynth.applyMod(new Inflate(dMin, dMax, zoomVel, table));
+			System.out.println("Complete - " + count + " grains modified");
 			modifyLayer();
 		} else if (mod.toLowerCase().startsWith("x")) {
 			grainMenu();
@@ -262,13 +304,5 @@ public class UI {
 			invalid();
 			generateGrains();
 		}
-	}
-
-	private static void selectLayer() {
-
-	}
-
-	private static void newLayer() {
-
 	}
 }

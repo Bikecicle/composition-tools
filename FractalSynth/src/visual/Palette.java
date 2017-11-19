@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Palette {
 
-	private int dim;
-	private List<ColorTag> key;
-	private int[][] gradient;
+	public int dim;
+	public List<ColorTag> key;
+	public int[][] gradient;
 
 	public Palette(int dim) {
 		this.dim = dim;
@@ -63,5 +63,17 @@ public class Palette {
 
 	public int[] get( int i ) {
 		return gradient[i % dim];
+	}
+	
+	@Override
+	public String toString() {
+		if (key.isEmpty()) {
+			return null;
+		}
+		String str = "[" + key.get(0);
+		for (int i = 1; i < key.size(); i ++) {
+			str += ", " + key.get(i);
+		}
+		return str + "]";
 	}
 }

@@ -1,0 +1,11 @@
+498_s
+
+layer midL
+pulsar 1 30 25 20 1000 10 100 0.1 2 t1 t2
+rshift 0.03 0.1 t3_r
+inflate 0.01 0.05 0.1 t4_r
+
+layer midR
+pulsar 1 30 25 20 1000 10 100 0.1 2 t2 t1
+rshift 0.03 0.1 t4_r
+inflate 0.01 0.05 0.1 t3_r

@@ -11,13 +11,13 @@ public class ViewStream extends PApplet{
 	private static int viewWidth = 1000;
 	private static int viewHeight = 1000;
 	
-	private static double fMin = 1.0/40;
-	private static double fMax = 1.0/1;
+	private static double fMin = 2000;
+	private static double fMax = 20000;
 	
-	private static double duration = 50;
+	private static double duration = 150;
 	
-	private static String scoreFile = "C:/Users/Griffin/git/sound/FractalSynth/projects/498/layers/default.sco";
-	private static String imageFile = "C:/Users/Griffin/git/sound/FractalSynth/projects/498/images/default.jpg";
+	private static String scoreFile = "C:/Users/Griffin/git/sound/FractalSynth/projects/498_s/layers/highR.sco";
+	private static String imageFile = "C:/Users/Griffin/git/sound/FractalSynth/projects/498_s/images/highR.jpg";
 	
 	public static void main(String[] args) {
 		if (args.length > 0) {
@@ -45,7 +45,7 @@ public class ViewStream extends PApplet{
 		while (line.startsWith("i")) {
 			String[] grain = line.split(" ");
 			int x = (int) (Double.valueOf(grain[1]) / duration * viewWidth);
-			int y = viewHeight - (int) ((Double.valueOf(grain[2]) - fMin) / (fMax - fMin) * viewHeight);
+			int y = viewHeight - (int) ((Double.valueOf(grain[4]) - fMin) / (fMax - fMin) * viewHeight) - 1;
 			int i = x + (y * viewWidth);
 			pixels[i] = color(0);
 			line = score.nextLine();

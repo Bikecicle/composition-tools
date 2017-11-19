@@ -13,6 +13,13 @@ public class ColorTag {
 		this.position = position;
 	}
 
+	public ColorTag(int val, int position) {
+		red = val;
+		green = val;
+		blue = val;
+		this.position = position;
+	}
+
 	public int getPosition() {
 		return position;
 	}
@@ -31,9 +38,9 @@ public class ColorTag {
 		}
 		double alpha = (double)(pos - this.position) / distance;
 		int[] color = new int[3];
-		color[0] = (int) (this.red * (1.0 - alpha) + other.getRed() * alpha);
-		color[1] = (int) (this.green * (1.0 - alpha) + other.getGreen() * alpha);
-		color[2] = (int) (this.blue * (1.0 - alpha) + other.getBlue() * alpha);
+		color[0] = (int) Math.sqrt((this.red * this.red * (1.0 - alpha) + other.getRed() * other.getRed() * alpha));
+		color[1] = (int) Math.sqrt((this.green * this.green * (1.0 - alpha) + other.getGreen() * other.getGreen() * alpha));
+		color[2] = (int) Math.sqrt((this.blue * this.blue * (1.0 - alpha) + other.getBlue() * other.getBlue() * alpha));
 		return color;
 	}
 
@@ -49,4 +56,8 @@ public class ColorTag {
 		return blue;
 	}
 
+	@Override
+	public String toString() {
+		return position + "-" + red + ":" + green + ":" + blue;
+	}
 }

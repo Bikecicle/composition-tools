@@ -10,52 +10,45 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;
-import main.Performer;
 import table.Table;
 import visual.ViewStream;
 
 public class GrainManager {
 
-	private List<Layer> layers;
-	private Layer active;
-	private String project;
-	private String mainProjectDir;
-	private String projectDir;
-	private String layerDir;
-	private String imageDir;
-	private String soundDir;
+	public static int MAX_GRAINS = 100000;
+
+	public List<String> layerNames;
+	public Layer active;
+	public String project;
+	public String mainProjectPath;
+	public String projectPath;
+	public String layerPath;
+	public String imagePath;
+	public String soundPath;
 
 	public GrainManager(String mainProjectDir, String project) {
-		layers = new ArrayList<Layer>();
-		this.mainProjectDir = mainProjectDir;
+		layerNames = new ArrayList<String>();
+		this.mainProjectPath = mainProjectDir;
 		this.project = project;
-		projectDir = mainProjectDir + project + "/";
-		layerDir = projectDir + "layers/";
-		imageDir = projectDir + "images/";
-		soundDir = projectDir + "sounds/";
-		FractalSynth.openDir(projectDir);
-		FractalSynth.openDir(layerDir);
-		FractalSynth.openDir(imageDir);
-		FractalSynth.openDir(soundDir);
-		File[] layerFiles = new File(layerDir).listFiles();
+		projectPath = mainProjectDir + project + "/";
+		layerPath = projectPath + "layers/";
+		imagePath = projectPath + "images/";
+		soundPath = projectPath + "sounds/";
+		FractalSynth.openDir(projectPath);
+		FractalSynth.openDir(layerPath);
+		FractalSynth.openDir(imagePath);
+		FractalSynth.openDir(soundPath);
+		File[] layerFiles = new File(layerPath).listFiles();
 		if (layerFiles != null && layerFiles.length > 0) {
 			for (File layerFile : layerFiles) {
 				if (layerFile.getName().endsWith((".layer"))) {
-					try {
-						ObjectInputStream in = new ObjectInputStream(new FileInputStream(layerFile.getAbsolutePath()));
-						layers.add((Layer) in.readObject());
-						in.close();
-					} catch (IOException | ClassNotFoundException e) {
-						e.printStackTrace();
-					}
+					layerNames.add(layerFile.getName().replace(".layer", ""));
 				}
 			}
-
-			active = layers.get(0);
+			active = loadLayer(layerNames.get(0));
 		} else {
 			// Start a single empty layer if new project
 			newLayer("default");
@@ -68,59 +61,71 @@ public class GrainManager {
 
 	public boolean setProject(String project) {
 		this.project = project;
-		projectDir = mainProjectDir + project + "/";
-		layerDir = projectDir + "layers/";
-		imageDir = projectDir + "images/";
-		soundDir = projectDir + "sounds/";
-		FractalSynth.openDir(projectDir);
-		FractalSynth.openDir(layerDir);
-		FractalSynth.openDir(imageDir);
-		FractalSynth.openDir(soundDir);
+		projectPath = mainProjectPath + project + "/";
+		layerPath = projectPath + "layers/";
+		imagePath = projectPath + "images/";
+		soundPath = projectPath + "sounds/";
+		FractalSynth.openDir(projectPath);
+		FractalSynth.openDir(layerPath);
+		FractalSynth.openDir(imagePath);
+		FractalSynth.openDir(soundPath);
 		return true;
 	}
 
 	public void save() {
-		for (Layer layer : layers) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(layerPath + active.name + ".layer"));
+			out.writeObject(active);
+			out.close();
+			System.out.println(active.name + " - layer saved");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		writeScore(active);
+		System.out.println(active.name + " - score saved");
+		// String[] args = new String[2];
+		// args[0] = layerDir + layer.name + ".sco";
+		// args[1] = imageDir + layer.name + ".jpg";
+		// ViewStream.main(args);
+
+	}
+
+	public Layer loadLayer(String name) {
+		if (layerNames.contains(name)) {
 			try {
-				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(layerDir + layer.name + ".layer"));
-				out.writeObject(layer);
-				out.close();
-				System.out.println(layer.name + " - layer saved");
-			} catch (IOException e) {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(layerPath + name + ".layer"));
+				Layer layer = (Layer) in.readObject();
+				in.close();
+				return layer;
+			} catch (IOException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			writeScore(layer, layerDir + layer.name + ".sco");
-			System.out.println(layer.name + " - score saved");
-			// String[] args = new String[2];
-			// args[0] = layerDir + layer.name + ".sco";
-			// args[1] = imageDir + layer.name + ".jpg";
-			// ViewStream.main(args);
 		}
+		return null;
 	}
 
 	public boolean newLayer(String name) {
-		for (Layer layer : layers) {
-			if (layer.name.equals(name))
+		if (active != null)
+			save();
+		for (String other : layerNames) {
+			if (other.equals(name))
 				return false;
 		}
 		Layer layer = new Layer(name);
-		layers.add(layer);
+		layerNames.add(layer.name);
 		active = layer;
+		save();
+		updateNames();
 		return true;
 	}
 
-	public Layer getActiveLayer() {
-		return active;
-	}
-
 	public boolean setActiveLayer(String name) {
-		for (Layer layer : layers) {
-			if (layer.name.equals(name)) {
-				active = layer;
-				return true;
-			}
-		}
-		return false;
+		if (!layerNames.contains(name))
+			return false;
+		if (active != null)
+			save();
+		active = loadLayer(name);
+		return true;
 	}
 
 	public void clear() {
@@ -128,23 +133,44 @@ public class GrainManager {
 	}
 
 	public boolean renameLayer(String name) {
-		for (Layer layer : layers) {
-			if (layer.name.equals(name))
-				return false;
-		}
+		if (layerNames.contains(name))
+			return false;
+		new File(layerPath + active.name + ".layer").renameTo(new File(layerPath + name + ".layer"));
 		active.name = name;
+		updateNames();
 		return true;
 	}
 
-	public void writeScore(Layer layer, String scoreFile) {
-		try {
-			PrintWriter out = new PrintWriter(scoreFile);
-			out.println("f1 0 4096 10 1");
-			for (Grain g : layer.sequence) {
-				out.println(g.statement());
+	private void updateNames() {
+		layerNames.clear();
+		File[] layerFiles = new File(layerPath).listFiles();
+		for (File layerFile : layerFiles) {
+			if (layerFile.getName().endsWith((".layer")) && !layerFile.getName().equals(".layer")) {
+				layerNames.add(layerFile.getName().replace(".layer", ""));
 			}
-			out.println("e");
-			out.close();
+		}
+	}
+
+	public void writeScore(Layer layer) {
+		int sCount = layer.sequence.size() / MAX_GRAINS + 1;
+		List<List<Grain>> sections = new ArrayList<List<Grain>>();
+		for (int s = 0; s < sCount; s++) {
+			sections.add(new ArrayList<Grain>());
+		}
+		for (int g = 0; g < layer.sequence.size(); g++) {
+			sections.get(g / MAX_GRAINS).add(layer.sequence.get(g));
+		}
+
+		try {
+			for (int s = 0; s < sCount; s++) {
+				PrintWriter out = new PrintWriter(layerPath + layer.name + "_" + s + ".sco");
+				out.println("f1 0 4096 10 1");
+				for (Grain g : sections.get(s)) {
+					out.println(g.statement());
+				}
+				out.println("e");
+				out.close();
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -152,19 +178,29 @@ public class GrainManager {
 
 	public void visualizeLayers() {
 		save();
-		for (Layer layer : layers) {
+		for (String name : layerNames) {
 			String[] args = new String[2];
-			args[0] = layerDir + layer.name + ".layer";
-			args[1] = imageDir + layer.name + ".jpg";
+			args[0] = layerPath + name + ".layer";
+			args[1] = imagePath + name + ".jpg";
 			ViewStream.main(args);
 		}
 	}
 
-	public void render(String name, String filename) {
-		String sco = layerDir + name + ".sco";
-		String out = soundDir + filename + ".wav";
-		String[] args = { sco, out };
-		new MediaThread(Medium.performer, args).run();
+	public void renderAll(String title) {
+		save();
+		String path = soundPath + title + "/";
+		System.out.println("Rendering layers to " + path);
+		FractalSynth.openDir(path);
+		File[] files = new File(layerPath).listFiles();
+		for (File file : files) {
+			if (file.getName().endsWith(".sco")) {
+				System.out.println("Rendering " + file.getName());
+				String sco = layerPath + file.getName();
+				String out = path + title + "_" + file.getName().replace(".sco", ".wav");
+				String[] args = { sco, out };
+				new Thread(new MediaThread(Medium.performer, args)).start();
+			}
+		}
 	}
 
 	/**
@@ -215,14 +251,13 @@ public class GrainManager {
 		double fStepP = 1.0 * (fMaxP - fMinP) / fResP;
 		double dur = Math.log(Math.pow(10, zoomMax)) / Math.log(zoomVel + 1);
 		int tSteps = (int) (dur * tRes);
-		float gAmp = 2.0f / tableD.getMaxDensity();
 
 		for (int t = 0; t < tSteps; t++) {
 			for (int fp = 0; fp < fResP; fp++) {
 				int pFreq = (int) (fMinP + (fStepP * fp));
 				// Add a grain if this frequency releases a pulse at this time
 				// step, and the corresponding value in tableP is 1
-				if (t % (int) (fMaxP / pFreq) == 0 && tableP.get(t, fp, tRes, fResP, zoomVel) == 1) {
+				if ((int) (t % (1.0 * fMaxP / pFreq)) == 0 && tableP.get(t, fp, tRes, fResP, zoomVel) == 1) {
 					double scl = 1.0 * (pFreq - fMinP) / (fMaxP - fMinP);
 					int fResD = (int) ((maxResD - minResD) * scl) + minResD;
 					double fStepD = 1.0 * (fMaxD - fMinD) / fResD;
@@ -230,7 +265,7 @@ public class GrainManager {
 						if (tableD.get(t, f, tRes, fResD, zoomVel) == 1) {
 							float gTime = 1.0f * t / tRes;
 							int gFreq = (int) (fMinD + (fStepD * f));
-							matrix.add(new Grain(Grain.DEFAULT_IID, gTime, Grain.DEFAULT_DUR, gAmp, gFreq,
+							matrix.add(new Grain(Grain.DEFAULT_IID, gTime, Grain.DEFAULT_DUR, Grain.DEFAULT_AMP, gFreq,
 									Grain.DEFAULT_ATT, Grain.DEFAULT_DEC));
 						}
 					}
@@ -240,8 +275,18 @@ public class GrainManager {
 		active.addGrains(matrix);
 		return matrix.size();
 	}
-	
+
 	public int applyMod(Modulator mod) {
 		return mod.applyTo(active);
+	}
+
+	public void removeAll() {
+		File[] layerFiles = new File(layerPath).listFiles();
+		for (File file : layerFiles) {
+			file.delete();
+			System.out.println(file.getName() + " deleted");
+		}
+		updateNames();
+		active = null;
 	}
 }
