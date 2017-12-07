@@ -81,6 +81,7 @@ public class Stripe {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void glow() {
 		int width = val.length;
 		int height = val[0].length;
@@ -123,7 +124,7 @@ public class Stripe {
 			}
 		}
 	}
-
+	
 	private Palette randomGrad(int height) {
 		Palette colors = new Palette(height);
 		for (int i = 0; i < COLOR_COUNT; i++) {
