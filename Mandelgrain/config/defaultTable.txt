@@ -1,8 +1,0 @@
-GENERAL
-Resolution:		1000
-PositionX:		-0.76833103586615281
-PositionY:		-0.10763293884119845
-MaxZoom:		10
-ZoomSpeed:		1.005
-MaxIteration:	2048
-StepDivision:	10
