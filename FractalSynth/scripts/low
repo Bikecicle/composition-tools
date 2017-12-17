@@ -1,9 +1,0 @@
-498_s
-
-layer lowL
-pulsar 10 20 10 20 200 10 100 0.1 15 t1 t3
-inflate 0.1 1 0.1 t4_r
-
-layer lowR
-pulsar 10 20 10 20 80 10 100 0.1 15 t3 t1
-inflate 0.1 1 0.1 t2_r
