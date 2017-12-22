@@ -48,7 +48,7 @@ public class Table implements Serializable {
 		data = new int[len][fRes];
 		filters = new ArrayList<String>();
 	}
-
+	
 	public int get(int t, int f, int tRes, int fRes, double zoomVel) {
 		// Scale time and frequency frames from given resolution to table's
 		// resolution
@@ -58,6 +58,10 @@ public class Table implements Serializable {
 	public int get(double t, int f, int fMin, int fMax, double zoomVel) {
 		// Proper time value given here
 		return data[(int) (t * this.tRes * zoomVel / this.zoomVel)][(int) (1.0 * (f - fMin) / (fMax - fMin) * (this.fRes - 1))];
+	}
+	
+	public int get(double xScaled, double yScaled) {
+		return data[(int) (xScaled * data.length)][(int) (yScaled * data[0].length)];
 	}
 
 	public int getMaxDensity() {

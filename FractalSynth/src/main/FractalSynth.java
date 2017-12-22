@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import grain.GrainManager;
-import grain.Modulator;
+import grain.Modifier;
 import table.Filter;
 import table.Table;
 import table.TableManager;
@@ -17,15 +17,23 @@ public class FractalSynth {
 	private String mainProjectDir;
 	private String mainTableDir;
 
-	public FractalSynth(String project) {
+	public FractalSynth() {
 		File path = new File("");
 		mainDir = path.getAbsolutePath().replace("\\", "/") + "/";
 		mainProjectDir = mainDir + "projects/";
 		mainTableDir = mainDir + "tables/";
 		openDir(mainProjectDir);
 		openDir(mainTableDir);
-		grainManager = new GrainManager(mainProjectDir, project);
+		grainManager = null;
 		tableManager = new TableManager(mainTableDir);
+	}
+
+	public void openProject(String project) {
+		grainManager = new GrainManager(mainProjectDir, project);
+	}
+	
+	public boolean projectLoaded() {
+		return grainManager != null;
 	}
 
 	public String getProject() {
@@ -35,9 +43,13 @@ public class FractalSynth {
 	public List<String> getTableNames() {
 		return tableManager.getTableList();
 	}
-	
+
 	public Table getTable(String name) {
 		return tableManager.getTable(name);
+	}
+	
+	public boolean hasTable(String name) {
+		return tableManager.getTableList().contains(name);
 	}
 
 	public void deleteTable(String name) {
@@ -52,7 +64,7 @@ public class FractalSynth {
 			double posY) {
 		tableManager.generateTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
 	}
-	
+
 	public void addTable(String name, String otherName) {
 		Table other = tableManager.getTable(otherName);
 		int tRes = other.tRes;
@@ -69,12 +81,12 @@ public class FractalSynth {
 		return tableManager.getTable(name).toString();
 	}
 
-	public void genPulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD, double zoomVel,
-			int zoomMax, String tablePName, String tableDName) {
+	public void genPulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD,
+			double zoomVel, int zoomMax, String tablePName, String tableDName) {
 		Table tableP = tableManager.getTable(tablePName);
 		Table tableD = tableManager.getTable(tableDName);
-		int grains = grainManager.genPulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax, tableP,
-				tableD);
+		int grains = grainManager.genPulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
+				tableP, tableD);
 		System.out.println(grains + "grains created");
 	}
 
@@ -86,7 +98,7 @@ public class FractalSynth {
 		}
 		return false;
 	}
-	
+
 	public static void deleteFile(String path) {
 		File dir = new File(path);
 		dir.delete();
@@ -103,7 +115,7 @@ public class FractalSynth {
 	public void visualizeLayers() {
 		grainManager.visualizeLayers();
 	}
-	
+
 	public void renderAll(String title) {
 		grainManager.renderAll(title);
 	}
@@ -112,16 +124,8 @@ public class FractalSynth {
 		grainManager.clear();
 	}
 
-	public int applyMod(Modulator mod) {
+	public int applyMod(Modifier mod) {
 		return grainManager.applyMod(mod);
-	}
-
-	public int getActiveLayerFMax() {
-		return grainManager.active.getFMax();
-	}
-
-	public int getActiveLayerFMin() {
-		return grainManager.active.getFMin();
 	}
 
 	public boolean renameLayer(String name) {
@@ -130,23 +134,22 @@ public class FractalSynth {
 
 	public boolean changeActiveLayer(String name) {
 		return grainManager.setActiveLayer(name);
-		
+
 	}
 
-	public boolean newLayer(String name) {
-		return grainManager.newLayer(name);
+	public boolean newLayer(String name, double duration) {
+		return grainManager.newLayer(name, duration);
 	}
 
 	public List<String> getLayerNames() {
 		return grainManager.layerNames;
 	}
 	
+	public boolean hasLayer(String name) {
+		return grainManager.layerNames.contains(name);
+	}
+
 	public void clear() {
 		grainManager.removeAll();
-	}
-	
-	public void executeScript(String path) {
-		ScriptReader scriptReader = new ScriptReader(path, this);
-		scriptReader.execute();
 	}
 }

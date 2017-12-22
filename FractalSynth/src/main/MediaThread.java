@@ -16,7 +16,7 @@ public class MediaThread implements Runnable {
 	@Override
 	public void run() {
 		if (medium == Medium.performer) {
-			Performer.main(args);;
+			Performer.main(args);
 		} else if (medium == Medium.streamViewer) {
 			ViewStream.main(args);
 		} else if (medium == Medium.tableViewer) {

@@ -1,0 +1,21 @@
+package grain;
+
+public class OscGrain extends Grain {
+	
+	private static final long serialVersionUID = 6203508575435333528L;
+	
+	public static final int DEFAULT_FREQ = 60;
+	public static final float DEFAULT_ATT = 0.001f;
+	public static final float DEFAULT_DEC = 0.001f;
+	
+	public int freq;
+
+	public OscGrain(float strt, float dur, float amp, int freq, float att, float dec) {
+		super(Instrument.osc.id, strt, dur, amp, att, dec);
+		this.freq = freq;
+	}
+
+	public String statement() {
+		return "i" + iID + " " + strt + " " + dur + " " + amp + " " + freq + " " + att + " " + dec;
+	}
+}

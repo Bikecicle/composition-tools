@@ -29,9 +29,7 @@ public class UI {
 	private static void startup() {
 		in = new Scanner(System.in);
 		System.out.println("--FractalSynth--");
-		System.out.println("Project:");
-		String project = in.nextLine();
-		fractalSynth = new FractalSynth(project);
+		fractalSynth = new FractalSynth();
 	}
 
 	private static void mainMenu() {
@@ -98,8 +96,7 @@ public class UI {
 
 	private static void filter(String name) {
 		System.out.println("Apply filter to " + name);
-		System.out.println(
-				"(E)dge detection, (B)lur, (P)ulse limiter, (D)enoise, (C)utoff, di(F)ferentiate,\n"
+		System.out.println("(E)dge detection, (B)lur, (P)ulse limiter, (D)enoise, (C)utoff, di(F)ferentiate,\n"
 				+ "(A)mplify, p(O)wer, (I)nvert, (X)-back");
 		String action = in.nextLine();
 		if (action.toLowerCase().startsWith("e")) {
@@ -168,6 +165,11 @@ public class UI {
 	}
 
 	private static void grainMenu() {
+		if (!fractalSynth.projectLoaded()) {
+			System.out.println("Project:");
+			String project = in.nextLine();
+			fractalSynth.openProject(project);
+		}
 		String active = fractalSynth.getActiveLayerName();
 		System.out.println("Grain menu - Active layer: " + active);
 		System.out.println("All layers:");
@@ -200,7 +202,10 @@ public class UI {
 		} else if (action.toLowerCase().startsWith("n")) {
 			System.out.println("New layer name:");
 			String name = in.nextLine();
-			fractalSynth.newLayer(name);
+			System.out.println("New layer duration:");
+			double duration = in.nextDouble();
+			in.nextLine();
+			fractalSynth.newLayer(name, duration);
 			grainMenu();
 		} else if (action.toLowerCase().startsWith("v")) {
 			fractalSynth.visualizeLayers();
@@ -208,7 +213,8 @@ public class UI {
 		} else if (action.toLowerCase().startsWith("r")) {
 			System.out.println("Output name:");
 			String title = in.nextLine();
-			fractalSynth.renderAll(title);;
+			fractalSynth.renderAll(title);
+			;
 			grainMenu();
 		} else if (action.toLowerCase().startsWith("s")) {
 			fractalSynth.saveLayers();

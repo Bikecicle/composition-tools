@@ -1,0 +1,34 @@
+package grain;
+
+import table.Table;
+
+public class Inflate implements Modulator {
+
+	private double dMin;
+	private double dMax;
+	private double zoomVel;
+	private Table table;
+
+	public Inflate(double dMin, double dMax, double zoomVel, Table table) {
+		this.dMin = dMin;
+		this.dMax = dMax;
+		this.zoomVel = zoomVel;
+		this.table = table;
+	}
+
+	@Override
+	public int applyTo(Layer layer) {
+		int fMin = layer.getFMin();
+		int fMax = layer.getFMax();
+		for (Grain g : layer.sequence) {
+			if (g.iID == Instrument.osc.id) {
+				double m = table.get(((OscGrain) g).strt, ((OscGrain) g).freq, fMin, fMax, zoomVel) / table.kMax;
+				((OscGrain) g).dur = (float) ((dMax - dMin) * m + dMin);
+				((OscGrain) g).att = ((OscGrain) g).dur / 2;
+				((OscGrain) g).dec = ((OscGrain) g).dur / 2;
+			}
+		}
+		return layer.sequence.size();
+	}
+
+}

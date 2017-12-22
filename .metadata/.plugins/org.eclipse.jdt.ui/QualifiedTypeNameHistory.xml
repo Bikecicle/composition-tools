@@ -2,4 +2,13 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="grain.Grain"/>
 <fullyQualifiedTypeName name="grain.Instrument"/>
+<fullyQualifiedTypeName name="grain.OscGrain"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="table.EdgeDetection"/>
+<fullyQualifiedTypeName name="table.Power"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="main.ScriptReader"/>
+<fullyQualifiedTypeName name="java.lang.Boolean"/>
+<fullyQualifiedTypeName name="javax.swing.plaf.synth.SynthSeparatorUI"/>
 </qualifiedTypeNameHistroy>

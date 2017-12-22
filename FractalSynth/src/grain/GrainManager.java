@@ -51,7 +51,7 @@ public class GrainManager {
 			active = loadLayer(layerNames.get(0));
 		} else {
 			// Start a single empty layer if new project
-			newLayer("default");
+			//newLayer("default", 1);
 		}
 	}
 
@@ -104,14 +104,14 @@ public class GrainManager {
 		return null;
 	}
 
-	public boolean newLayer(String name) {
+	public boolean newLayer(String name, double duration) {
 		if (active != null)
 			save();
 		for (String other : layerNames) {
 			if (other.equals(name))
 				return false;
 		}
-		Layer layer = new Layer(name);
+		Layer layer = new Layer(name, duration);
 		layerNames.add(layer.name);
 		active = layer;
 		save();
@@ -235,8 +235,8 @@ public class GrainManager {
 				if (table.get(t, f, tRes, fRes, zoomVel) == 1) {
 					float gTime = 1.0f * t / tRes;
 					int gFreq = (int) (fMin + (fStep * f));
-					matrix.add(new Grain(Grain.DEFAULT_IID, gTime, Grain.DEFAULT_DUR, gAmp, gFreq, Grain.DEFAULT_ATT,
-							Grain.DEFAULT_DEC));
+					matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, gAmp, gFreq, Grain.DEFAULT_ATT,
+							Grain.DEFAULT_DEC, fMin, fMax, active.duration));
 				}
 			}
 		}
@@ -265,18 +265,20 @@ public class GrainManager {
 						if (tableD.get(t, f, tRes, fResD, zoomVel) == 1) {
 							float gTime = 1.0f * t / tRes;
 							int gFreq = (int) (fMinD + (fStepD * f));
-							matrix.add(new Grain(Grain.DEFAULT_IID, gTime, Grain.DEFAULT_DUR, Grain.DEFAULT_AMP, gFreq,
-									Grain.DEFAULT_ATT, Grain.DEFAULT_DEC));
+							matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, Grain.DEFAULT_AMP, gFreq,
+									Grain.DEFAULT_ATT, Grain.DEFAULT_DEC, fMinD, fMaxD, dur));
 						}
 					}
 				}
 			}
 		}
 		active.addGrains(matrix);
+		if (active.duration < dur)
+			active.duration = dur;
 		return matrix.size();
 	}
 
-	public int applyMod(Modulator mod) {
+	public int applyMod(Modifier mod) {
 		return mod.applyTo(active);
 	}
 

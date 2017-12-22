@@ -1,6 +1,6 @@
 package grain;
 
-public class UniformShift implements Modulator {
+public class UniformShift implements Modifier {
 	
 	private double rMax;
 	

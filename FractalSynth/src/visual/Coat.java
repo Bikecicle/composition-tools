@@ -15,7 +15,7 @@ public class Coat {
 	
 	public void generate(String projectName, int width, int height, Palette colors) {
 		val = new int[width][height][3];
-		FractalSynth fractalSynth = new FractalSynth(projectName);
+		FractalSynth fractalSynth = new FractalSynth();
 		Table table = fractalSynth.getTable(tableName);
 		double xScale = 1.0 * table.fRes / width;
 		double yScale = 1.0 * table.length() / height;
