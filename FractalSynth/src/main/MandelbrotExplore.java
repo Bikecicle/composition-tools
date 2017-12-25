@@ -13,7 +13,7 @@ public class MandelbrotExplore extends PApplet {
 	public static final int viewWidth = 1440;
 	public static final int viewHeight = 800;
 	private int viewShort;
-	
+
 	public static final double moveSpeed = 0.1; // Scaled to view
 	public static final double zoomSpeed = 2.0; // Multiplier
 
@@ -27,6 +27,8 @@ public class MandelbrotExplore extends PApplet {
 
 	private Palette palette;
 	private int dim = 255;
+
+	private int[] frame;
 
 	public static void main(String[] args) {
 		PApplet.main("main.MandelbrotExplore");
@@ -42,6 +44,7 @@ public class MandelbrotExplore extends PApplet {
 		palette = new Palette(dim);
 		palette.add(new ColorTag(0, 0, 0, 0));
 		palette.add(new ColorTag(255, 255, 255, dim / 2));
+		frame = new int[viewWidth * viewHeight];
 		ellipseMode(CENTER);
 		noStroke();
 		fill(255);
@@ -57,7 +60,7 @@ public class MandelbrotExplore extends PApplet {
 
 	public void keyPressed() {
 		if (editingPalette) {
-			
+
 		} else {
 			mainControls();
 		}
