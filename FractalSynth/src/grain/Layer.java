@@ -11,11 +11,13 @@ public class Layer implements Serializable {
 	public String name;
 	public double duration;
 	public List<Grain> sequence;
+	public List<String> sources;
 
 	public Layer(String name, double duration) {
 		this.name = name;
 		this.duration = duration;
 		sequence = new ArrayList<Grain>();
+		sources = new ArrayList<String>();
 	}
 
 	public void addGrains(List<Grain> matrix) {

@@ -35,9 +35,10 @@ public class RenderGrains {
                 csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
         
         String output = args[0];
-        String sco = args[1];
+        String sco = null;
         String orc = null;
 		try {
+			sco = new Scanner(new File(args[1])).useDelimiter("\\Z").next();
 			orc = new Scanner(new File("config/grainplot.orc")).useDelimiter("\\Z").next();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

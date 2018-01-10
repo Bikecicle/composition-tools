@@ -1,24 +1,38 @@
-sr =  44100
+sr = 44100
 ksmps = 32
 nchnls = 2
-0dbfs = 1
+0dbfs = 1.0
 
-gaRvbSend    init      0 ; global audio variable initialized to zero
+instr 1
 
-  instr 1 ; sound generating instrument (sparse noise bursts)
-kEnv         loopseg   0.5,0,0,1,0.003,1,0.0001,0,0.9969,0,0; amp. env.
-aSig         pinkish   kEnv              ; noise pulses
-             outs      aSig, aSig        ; audio to outs
-iRvbSendAmt  =         0.8               ; reverb send amount (0 - 1)
-; add some of the audio from this instrument to the global reverb send variable
-gaRvbSend    =         gaRvbSend + (aSig * iRvbSendAmt)
-  endin
+	idur = p3; duration
+	kamp = p4; amplitude
+	kcps = p5; frequency
+	irise = p6; attack
+	idec = p7; decay
+	
+	aenv linen kamp, irise, idur, idec
+	asig poscil aenv, kcps 
+	outs asig, asig  
+	
+endin
 
-  instr 5 ; reverb - always on
-kroomsize    init      0.85          ; room size (range 0 to 1)
-kHFDamp      init      0.5           ; high freq. damping (range 0 to 1)
-; create reverberated version of input signal (note stereo input and output)
-aRvbL,aRvbR  freeverb  gaRvbSend, gaRvbSend,kroomsize,kHFDamp
-             outs      aRvbL, aRvbR ; send audio to outputs
-             clear     gaRvbSend    ; clear global audio variable
-  endin
+instr 2
+	
+	idur = p3; duration
+	kamp = p4; amplitude
+	irise = p5; attack
+	idec = p6; decay
+	kfreqratio = p7; frequency mod
+	kloop = p8 * sr; start time
+	kend = p9 * sr; end time
+	xfreq = p10; center frequency
+	xband = p11; bandwidth
+	ifn = p12 function table id
+	
+	kenv linen kamp, irise, idur, idec
+	asig lposcil kenv, kfreqratio, kloop, kend, ifn
+	ares butterbp asig, xfreq, xband
+	outs ares, ares
+     
+endin
