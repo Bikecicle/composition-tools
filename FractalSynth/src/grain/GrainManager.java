@@ -129,7 +129,7 @@ public class GrainManager {
 	}
 
 	public void clear() {
-		active.sequence.clear();
+		active.clear();
 	}
 
 	public boolean renameLayer(String name) {
@@ -164,7 +164,13 @@ public class GrainManager {
 		try {
 			for (int s = 0; s < sCount; s++) {
 				PrintWriter out = new PrintWriter(layerPath + layer.name + "_" + s + ".sco");
+				if (layer.sources.isEmpty()) {
 				out.println("f1 0 4096 10 1");
+				} else {
+					for (int id : layer.sources.keySet()) {
+						// TODO print out ftgen statement
+					}
+				}
 				for (Grain g : sections.get(s)) {
 					out.println(g.statement());
 				}

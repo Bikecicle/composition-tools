@@ -123,6 +123,8 @@ public class ScriptReader {
 					replace = Boolean.parseBoolean(cmd[1]);
 				} else if (cmd[0].equals("clear")) {
 					fractalSynth.clear();
+				} else if (cmd[0].equals("source")) {
+					fractalSynth.addSource(Integer.parseInt(cmd[1]), cmd[2]);
 				}
 			}
 		}

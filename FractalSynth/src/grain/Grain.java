@@ -19,7 +19,7 @@ public abstract class Grain implements Serializable {
 	public static final int NUMBER_OF_CHANNELS = 2;
 	public static final float AMP_SCALE = 1.0f;
 	
-	public int iID;
+	public Instrument gType;
 	public float strt;
 	public float dur;
 	public float amp;
@@ -28,8 +28,8 @@ public abstract class Grain implements Serializable {
 	public double xNorm;
 	public double yNorm;
 
-	public Grain(int iID, float strt, float dur, float amp, float att, float dec) {
-		this.iID = iID;
+	public Grain(Instrument gType, float strt, float dur, float amp, float att, float dec) {
+		this.gType = gType;
 		this.strt = strt;
 		this.dur = dur;
 		this.amp = amp;
