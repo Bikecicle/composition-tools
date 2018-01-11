@@ -152,4 +152,8 @@ public class FractalSynth {
 	public void clear() {
 		grainManager.removeAll();
 	}
+
+	public void addSource(int id, String filename) {
+		grainManager.active.sources.put(id, filename);
+	}
 }

@@ -1,0 +1,13 @@
+# Iniltialize tables
+
+replace false
+
+table new hf_t1 1000 1000 1.3 15 2048 -0.76833103586615281 -0.10763293884119845
+
+# Generate and render sound
+
+replace true
+
+
+
+render full_render
