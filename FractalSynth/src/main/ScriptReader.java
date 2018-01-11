@@ -75,6 +75,9 @@ public class ScriptReader {
 						if (!fractalSynth.changeActiveLayer(cmd[1])) {
 							System.out.println("Creating...");
 							fractalSynth.newLayer(cmd[1], Double.parseDouble(cmd[2]));
+						} else {
+							System.out.println("Clearing...");
+							fractalSynth.clearLayer();
 						}
 					} else {
 						System.out.println("Skipping layer: " + cmd[1]);
