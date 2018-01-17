@@ -51,7 +51,7 @@ public class GrainManager {
 			active = loadLayer(layerNames.get(0));
 		} else {
 			// Start a single empty layer if new project
-			//newLayer("default", 1);
+			// newLayer("default", 1);
 		}
 	}
 
@@ -164,11 +164,10 @@ public class GrainManager {
 		try {
 			for (int s = 0; s < sCount; s++) {
 				PrintWriter out = new PrintWriter(layerPath + layer.name + "_" + s + ".sco");
-				if (layer.sources.isEmpty()) {
 				out.println("f1 0 4096 10 1");
-				} else {
+				if (layer.sources != null) {
 					for (int id : layer.sources.keySet()) {
-						// TODO print out ftgen statement
+						out.println(new SoundfileFTable(id, layer.sources.get(id)).statement());
 					}
 				}
 				for (Grain g : sections.get(s)) {
@@ -210,8 +209,8 @@ public class GrainManager {
 	}
 
 	/**
-	 * Generates a new grain matrix into the active layer. Grain matrix is
-	 * defined here as a discrete distribution of grains with binary amplitudes
+	 * Generates a new grain matrix into the active layer. Grain matrix is defined
+	 * here as a discrete distribution of grains with binary amplitudes
 	 * 
 	 * @param fRes
 	 *            Frequency resolution
@@ -241,8 +240,8 @@ public class GrainManager {
 				if (table.get(t, f, tRes, fRes, zoomVel) == 1) {
 					float gTime = 1.0f * t / tRes;
 					int gFreq = (int) (fMin + (fStep * f));
-					matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, gAmp, gFreq, Grain.DEFAULT_ATT,
-							Grain.DEFAULT_DEC, fMin, fMax, active.duration));
+					matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, gAmp, gFreq, Grain.DEFAULT_ATT, Grain.DEFAULT_DEC,
+							fMin, fMax, active.duration));
 				}
 			}
 		}

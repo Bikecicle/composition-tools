@@ -8,6 +8,7 @@ import grain.Inflate;
 import grain.RandomShift;
 import grain.UniformShift;
 import table.EdgeDetection;
+import table.Integrate;
 import table.Power;
 
 public class ScriptReader {
@@ -116,6 +117,9 @@ public class ScriptReader {
 					// TODO
 				} else if (cmd[0].equals("blur") && !skip) {
 					// TODO
+				} else if (cmd[0].equals("integrate") && !skip) {
+					System.out.println("Integrating...");
+					fractalSynth.filterTable(currentTable, new Integrate(Integer.parseInt(cmd[1])));
 				}
 
 				// Utility

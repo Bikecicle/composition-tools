@@ -26,10 +26,13 @@ instr 2
 	kfreqratio = p7; frequency mod
 	kloop = p8 * sr; start time
 	kend = p9 * sr; end time
-	ifn = p10; function table id
+	xfreq = p10; center frequency
+	xband = p11; bandwidth
+	ifn = p12 function table id
 	
 	kenv linen kamp, irise, idur, idec
 	asig lposcil kenv, kfreqratio, kloop, kend, ifn
-	outs asig, asig
+	ares butterbp asig, xfreq, xband
+	outs ares, ares
      
 endin
