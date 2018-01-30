@@ -5,21 +5,22 @@ import java.util.List;
 
 public class OverlaySample implements Modifier {
 
-	private float fMod;
-	private int band;
-	private int fID;
+	private float fMod; // Frequency (pitch) modifier
+	private int band; // Bandpass bandwidth in Hz
+	private String filename; // Sample sound file name (within materials/)
 
-	public OverlaySample(float fMod, int band, int fID) {
+	public OverlaySample(float fMod, int band, String filename) {
 		super();
 		this.fMod = fMod;
 		this.band = band;
-		this.fID = fID;
+		this.filename = filename;
 	}
 
 	@Override
 	public int applyTo(Layer layer) {
 		List<Grain> matrix = new ArrayList<Grain>();
 		int count = 0;
+		int fID = layer.addFTable(new SoundfileFTable(filename));
 		for (Grain g : layer.sequence) {
 			if (g.gType == Instrument.osc) {
 				OscGrain og = (OscGrain) g;

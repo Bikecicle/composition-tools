@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;
@@ -164,11 +165,8 @@ public class GrainManager {
 		try {
 			for (int s = 0; s < sCount; s++) {
 				PrintWriter out = new PrintWriter(layerPath + layer.name + "_" + s + ".sco");
-				out.println("f1 0 4096 10 1");
-				if (layer.sources != null) {
-					for (int id : layer.sources.keySet()) {
-						out.println(new SoundfileFTable(id, layer.sources.get(id)).statement());
-					}
+				for (FTable ft : layer.fTables) {
+					out.println(ft.statement());
 				}
 				for (Grain g : sections.get(s)) {
 					out.println(g.statement());
@@ -246,6 +244,7 @@ public class GrainManager {
 			}
 		}
 		active.addGrains(matrix);
+		active.addFTable(new SineFTable());
 		return matrix.size();
 	}
 
@@ -262,12 +261,12 @@ public class GrainManager {
 				int pFreq = (int) (fMinP + (fStepP * fp));
 				// Add a grain if this frequency releases a pulse at this time
 				// step, and the corresponding value in tableP is 1
-				if ((int) (t % (1.0 * fMaxP / pFreq)) == 0 && tableP.get(t, fp, tRes, fResP, zoomVel) == 1) {
+				if ((int) (t % (1.0 * fMaxP / pFreq)) == 0 && tableP.get(1.0 * t / tSteps, 1.0 * fp / fResP) == 1) {
 					double scl = 1.0 * (pFreq - fMinP) / (fMaxP - fMinP);
 					int fResD = (int) ((maxResD - minResD) * scl) + minResD;
 					double fStepD = 1.0 * (fMaxD - fMinD) / fResD;
 					for (int f = 0; f < fResD; f++) {
-						if (tableD.get(t, f, tRes, fResD, zoomVel) == 1) {
+						if (tableD.get(1.0 * t / tSteps, 1.0 * fp / fResP) == 1) {
 							float gTime = 1.0f * t / tRes;
 							int gFreq = (int) (fMinD + (fStepD * f));
 							matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, Grain.DEFAULT_AMP, gFreq,
@@ -280,6 +279,7 @@ public class GrainManager {
 		active.addGrains(matrix);
 		if (active.duration < dur)
 			active.duration = dur;
+		active.addFTable(new SineFTable());
 		return matrix.size();
 	}
 

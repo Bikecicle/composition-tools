@@ -1,4 +1,0 @@
-replace true
-
-table copy hf_t1_i hf_t1
-integrate 0

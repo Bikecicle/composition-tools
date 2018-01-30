@@ -2,7 +2,6 @@ package grain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Layer implements Serializable {
@@ -12,20 +11,27 @@ public class Layer implements Serializable {
 	public String name;
 	public double duration;
 	public List<Grain> sequence;
-	public HashMap<Integer, String> sources;
+	public List<FTable> fTables;
 
 	public Layer(String name, double duration) {
 		this.name = name;
 		this.duration = duration;
 		sequence = new ArrayList<Grain>();
-		sources = new HashMap<Integer, String>();
+		fTables = new ArrayList<FTable>();
 	}
 
 	public void addGrains(List<Grain> matrix) {
 		sequence.addAll(matrix);
 	}
 	
+	public int addFTable(FTable ft) {
+		ft.ifn = fTables.size() + 1;
+		fTables.add(ft);
+		return ft.ifn;
+	}
+	
 	public void clear() {
 		sequence.clear();
+		fTables.clear();
 	}
 }

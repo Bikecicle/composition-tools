@@ -1,32 +1,26 @@
 package grain;
 
-public class SoundfileFTable {
-
-	public String varname;
-	public int ifn;
-	public float itime;
-	public float isize;
-	public int igen;
+public class SoundfileFTable extends FTable {
+	
+	private static final long serialVersionUID = -2596051195054624160L;
+	
 	public String Sfilnam;
 	public float iskip;
 	public int iformat;
 	public int ichn;
 
-	public SoundfileFTable(int ifn, String filename) {
-		this.varname = "giFt" + ifn;
-		this.ifn = ifn;
-		this.itime = 0;
-		this.isize = 0;
-		this.igen = 1;
-		this.Sfilnam = filename;
+	public SoundfileFTable(String filename) {
+		super(IFN_DEFAULT, Instrument.sample.genRoutine);
+		this.Sfilnam = "materials/" + filename;
 		this.iskip = 0; // Start at beginning
 		this.iformat = 0;
 		this.ichn = 0;
 	}
 
+	@Override
 	public String statement() {
-		return varname + " ftgen " + ifn + ", " + itime + ", " + isize + ", " + igen + ", " + "\"" + Sfilnam + "\", "
-				+ iskip + ", " + iformat + ", " + ichn;
+		return super.statement() + " " + "\"" + Sfilnam + "\" "
+				+ iskip + " " + iformat + " " + ichn;
 	}
 
 }

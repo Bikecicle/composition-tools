@@ -5,12 +5,10 @@ import table.Table;
 public class RandomShift implements Modifier {
 
 	private double rMax;
-	private double zoomVel;
 	private Table table;
 
-	public RandomShift(double rMax, double zoomVel, Table table) {
+	public RandomShift(double rMax, Table table) {
 		this.rMax = rMax;
-		this.zoomVel = zoomVel;
 		this.table = table;
 	}
 

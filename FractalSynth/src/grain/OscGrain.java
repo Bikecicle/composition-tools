@@ -16,6 +16,6 @@ public class OscGrain extends Grain {
 	}
 
 	public String statement() {
-		return "i" + gType.id + " " + strt + " " + dur + " " + amp + " " + freq + " " + att + " " + dec;
+		return super.statement() + " " + freq + " " + att + " " + dec;
 	}
 }

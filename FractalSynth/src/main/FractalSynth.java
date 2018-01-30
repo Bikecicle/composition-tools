@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 import java.util.List;
 
+import grain.FTable;
 import grain.GrainManager;
 import grain.Modifier;
 import table.Filter;
@@ -153,7 +154,7 @@ public class FractalSynth {
 		grainManager.removeAll();
 	}
 
-	public void addSource(int id, String filename) {
-		grainManager.active.sources.put(id, filename);
+	public void addFTable(FTable ft) {
+		grainManager.active.fTables.add(ft);
 	}
 }

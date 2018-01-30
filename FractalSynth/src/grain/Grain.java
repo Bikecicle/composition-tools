@@ -38,5 +38,7 @@ public abstract class Grain implements Serializable {
 
 	}
 
-	public abstract String statement();
+	public String statement() {
+		return "i " + gType.id + " " + strt + " " + dur + " " + amp;
+	}
 }

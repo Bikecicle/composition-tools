@@ -6,13 +6,11 @@ public class Inflate implements Modifier {
 
 	private double dMin;
 	private double dMax;
-	private double zoomVel;
 	private Table table;
 
-	public Inflate(double dMin, double dMax, double zoomVel, Table table) {
+	public Inflate(double dMin, double dMax, Table table) {
 		this.dMin = dMin;
 		this.dMax = dMax;
-		this.zoomVel = zoomVel;
 		this.table = table;
 	}
 

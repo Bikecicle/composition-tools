@@ -24,7 +24,7 @@ public class SampleGrain extends Grain {
 	}
 
 	public String statement() {
-		return "i" + gType.id + " " + strt + " " + dur + " " + amp + " " + att + " " + dec + " " + fMod + " " + sStrt + " "
+		return super.statement() + " " + att + " " + dec + " " + fMod + " " + sStrt + " "
 				+ sEnd + " " + freq + " " + band + " " + fID;
 	}
 }

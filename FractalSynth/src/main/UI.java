@@ -240,7 +240,7 @@ public class UI {
 			System.out.println("Source table name:");
 			String name = in.nextLine();
 			Table table = fractalSynth.getTable(name);
-			int count = fractalSynth.applyMod(new RandomShift(rMax, zoomVel, table));
+			int count = fractalSynth.applyMod(new RandomShift(rMax, table));
 			System.out.println("Complete - " + count + " grains modified");
 			modifyLayer();
 		} else if (mod.toLowerCase().startsWith("s")) {
@@ -258,7 +258,7 @@ public class UI {
 			System.out.println("Source table name:");
 			String name = in.nextLine();
 			Table table = fractalSynth.getTable(name);
-			int count = fractalSynth.applyMod(new Inflate(dMin, dMax, zoomVel, table));
+			int count = fractalSynth.applyMod(new Inflate(dMin, dMax, table));
 			System.out.println("Complete - " + count + " grains modified");
 			modifyLayer();
 		} else if (mod.toLowerCase().startsWith("x")) {
