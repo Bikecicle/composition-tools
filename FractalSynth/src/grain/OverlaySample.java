@@ -32,7 +32,7 @@ public class OverlaySample implements Modifier {
 				matrix.add(g);
 			}
 		}
-		layer.clear();
+		layer.sequence.clear();
 		layer.addGrains(matrix);
 		return count;
 	}

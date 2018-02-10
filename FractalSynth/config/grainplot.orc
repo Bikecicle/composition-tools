@@ -32,7 +32,7 @@ instr 2
 	
 	kenv linen kamp, irise, idur, idec
 	asig lposcil kenv, kfreqratio, kloop, kend, ifn
-	ares butterbp asig, ifreq, iband
-	outs ares, ares
+	;ares butterbp asig, ifreq, iband
+	outs asig, asig
      
 endin

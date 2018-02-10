@@ -19,6 +19,7 @@ public class SampleGrain extends Grain {
 		this.sEnd = sStrt + dur;
 		this.freq = freq;
 		this.band = band;
+		this.fID = fID;
 		xNorm = 1.0 * strt / totalDur;
 		yNorm = 1.0 * (freq - fMin) / (fMax - fMin);  
 	}

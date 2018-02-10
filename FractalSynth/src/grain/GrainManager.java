@@ -205,27 +205,7 @@ public class GrainManager {
 			}
 		}
 	}
-
-	/**
-	 * Generates a new grain matrix into the active layer. Grain matrix is defined
-	 * here as a discrete distribution of grains with binary amplitudes
-	 * 
-	 * @param fRes
-	 *            Frequency resolution
-	 * @param fMin
-	 *            Minimum frequency
-	 * @param fMax
-	 *            Maximum freqTency
-	 * @param tRes
-	 *            Time resolution (steps/second)
-	 * @param zoomMax
-	 *            Maximum zoom (10^zoomMax)
-	 * @param zoomVel
-	 *            Zoom velocity (magnification/second)
-	 * @param table
-	 *            Source table
-	 * @return Grains added
-	 */
+	
 	public int genMatrix(int fRes, int fMin, int fMax, int tRes, int zoomMax, int zoomVel, Table table) {
 		List<Grain> matrix = new ArrayList<Grain>();
 		double dur = Math.log(Math.pow(10, zoomMax)) / Math.log(zoomVel + 1);
