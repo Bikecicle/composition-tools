@@ -57,8 +57,12 @@ public class ScriptReader {
 				// Grain management
 				if (cmd[0].equals("inflate") && !skip) {
 					System.out.println("Resizing grains...");
-					fractalSynth.applyMod(new Inflate(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]),
-							fractalSynth.getTable(cmd[3])));
+					if (cmd.length == 2) {
+						fractalSynth.applyMod(new Inflate(Double.parseDouble(cmd[1])));
+					} else {
+						fractalSynth.applyMod(new Inflate(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]),
+								fractalSynth.getTable(cmd[3])));
+					}
 				} else if (cmd[0].equals("rshift") && !skip) {
 					System.out.println("Shifting grains...");
 					fractalSynth.applyMod(new RandomShift(Double.parseDouble(cmd[1]), fractalSynth.getTable(cmd[2])));
@@ -76,7 +80,8 @@ public class ScriptReader {
 							Integer.parseInt(cmd[9]), cmd[10], cmd[11]);
 				} else if (cmd[0].equals("overlay")) {
 					System.out.println("Overlaying sample " + cmd[3] + "...");
-					fractalSynth.applyMod(new OverlaySample(Float.parseFloat(cmd[1]), Integer.parseInt(cmd[2]), cmd[3]));
+					fractalSynth
+							.applyMod(new OverlaySample(Float.parseFloat(cmd[1]), Integer.parseInt(cmd[2]), cmd[3]));
 				} else if (cmd[0].equals("layer")) {
 					if (!fractalSynth.hasLayer(cmd[1]) || replace) {
 						System.out.println("Switching to layer: " + cmd[1]);
