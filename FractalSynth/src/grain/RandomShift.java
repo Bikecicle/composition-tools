@@ -12,12 +12,22 @@ public class RandomShift implements Modifier {
 		this.table = table;
 	}
 
+	public RandomShift(double rMax) {
+		this.rMax = rMax;
+		this.table = null;
+	}
+
 	@Override
 	public int applyTo(Layer layer) {
 		for (Grain g : layer.sequence) {
-				double r = rMax * table.get(g.xNorm, g.yNorm) / table.kMax;
-				double d = Math.random() * 2 * r - r;
-				g.strt += d;
+			double r = 0;
+			if (table != null) {
+				r = rMax * table.get(g.xNorm, g.yNorm) / table.kMax;
+			} else {
+				r = rMax;
+			}
+			double d = Math.random() * 2 * r - r;
+			g.strt += d;
 		}
 		return layer.sequence.size();
 	}

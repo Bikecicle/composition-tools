@@ -4,14 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import javax.swing.OverlayLayout;
-
-import csnd6.Soundfile;
 import grain.Inflate;
 import grain.OverlaySample;
 import grain.RandomShift;
-import grain.SineFTable;
-import grain.SoundfileFTable;
 import grain.UniformShift;
 import table.EdgeDetection;
 import table.Integrate;
@@ -57,15 +52,20 @@ public class ScriptReader {
 				// Grain management
 				if (cmd[0].equals("inflate") && !skip) {
 					System.out.println("Resizing grains...");
-					if (cmd.length == 2) {
-						fractalSynth.applyMod(new Inflate(Double.parseDouble(cmd[1])));
-					} else {
+					if (cmd.length == 4) {
 						fractalSynth.applyMod(new Inflate(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]),
 								fractalSynth.getTable(cmd[3])));
+					} else if (cmd.length == 2) {
+						fractalSynth.applyMod(new Inflate(Double.parseDouble(cmd[1])));
 					}
 				} else if (cmd[0].equals("rshift") && !skip) {
 					System.out.println("Shifting grains...");
-					fractalSynth.applyMod(new RandomShift(Double.parseDouble(cmd[1]), fractalSynth.getTable(cmd[2])));
+					if (cmd.length == 3) {
+						fractalSynth
+								.applyMod(new RandomShift(Double.parseDouble(cmd[1]), fractalSynth.getTable(cmd[2])));
+					} else if (cmd.length == 2) {
+						fractalSynth.applyMod(new RandomShift(Double.parseDouble(cmd[1])));
+					}
 				} else if (cmd[0].equals("reverb") && !skip) {
 					// TODO
 				} else if (cmd[0].equals("spatial") && !skip) {
