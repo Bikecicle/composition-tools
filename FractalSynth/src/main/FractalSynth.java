@@ -4,8 +4,10 @@ import java.io.File;
 import java.util.List;
 
 import grain.FTable;
+import grain.Generator;
 import grain.GrainManager;
 import grain.Modifier;
+import grain.PulsarMatrix;
 import table.Filter;
 import table.Table;
 import table.TableManager;
@@ -86,8 +88,13 @@ public class FractalSynth {
 			double zoomVel, int zoomMax, String tablePName, String tableDName) {
 		Table tableP = tableManager.getTable(tablePName);
 		Table tableD = tableManager.getTable(tableDName);
-		int grains = grainManager.genPulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
-				tableP, tableD);
+		int grains = grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
+				tableP, tableD));
+		System.out.println(grains + "grains created");
+	}
+	
+	public void generateGrains(Generator gen) {
+		int grains = grainManager.generateGrains(gen);
 		System.out.println(grains + "grains created");
 	}
 

@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import grain.Inflate;
+import grain.NoiseBand;
 import grain.OverlaySample;
+import grain.PulsarMatrix;
 import grain.RandomShift;
 import grain.UniformShift;
 import table.EdgeDetection;
@@ -74,14 +76,23 @@ public class ScriptReader {
 					fractalSynth.applyMod(new UniformShift(Double.parseDouble(cmd[1])));
 				} else if (cmd[0].equals("pulsar") && !skip) {
 					System.out.println("Generating pulsar matrix...");
-					fractalSynth.genPulsarMatrix(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
+					fractalSynth.generateGrains(new PulsarMatrix(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
 							Integer.parseInt(cmd[3]), Integer.parseInt(cmd[4]), Integer.parseInt(cmd[5]),
 							Integer.parseInt(cmd[6]), Integer.parseInt(cmd[7]), Double.parseDouble(cmd[8]),
-							Integer.parseInt(cmd[9]), cmd[10], cmd[11]);
+							Integer.parseInt(cmd[9]), fractalSynth.getTable(cmd[10]), fractalSynth.getTable(cmd[11])));
+
+				} else if (cmd[0].equals("noise") && !skip) {
+					System.out.println("Generating noise band...");
+					fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
+							Double.parseDouble(cmd[3]), Double.parseDouble(cmd[4])));
 				} else if (cmd[0].equals("overlay")) {
-					System.out.println("Overlaying sample " + cmd[3] + "...");
-					fractalSynth
-							.applyMod(new OverlaySample(Float.parseFloat(cmd[1]), Integer.parseInt(cmd[2]), cmd[3]));
+					System.out.println("Overlaying sample " + cmd[1] + "...");
+					if (cmd.length == 4) {
+						fractalSynth.applyMod(
+								new OverlaySample(cmd[1], Float.parseFloat(cmd[2]), Integer.parseInt(cmd[3])));
+					} else if (cmd.length == 2) {
+						fractalSynth.applyMod(new OverlaySample(cmd[1]));
+					}
 				} else if (cmd[0].equals("layer")) {
 					if (!fractalSynth.hasLayer(cmd[1]) || replace) {
 						System.out.println("Switching to layer: " + cmd[1]);

@@ -9,11 +9,16 @@ public class OverlaySample implements Modifier {
 	private int band; // Bandpass bandwidth in Hz
 	private String filename; // Sample sound file name (within materials/)
 
-	public OverlaySample(float fMod, int band, String filename) {
-		super();
+	public OverlaySample(String filename, float fMod, int band) {
+		this.filename = filename;
 		this.fMod = fMod;
 		this.band = band;
+	}
+	
+	public OverlaySample(String filename) {
 		this.filename = filename;
+		this.fMod = 1;
+		this.band = 1;
 	}
 
 	@Override
