@@ -235,7 +235,7 @@ public class UI {
 			System.out.println("Maximum shift radius (sec):");
 			double rMax = in.nextDouble();
 			System.out.println("Zoom velocity (*/sec)");
-			double zoomVel = in.nextDouble();
+			//double zoomVel = in.nextDouble();
 			in.nextLine();
 			System.out.println("Source table name:");
 			String name = in.nextLine();
@@ -253,7 +253,7 @@ public class UI {
 			System.out.println("Maximum grain duration (sec):");
 			double dMax = in.nextDouble();
 			System.out.println("Zoom velocity");
-			double zoomVel = in.nextDouble();
+			//double zoomVel = in.nextDouble();
 			in.nextLine();
 			System.out.println("Source table name:");
 			String name = in.nextLine();

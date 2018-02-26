@@ -14,7 +14,6 @@ import java.util.List;
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;
-import table.Table;
 import visual.ViewStream;
 
 public class GrainManager {
@@ -208,6 +207,10 @@ public class GrainManager {
 
 	public int applyMod(Modifier mod) {
 		return mod.applyTo(active);
+	}
+	
+	public void copyFrom(String other) {
+		active.addGrains(loadLayer(other).sequence);
 	}
 	
 	public int generateGrains(Generator gen) {

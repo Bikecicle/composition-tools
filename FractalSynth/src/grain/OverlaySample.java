@@ -18,7 +18,7 @@ public class OverlaySample implements Modifier {
 	public OverlaySample(String filename) {
 		this.filename = filename;
 		this.fMod = 1;
-		this.band = 1;
+		this.band = 20000;
 	}
 
 	@Override

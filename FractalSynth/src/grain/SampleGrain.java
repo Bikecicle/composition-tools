@@ -6,7 +6,6 @@ public class SampleGrain extends Grain {
 
 	public float fMod;
 	public float sStrt;
-	public float sEnd;
 	public int freq;
 	public int band;
 	public int fID;
@@ -16,7 +15,6 @@ public class SampleGrain extends Grain {
 		super(Instrument.sample, strt, dur, amp, att, dec);
 		this.fMod = fMod;
 		this.sStrt = sStrt;
-		this.sEnd = sStrt + dur;
 		this.freq = freq;
 		this.band = band;
 		this.fID = fID;
@@ -25,7 +23,6 @@ public class SampleGrain extends Grain {
 	}
 
 	public String statement() {
-		return super.statement() + " " + att + " " + dec + " " + fMod + " " + sStrt + " "
-				+ sEnd + " " + freq + " " + band + " " + fID;
+		return super.statement() + " " + att + " " + dec + " " + fMod + " " + freq + " " + band + " " + fID + " " + sStrt;
 	}
 }

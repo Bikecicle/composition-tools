@@ -13,8 +13,8 @@ public class SoundfileFTable extends FTable {
 		super(IFN_DEFAULT, Instrument.sample.genRoutine);
 		this.Sfilnam = "samples/" + filename;
 		this.iskip = 0; // Start at beginning
-		this.iformat = 0;
-		this.ichn = 0;
+		this.iformat = 0; // Defer
+		this.ichn = 0; // Defer
 	}
 
 	@Override

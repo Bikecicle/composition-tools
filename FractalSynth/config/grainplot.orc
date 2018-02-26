@@ -24,15 +24,14 @@ instr 2
 	irise = p5; attack
 	idec = p6; decay
 	kfreqratio = p7; frequency mod
-	kloop = p8 * sr; start time
-	kend = p9 * sr; end time
-	ifreq = p10; center frequency
-	iband = p11; bandwidth
-	ifn = p12; function table id
+	ifreq = p8; center frequency
+	iband = p9; bandwidth
+	ifn = p10; function table id
+	iphs = p11 * sr; start phase
 	
 	kenv linen kamp, irise, idur, idec
-	asig lposcil kenv, kfreqratio, kloop, kend, ifn
-	;ares butterbp asig, ifreq, iband
-	outs asig, asig
+	asig lposcil kenv, kfreqratio, 0, 0, ifn, iphs
+	ares butterbp asig, ifreq, iband
+	outs ares, ares
      
 endin

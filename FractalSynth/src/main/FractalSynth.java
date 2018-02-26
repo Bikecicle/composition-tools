@@ -84,18 +84,16 @@ public class FractalSynth {
 		return tableManager.getTable(name).toString();
 	}
 
-	public void genPulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD,
+	public int genPulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD,
 			double zoomVel, int zoomMax, String tablePName, String tableDName) {
 		Table tableP = tableManager.getTable(tablePName);
 		Table tableD = tableManager.getTable(tableDName);
-		int grains = grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
+		return grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
 				tableP, tableD));
-		System.out.println(grains + "grains created");
 	}
 	
-	public void generateGrains(Generator gen) {
-		int grains = grainManager.generateGrains(gen);
-		System.out.println(grains + "grains created");
+	public int generateGrains(Generator gen) {
+		return grainManager.generateGrains(gen);
 	}
 
 	public static boolean openDir(String path) {
@@ -134,6 +132,10 @@ public class FractalSynth {
 
 	public int applyMod(Modifier mod) {
 		return grainManager.applyMod(mod);
+	}
+
+	public void copyFrom(String other) {
+		grainManager.copyFrom(other);
 	}
 
 	public boolean renameLayer(String name) {

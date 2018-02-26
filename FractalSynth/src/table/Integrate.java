@@ -46,6 +46,7 @@ public class Integrate implements Filter {
 			}
 		}
 		table.data = newData;
+		table.kMax = max;
 		newData = null;
 		table.filters.add("integral");
 

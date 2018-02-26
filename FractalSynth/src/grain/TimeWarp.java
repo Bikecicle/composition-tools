@@ -4,20 +4,25 @@ import table.Table;
 
 public class TimeWarp implements Modifier {
 	
-	private double minSpeed;
-	private double maxSpeed;
-	private double[] speed;
-	private double[] time;
 	private Table table;
 	
-	public TimeWarp(double minSpeed, double maxSpeed, Table table) {
-		// TODO Auto-generated constructor stub
+	public TimeWarp(Table table) {
+		this.table = table;
 	}
 
 	@Override
 	public int applyTo(Layer layer) {
-		// TODO Auto-generated method stub
-		return 0;
+		double dur = layer.duration;
+		int count = 0;
+		for (Grain g : layer.sequence) {
+			if (g.gType == Instrument.sample) {
+				SampleGrain sg = (SampleGrain) g;
+				// Map iteration to time within duration
+				sg.sStrt = (float) (dur * table.get(sg.xNorm, sg.yNorm) / table.kMax);
+				count++;
+			}
+		}
+		return count;
 	}
 
 }

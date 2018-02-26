@@ -23,13 +23,13 @@ public class Layer implements Serializable {
 	public void addGrains(List<Grain> matrix) {
 		sequence.addAll(matrix);
 	}
-	
+
 	public int addFTable(FTable ft) {
 		ft.ifn = fTables.size() + 1;
 		fTables.add(ft);
 		return ft.ifn;
 	}
-	
+
 	public void clear() {
 		sequence.clear();
 		fTables.clear();

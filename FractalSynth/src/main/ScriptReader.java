@@ -6,10 +6,12 @@ import java.util.Scanner;
 
 import grain.Inflate;
 import grain.NoiseBand;
+import grain.Normalize;
+import grain.Note;
 import grain.OverlaySample;
 import grain.PulsarMatrix;
 import grain.RandomShift;
-import grain.UniformShift;
+import grain.TimeWarp;
 import table.EdgeDetection;
 import table.Integrate;
 import table.Power;
@@ -72,8 +74,12 @@ public class ScriptReader {
 					// TODO
 				} else if (cmd[0].equals("spatial") && !skip) {
 					// TODO
-				} else if (cmd[0].equals("ushift") && !skip) {
-					fractalSynth.applyMod(new UniformShift(Double.parseDouble(cmd[1])));
+				} else if (cmd[0].equals("normalize") && !skip) {
+					System.out.println("Normalizing amplitude...");
+					fractalSynth.applyMod(new Normalize());
+				} else if (cmd[0].equals("warp") && !skip) {
+					System.out.println("Time-warping...");
+					fractalSynth.applyMod(new TimeWarp(fractalSynth.getTable(cmd[1])));
 				} else if (cmd[0].equals("pulsar") && !skip) {
 					System.out.println("Generating pulsar matrix...");
 					fractalSynth.generateGrains(new PulsarMatrix(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
@@ -85,6 +91,11 @@ public class ScriptReader {
 					System.out.println("Generating noise band...");
 					fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
 							Double.parseDouble(cmd[3]), Double.parseDouble(cmd[4])));
+
+				} else if (cmd[0].equals("note") && !skip) {
+					System.out.println("Adding a note...");
+					fractalSynth.generateGrains(
+							new Note(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]), Integer.parseInt(cmd[3])));
 				} else if (cmd[0].equals("overlay")) {
 					System.out.println("Overlaying sample " + cmd[1] + "...");
 					if (cmd.length == 4) {
@@ -93,19 +104,26 @@ public class ScriptReader {
 					} else if (cmd.length == 2) {
 						fractalSynth.applyMod(new OverlaySample(cmd[1]));
 					}
+				} else if (cmd[0].equals("copy")) {
+					System.out.println("Copying grains from " + cmd[1] + " to " + fractalSynth.getActiveLayerName());
+					fractalSynth.copyFrom(cmd[1]);
 				} else if (cmd[0].equals("layer")) {
 					if (!fractalSynth.hasLayer(cmd[1]) || replace) {
-						System.out.println("Switching to layer: " + cmd[1]);
+						System.out.println("[Switching to layer: " + cmd[1] + "]");
 						skip = false;
 						if (!fractalSynth.changeActiveLayer(cmd[1])) {
 							System.out.println("Creating...");
-							fractalSynth.newLayer(cmd[1], Double.parseDouble(cmd[2]));
+							if (cmd.length == 3) {
+								fractalSynth.newLayer(cmd[1], Double.parseDouble(cmd[2]));
+							} else if (cmd.length == 2) {
+								fractalSynth.newLayer(cmd[1], 0);
+							}
 						} else {
 							System.out.println("Clearing...");
 							fractalSynth.clearLayer();
 						}
 					} else {
-						System.out.println("Skipping layer: " + cmd[1]);
+						System.out.println("[Skipping layer: " + cmd[1] + "]");
 						skip = true;
 					}
 				} else if (cmd[0].equals("render")) {
@@ -116,7 +134,7 @@ public class ScriptReader {
 				else if (cmd[0].equals("table")) {
 					if (!fractalSynth.hasTable(cmd[2]) || replace) {
 						skip = false;
-						System.out.println("Generating new table: " + cmd[2]);
+						System.out.println("[Generating new table: " + cmd[2] + "]");
 						if (cmd[1].equals("new")) {
 							fractalSynth.addTable(cmd[2], Integer.parseInt(cmd[3]), Integer.parseInt(cmd[4]),
 									Double.parseDouble(cmd[5]), Integer.parseInt(cmd[6]), Integer.parseInt(cmd[7]),
@@ -126,7 +144,7 @@ public class ScriptReader {
 						}
 						currentTable = cmd[2];
 					} else {
-						System.out.println("Skipping table: " + cmd[2]);
+						System.out.println("[Skipping table: " + cmd[2] + "]");
 						skip = true;
 					}
 				} else if (cmd[0].equals("edge") && !skip) {
