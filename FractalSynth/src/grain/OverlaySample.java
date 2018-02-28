@@ -30,7 +30,7 @@ public class OverlaySample implements Modifier {
 			if (g.gType == Instrument.osc) {
 				OscGrain og = (OscGrain) g;
 				SampleGrain sg = new SampleGrain(og.strt, og.dur, og.amp, og.att, og.dec, fMod, og.strt, og.freq, band,
-						fID, og.fMin, og.fMax, layer.duration);
+						fID, og.xNorm, og.yNorm);
 				matrix.add(sg);
 				count++;
 			} else {

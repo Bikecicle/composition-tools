@@ -55,8 +55,10 @@ public class PulsarMatrix implements Generator {
 						if (tableD.get(1.0 * t / tSteps, 1.0 * fp / fResP) == 1) {
 							float gTime = 1.0f * t / tRes;
 							int gFreq = (int) (fMinD + (fStepD * f));
+							double xNorm = gTime / dur;
+							double yNorm = 1.0 * (gFreq - fMinD) / (fMaxD - fMinD);
 							matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, Grain.DEFAULT_AMP, gFreq,
-									Grain.DEFAULT_ATT, Grain.DEFAULT_DEC, fMinD, fMaxD, dur));
+									Grain.DEFAULT_ATT, Grain.DEFAULT_DEC, xNorm, yNorm));
 						}
 					}
 				}

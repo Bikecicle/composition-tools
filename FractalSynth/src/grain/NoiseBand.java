@@ -26,9 +26,13 @@ public class NoiseBand implements Generator {
 			int freq = (int) (Math.random() * width) + fMin;
 			float att = Grain.DEFAULT_ATT;
 			float dec = Grain.DEFAULT_DEC;
-			OscGrain g = new OscGrain(strt, dur, amp, freq, att, dec, fMin, fMax, duration);
+			double xNorm = strt / duration;
+			double yNorm = 1.0 * (freq - fMin) / width;
+			OscGrain g = new OscGrain(strt, dur, amp, freq, att, dec, xNorm, yNorm);
 			layer.sequence.add(g);
 		}
+		layer.sequence.sort(null);
+		layer.duration = duration;
 		layer.addFTable(new SineFTable());
 		return total;
 	}

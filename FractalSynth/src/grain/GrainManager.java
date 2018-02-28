@@ -209,8 +209,12 @@ public class GrainManager {
 		return mod.applyTo(active);
 	}
 	
-	public void copyFrom(String other) {
-		active.addGrains(loadLayer(other).sequence);
+	public void copyFrom(String name) {
+		Layer other = loadLayer(name);
+		active.addGrains(other.sequence);
+		if (active.duration < other.duration)
+			active.duration = other.duration;
+		active.fTables.addAll(other.fTables);
 	}
 	
 	public int generateGrains(Generator gen) {

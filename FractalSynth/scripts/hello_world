@@ -15,18 +15,15 @@ edge 2
 
 replace true
 
-layer noise
-noise 20 2000 100 10
-inflate 0.1
-normalize
+layer base
+pulsar 1 30 25 20 2000 10 100 0.1 2 hf_t1_e hf_t2_e
+rshift 0.1 0.1 hf_t3
+inflate 0.01 1 0.1 hf_t4
 
-layer noise_sample
-copy noise
-overlay hello_world.wav 1 10
+layer warped
+copy base
+overlay lydian.wav 200
 warp hw_t1_i
+normalize 256
 
-layer raw_sample
-note 0 10 0
-overlay hello_world.wav
-
-render test
+render hf_test

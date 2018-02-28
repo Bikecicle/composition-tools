@@ -20,10 +20,9 @@ public class Note implements Generator {
 		int freq = frequency;
 		float att = 0.1f;
 		float dec = 0.1f;
-		int fMin = freq;
-		int fMax = freq;
-		double totalDur = strt + dur;
-		OscGrain note = new OscGrain(strt, dur, amp, freq, att, dec, fMin, fMax, totalDur);
+		double xNorm = 0;
+		double yNorm = 0;
+		OscGrain note = new OscGrain(strt, dur, amp, freq, att, dec, xNorm, yNorm);
 		layer.sequence.add(note);
 		layer.addFTable(new SineFTable());
 		return 1;

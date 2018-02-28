@@ -37,8 +37,9 @@ public class Matrix implements Generator {
 				if (table.get(t, f, tRes, fRes, zoomVel) == 1) {
 					float gTime = 1.0f * t / tRes;
 					int gFreq = (int) (fMin + (fStep * f));
-					matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, gAmp, gFreq, Grain.DEFAULT_ATT, Grain.DEFAULT_DEC,
-							fMin, fMax, layer.duration));
+					double xNorm = gTime / dur;
+					double yNorm = (gFreq - fMin) / (fMax - fMin);
+					matrix.add(new OscGrain(gTime, Grain.DEFAULT_DUR, gAmp, gFreq, Grain.DEFAULT_ATT, Grain.DEFAULT_DEC, xNorm, yNorm));
 				}
 			}
 		}

@@ -11,7 +11,7 @@ import grain.Note;
 import grain.OverlaySample;
 import grain.PulsarMatrix;
 import grain.RandomShift;
-import grain.TimeWarp;
+import grain.IntegralWarp;
 import table.EdgeDetection;
 import table.Integrate;
 import table.Power;
@@ -76,10 +76,10 @@ public class ScriptReader {
 					// TODO
 				} else if (cmd[0].equals("normalize") && !skip) {
 					System.out.println("Normalizing amplitude...");
-					fractalSynth.applyMod(new Normalize());
+					fractalSynth.applyMod(new Normalize(Integer.parseInt(cmd[1])));
 				} else if (cmd[0].equals("warp") && !skip) {
 					System.out.println("Time-warping...");
-					fractalSynth.applyMod(new TimeWarp(fractalSynth.getTable(cmd[1])));
+					fractalSynth.applyMod(new IntegralWarp(fractalSynth.getTable(cmd[1])));
 				} else if (cmd[0].equals("pulsar") && !skip) {
 					System.out.println("Generating pulsar matrix...");
 					fractalSynth.generateGrains(new PulsarMatrix(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
@@ -101,6 +101,8 @@ public class ScriptReader {
 					if (cmd.length == 4) {
 						fractalSynth.applyMod(
 								new OverlaySample(cmd[1], Float.parseFloat(cmd[2]), Integer.parseInt(cmd[3])));
+					} else if (cmd.length == 3) {
+						fractalSynth.applyMod(new OverlaySample(cmd[1], 1f, Integer.parseInt(cmd[2])));
 					} else if (cmd.length == 2) {
 						fractalSynth.applyMod(new OverlaySample(cmd[1]));
 					}

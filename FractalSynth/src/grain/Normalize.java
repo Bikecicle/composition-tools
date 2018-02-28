@@ -1,6 +1,13 @@
 package grain;
 
 public class Normalize implements Modifier {
+	
+	double mod;
+
+	public Normalize(double mod) {
+		super();
+		this.mod = mod;
+	}
 
 	@Override
 	public int applyTo(Layer layer) {
@@ -17,6 +24,7 @@ public class Normalize implements Modifier {
 			}
 			for (Grain g : layer.sequence) {
 				g.amp /= maxAmp;
+				g.amp *= mod;
 			}
 			return (int) (100 / maxAmp); // Percent modifier
 	}

@@ -2,7 +2,7 @@ package grain;
 
 import java.io.Serializable;
 
-public abstract class Grain implements Serializable {
+public abstract class Grain implements Serializable, Comparable<Grain> {
 
 	private static final long serialVersionUID = 7289961340282365917L;
 
@@ -28,14 +28,15 @@ public abstract class Grain implements Serializable {
 	public double xNorm;
 	public double yNorm;
 
-	public Grain(Instrument gType, float strt, float dur, float amp, float att, float dec) {
+	public Grain(Instrument gType, float strt, float dur, float amp, float att, float dec, double xNorm, double yNorm) {
 		this.gType = gType;
 		this.strt = strt;
 		this.dur = dur;
 		this.amp = amp;
 		this.att = att;
 		this.dec = dec;
-
+		this.xNorm = xNorm;
+		this.yNorm = yNorm;
 	}
 
 	public String statement() {
@@ -47,5 +48,10 @@ public abstract class Grain implements Serializable {
 		return (this.strt <= other.strt && this.strt + this.dur >= other.strt)
 				|| (this.strt <= other.strt + other.dur && this.strt + this.dur >= other.strt + other.dur)
 				|| (this.strt > other.strt && this.strt + this.dur < other.strt + other.dur);
+	}
+	
+	@Override
+	public int compareTo(Grain other) {
+		return (int) Math.signum(this.strt - other.strt);
 	}
 }

@@ -2,11 +2,11 @@ package grain;
 
 import table.Table;
 
-public class TimeWarp implements Modifier {
+public class IntegralWarp implements Modifier {
 	
 	private Table table;
 	
-	public TimeWarp(Table table) {
+	public IntegralWarp(Table table) {
 		this.table = table;
 	}
 

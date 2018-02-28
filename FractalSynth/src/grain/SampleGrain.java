@@ -11,15 +11,13 @@ public class SampleGrain extends Grain {
 	public int fID;
 	
 	public SampleGrain(float strt, float dur, float amp, float att, float dec, float fMod, float sStrt, int freq, int band,
-			int fID, int fMin, int fMax, double totalDur) {
-		super(Instrument.sample, strt, dur, amp, att, dec);
+			int fID, double xNorm, double yNorm) {
+		super(Instrument.sample, strt, dur, amp, att, dec, xNorm, yNorm);
 		this.fMod = fMod;
 		this.sStrt = sStrt;
 		this.freq = freq;
 		this.band = band;
 		this.fID = fID;
-		xNorm = 1.0 * strt / totalDur;
-		yNorm = 1.0 * (freq - fMin) / (fMax - fMin);  
 	}
 
 	public String statement() {
