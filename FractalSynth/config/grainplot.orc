@@ -5,11 +5,11 @@ nchnls = 2
 
 instr 1
 
-	idur = p3; duration
-	kamp = p4; amplitude
-	kcps = p5; frequency
-	irise = p6; attack
-	idec = p7; decay
+	idur		=		p3		; duration
+	kamp		=		p4		; amplitude
+	kcps		=		p5		; frequency
+	irise		=		p6		; attack
+	idec		=		p7		; decay
 	
 	aenv linen kamp, irise, idur, idec
 	asig poscil aenv, kcps 
@@ -19,15 +19,15 @@ endin
 
 instr 2
 	
-	idur = p3; duration
-	kamp = p4; amplitude
-	irise = p5; attack
-	idec = p6; decay
-	kfreqratio = p7; frequency mod
-	ifreq = p8; center frequency
-	iband = p9; bandwidth
-	ifn = p10; function table id
-	iphs = p11 * sr; start phase
+	idur		=		p3		; duration
+	kamp		=		p4		; amplitude
+	irise		=		p5		; attack
+	idec		=		p6		; decay
+	kfreqratio	=		p7		; frequency mod
+	ifreq		=		p8		; center frequency
+	iband		=		p9		; bandwidth
+	ifn			=		p10		; function table id
+	iphs		=		p11*sr	; start phase
 	
 	kenv linen kamp, irise, idur, idec
 	asig lposcil kenv, kfreqratio, 0, 0, ifn, iphs

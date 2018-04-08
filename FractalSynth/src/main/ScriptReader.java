@@ -82,15 +82,17 @@ public class ScriptReader {
 					fractalSynth.applyMod(new IntegralWarp(fractalSynth.getTable(cmd[1])));
 				} else if (cmd[0].equals("pulsar") && !skip) {
 					System.out.println("Generating pulsar matrix...");
-					fractalSynth.generateGrains(new PulsarMatrix(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
+					int n = fractalSynth.generateGrains(new PulsarMatrix(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
 							Integer.parseInt(cmd[3]), Integer.parseInt(cmd[4]), Integer.parseInt(cmd[5]),
 							Integer.parseInt(cmd[6]), Integer.parseInt(cmd[7]), Double.parseDouble(cmd[8]),
 							Integer.parseInt(cmd[9]), fractalSynth.getTable(cmd[10]), fractalSynth.getTable(cmd[11])));
+					System.out.println("Generated matrix of size " + n);
 
 				} else if (cmd[0].equals("noise") && !skip) {
 					System.out.println("Generating noise band...");
-					fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
+					int n = fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
 							Double.parseDouble(cmd[3]), Double.parseDouble(cmd[4])));
+					System.out.println("Generated matrix of size " + n);
 
 				} else if (cmd[0].equals("note") && !skip) {
 					System.out.println("Adding a note...");
