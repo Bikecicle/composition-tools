@@ -40,22 +40,30 @@ instr 3
 
 	idur		=		p3								; duration
 	kamp		=		p4								; amplitude
-	ifn1		=		giSound							; sample function table
+	ktimewarp	line	p5, p7, p6						; time stretch factor
+		
+		tigoto initskip
+		
+	iwsize		=		p8								; window size
+	irandw		=		p9								; random values added to iwsize
+	ioverlap	=		p10								; window overlap density
+	ifreq		=		p11								; band frequency
+	iband		=		p12								; band width
+	ifn1		=		p13								; sample function table
+	ifn2		=		p14								; window function table
 	ilen		=		nsamp(ifn1)/sr					; sample length
-	iPtrStart	random	1,ilen-1						;
-	iPtrTrav	random	-1,1							;
-	ktimewarp	lineseg	iPtrStart,p3,iPtrStart+iPtrTrav	; time stretch factor
-	kamp		lineseg	0,p3/2,0.2,p3/2,0				; amplitude
-	iresample	random	-24,24.99						;
-	iresample	=		semitone(int(iresample))		; pitch mod factor
-	ifn2		=		giWfn							; window function table
+	kresample	=		1								; pitch mod factor
 	ibeg		=		0								; start time offset
-	iwsize		random	400,10000						; window size
-	irandw		=		iwsize/3						; random values added to iwsize
-	ioverlap	=		50								; window overlap density
 	itimemode	=		1								; pointer mode (!0)
 
 	aSigL,aSigR sndwarpst kamp, ktimewarp, iresample, ifn1, \
 		ibeg, iwsize, irandw, ioverlap, ifn2, itimemode
+		
+	aResL butterbp aSigL, ifreq, iband
+	aResR butterbp aSigR, ifreq, iband
+	
+		outs aResL, aResR
+		
+	initskip:
 		
 endin
