@@ -11,6 +11,7 @@ import grain.Note;
 import grain.OverlaySample;
 import grain.PulsarMatrix;
 import grain.RandomShift;
+import grain.ShredSample;
 import grain.IntegralWarp;
 import table.EdgeDetection;
 import table.Integrate;
@@ -82,22 +83,28 @@ public class ScriptReader {
 					fractalSynth.applyMod(new IntegralWarp(fractalSynth.getTable(cmd[1])));
 				} else if (cmd[0].equals("pulsar") && !skip) {
 					System.out.println("Generating pulsar matrix...");
-					int n = fractalSynth.generateGrains(new PulsarMatrix(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
-							Integer.parseInt(cmd[3]), Integer.parseInt(cmd[4]), Integer.parseInt(cmd[5]),
-							Integer.parseInt(cmd[6]), Integer.parseInt(cmd[7]), Double.parseDouble(cmd[8]),
-							Integer.parseInt(cmd[9]), fractalSynth.getTable(cmd[10]), fractalSynth.getTable(cmd[11])));
+					int n = fractalSynth.generateGrains(new PulsarMatrix(Integer.parseInt(cmd[1]),
+							Integer.parseInt(cmd[2]), Integer.parseInt(cmd[3]), Integer.parseInt(cmd[4]),
+							Integer.parseInt(cmd[5]), Integer.parseInt(cmd[6]), Integer.parseInt(cmd[7]),
+							Double.parseDouble(cmd[8]), Integer.parseInt(cmd[9]), fractalSynth.getTable(cmd[10]),
+							fractalSynth.getTable(cmd[11])));
 					System.out.println("Generated matrix of size " + n);
 
 				} else if (cmd[0].equals("noise") && !skip) {
 					System.out.println("Generating noise band...");
-					int n = fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
-							Double.parseDouble(cmd[3]), Double.parseDouble(cmd[4])));
+					int n = fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]),
+							Integer.parseInt(cmd[2]), Double.parseDouble(cmd[3]), Double.parseDouble(cmd[4])));
 					System.out.println("Generated matrix of size " + n);
 
 				} else if (cmd[0].equals("note") && !skip) {
 					System.out.println("Adding a note...");
 					fractalSynth.generateGrains(
 							new Note(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]), Integer.parseInt(cmd[3])));
+				} else if (cmd[0].equals("shred") && !skip) {
+					System.out.println("Shredding sample " + cmd[8] + "...");
+					fractalSynth.generateGrains(new ShredSample(Integer.parseInt(cmd[1]), Integer.parseInt(cmd[2]),
+							Integer.parseInt(cmd[3]), Integer.parseInt(cmd[4]), Integer.parseInt(cmd[5]),
+							Double.parseDouble(cmd[6]), fractalSynth.getTable(cmd[7]), cmd[8]));
 				} else if (cmd[0].equals("overlay")) {
 					System.out.println("Overlaying sample " + cmd[1] + "...");
 					if (cmd.length == 4) {

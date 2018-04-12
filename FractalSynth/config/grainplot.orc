@@ -35,3 +35,38 @@ instr 2
 	outs ares, ares
      
 endin
+
+instr 3
+
+	idur		=		p3								; duration
+	kamp		=		p4								; amplitude
+	ifn1		=		p5								; sample function table
+	ifn2		=		p6								; window function table
+	ia			=		p7 * nsamp(ifn1)				;
+	ib			=		p8 * nsamp(ifn1)				;
+	idur		=		p9								;
+	ktimewarp	line	ia, idur, ib					; time stretch factor
+		
+		tigoto initskip
+		
+	iwsize		=		p10								; window size
+	irandw		=		p11								; random values added to iwsize
+	ioverlap	=		p12								; window overlap density
+	ifreq		=		p13								; band frequency
+	iband		=		p14								; band width
+	ilen		=		nsamp(ifn1)/sr					; sample length
+	iresample	=		1								; pitch mod factor
+	ibeg		=		0								; start time offset
+	itimemode	=		1								; pointer mode (!0)
+
+	aSigL,aSigR sndwarpst kamp, ktimewarp, iresample, ifn1, \
+		ibeg, iwsize, irandw, ioverlap, ifn2, itimemode
+		
+	aResL butterbp aSigL, ifreq, iband
+	aResR butterbp aSigR, ifreq, iband
+	
+		outs aResL, aResR
+		
+	initskip:
+		
+endin

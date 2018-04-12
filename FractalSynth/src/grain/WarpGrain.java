@@ -1,5 +1,7 @@
 package grain;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 public class WarpGrain extends Grain {
 
 	private static final long serialVersionUID = 3055216104560554640L;
@@ -35,13 +37,19 @@ public class WarpGrain extends Grain {
 	@Override
 	public String statement() {
 		String stmt = "";
-		stmt += "i " + gType.id + "." + id + " " + strt + " " + dur + " " + segments[0] + " " + segments[1] + " " + slen
-				+ " " + iwsize + " " + irandw + " " + ioverlap + " " + ifreq + " " + iband + " " + ifn1 + " " + ifn2;
+		stmt += "i " + gType.id + "." + id + " " + strt + " " + dur + " " + amp + " " + ifn1 + " " + ifn2 + " "
+				+ String.format("%.6f", segments[0]) + " " + String.format("%.6f", segments[1]) + " " + slen + " " + iwsize + " " + irandw + " " + ioverlap + " "
+				+ ifreq + " " + iband;
 		for (int i = 1; i < segments.length - 1; i++) {
 			float ts = segments[i];
 			float te = segments[i + 1];
 			float sstrt = strt + slen * i;
-			stmt += "\ni " + gType.id + "." + id + " " + sstrt + " " + dur + " " + ts + " " + te + " " + slen;
+			float sdur = 0;
+			if (i < segments.length - 2) {
+				sdur = dur;
+			}
+			stmt += "\ni " + gType.id + "." + id + " " + sstrt + " " + sdur + " " + amp + " " + ifn1 + " " + ifn2 + " "
+					+ String.format("%.6f", ts) + " " + String.format("%.6f", te) + " " + slen;
 		}
 		return stmt;
 	}

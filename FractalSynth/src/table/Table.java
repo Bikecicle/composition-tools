@@ -95,7 +95,7 @@ public class Table implements Serializable {
 	@Override
 	public String toString() {
 		double dur = Math.log(Math.pow(10, zoomMax)) / Math.log(zoomVel + 1);
-		String str = "Name: " + name + "\n" + "Duration: " + dur + " sec at x" + (zoomVel + 1) + "/sec\n"
+		String str = "Name: " + name + "\n" + "Duration: " + dur + " sec at x" + zoomVel + "/sec\n"
 				+ "Resolution: " + tRes + " steps/sec | " + fRes + " steps/2pi\n" + "Max iteration: " + kMax + "\n"
 				+ "Position: " + posX + " | " + posY + "\n" + "Applied filters: \n";
 		if (filters.size() > 0) {

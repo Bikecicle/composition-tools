@@ -1,7 +1,7 @@
 package table;
 
 public class Integrate implements Filter {
-	
+
 	private double maxR; // Seconds to reach kMax at max speed
 	private double zeroP; // Position of zero in kMax (0-1)
 	private double startP; // Starting value in max (0-1)
@@ -9,21 +9,21 @@ public class Integrate implements Filter {
 	private int zero;
 	private int start;
 	private boolean rel;
-	
+
 	public Integrate(double maxR, double zeroP, double startP) {
 		this.maxR = maxR;
 		this.zeroP = zeroP;
 		this.startP = startP;
 		rel = true;
 	}
-	
+
 	public Integrate(int max, int zero, int start) {
 		this.max = max;
 		this.zero = zero;
 		this.start = start;
 		rel = false;
 	}
-	
+
 	@Override
 	public void applyTo(Table table) {
 		if (rel) {
@@ -40,7 +40,7 @@ public class Integrate implements Filter {
 			for (int i = 0; i < steps; i++) {
 				sum += data[i][j] - zero;
 				int val = sum % max;
-				if (val < 0 )
+				if (val < 0)
 					val += max;
 				newData[i][j] = val;
 			}
@@ -49,7 +49,6 @@ public class Integrate implements Filter {
 		table.kMax = max;
 		newData = null;
 		table.filters.add("integral");
-
 	}
 
 }
