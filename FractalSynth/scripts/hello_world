@@ -16,14 +16,16 @@ edge 2
 replace true
 
 layer base
-pulsar 1 30 20 20 2000 10 100 0.1 2 hf_t1_e hf_t2_e
-rshift 0.1 0.1 hf_t3
-inflate 0.1 1 0.1 hf_t4
+noise 1 2000 100 10
+inflate 0.1
 
-layer warped
+layer overlay
 copy base
-overlay lydian.wav 10
-warp hw_t1_i
-normalize 256
+overlay hello_world.wav 10
+normalize 16
 
-render hf_test
+layer warp
+copy overlay
+warp hw_t1_i
+
+render hw_test

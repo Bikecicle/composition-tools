@@ -19,15 +19,15 @@ endin
 
 instr 2
 	
-	idur		=		p3		; duration
-	kamp		=		p4		; amplitude
-	irise		=		p5		; attack
-	idec		=		p6		; decay
-	kfreqratio	=		p7		; frequency mod
-	ifreq		=		p8		; center frequency
-	iband		=		p9		; bandwidth
-	ifn			=		p10		; function table id
-	iphs		=		p11*sr	; start phase
+	idur		=		p3			; duration
+	kamp		=		p4			; amplitude
+	irise		=		p5			; attack
+	idec		=		p6			; decay
+	kfreqratio	=		p7			; frequency mod
+	ifreq		=		p8			; center frequency
+	iband		=		p9			; bandwidth
+	ifn			=		p10			; function table id
+	iphs		=		p11 * sr	; start phase
 	
 	kenv linen kamp, irise, idur, idec
 	asig lposcil kenv, kfreqratio, 0, 0, ifn, iphs
@@ -38,14 +38,42 @@ endin
 
 instr 3
 
+	idur		=		p3									; duration
+	kamp		=		p4									; amplitude
+	ip1			=		p5									; starting pitch
+	ip2			=		p6									; ending pitch
+	islen		=		p7									; segment length
+	kpitch		line 	ip1, islen, ip2						; pitch line
+	kfreq		line	abs(p8 * ip1), islen, abs(p8 * ip2)	; frequency line
+	
+		tigoto initskip
+		
+	istart		=		0									; start position
+	ifad		=		0.05								; crossfade
+	iband		=		p9									; bandwidth
+	ifn			=		p10									; function table
+	ilen		=		nsamp(ifn) / sr - ifad				; loop length
+	
+	aSigR,aSigL flooper kamp, kpitch, istart, ilen, ifad, ifn
+	aResR butterbp aSigR, kfreq, iband
+	aResL butterbp aSigL, kfreq, iband
+		
+		outs aResR, aResL
+		
+	initskip:
+		
+endin
+
+instr 4
+
 	idur		=		p3								; duration
 	kamp		=		p4								; amplitude
 	ifn1		=		p5								; sample function table
 	ifn2		=		p6								; window function table
-	ia			=		p7 * nsamp(ifn1)				;
-	ib			=		p8 * nsamp(ifn1)				;
-	idur		=		p9								;
-	ktimewarp	line	ia, idur, ib					; time stretch factor
+	ia			=		p7 * nsamp(ifn1) / sr			;
+	ib			=		p8 * nsamp(ifn1) / sr			;
+	islen		=		p9								;
+	ktime		line	ia, islen, ib					; time stretch factor
 		
 		tigoto initskip
 		
@@ -59,7 +87,7 @@ instr 3
 	ibeg		=		0								; start time offset
 	itimemode	=		1								; pointer mode (!0)
 
-	aSigL,aSigR sndwarpst kamp, ktimewarp, iresample, ifn1, \
+	aSigL,aSigR sndwarpst kamp, ktime, iresample, ifn1, \
 		ibeg, iwsize, irandw, ioverlap, ifn2, itimemode
 		
 	aResL butterbp aSigL, ifreq, iband
