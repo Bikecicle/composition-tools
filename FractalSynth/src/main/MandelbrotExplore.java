@@ -22,8 +22,13 @@ public class MandelbrotExplore extends PApplet {
 	private double positionY = 0.0;
 	private int maxIteration = 1024;
 
-	private boolean moved = false;
+	private boolean moved = true;
+	private boolean rendered = false;
 	private boolean editingPalette = false;
+
+	private int nDivMin = 120;
+	private int nDivMax = viewWidth;
+	private int nDiv = nDivMin;
 
 	private Palette palette;
 	private int dim = 255;
@@ -38,6 +43,7 @@ public class MandelbrotExplore extends PApplet {
 	public void settings() {
 		size(viewWidth, viewHeight);
 		viewShort = viewWidth > viewHeight ? viewHeight : viewWidth;
+		int viewLong = viewWidth > viewHeight ? viewHeight : viewWidth;
 	}
 
 	public void setup() {
@@ -79,20 +85,53 @@ public class MandelbrotExplore extends PApplet {
 
 	private void renderMandlebrot() {
 		loadPixels();
-		for (int i = 0; i < viewWidth; i++) {
-			double x0 = scaleX(i + 1);
-			for (int j = 0; j < viewHeight; j++) {
-				double y0 = scaleY(j + 1);
-				int k = 0;
-				double x = 0.0;
-				double y = 0.0;
-				while ((x * x + y * y) < 4 && k < maxIteration) {
-					double xtemp = x * x - y * y + x0;
-					y = 2 * x * y + y0;
-					x = xtemp;
-					k++;
+		if (moved) {
+			nDiv = nDivMin;
+			rendered = false;
+			/**
+			for (int i = 0; i < pixels.length; i++) {
+				pixels[i] = color(0);
+			}
+			*/
+		} else {
+			if (!rendered) {
+				int xGap = viewWidth / nDiv + 1;
+				int yGap = viewHeight / nDiv + 1;
+				for (int xDiv = 0; xDiv < nDiv; xDiv++) {
+					if (moved) {
+						break;
+					}
+					for (int yDiv = 0; yDiv < nDiv; yDiv++) {
+						if (moved) {
+							break;
+						}
+						int c = 0;
+						if (((xDiv % 2 == 0) && (yDiv % 2 == 1)) || (xDiv % 2 == 1) || (nDiv == nDivMin)) {
+							double x0 = scaleX(xDiv * xGap);
+							double y0 = scaleY(yDiv * yGap);
+							int k = 0;
+							double x = 0.0;
+							double y = 0.0;
+							while ((x * x + y * y) < 4 && k < maxIteration) {
+								double xtemp = x * x - y * y + x0;
+								y = 2 * x * y + y0;
+								x = xtemp;
+								k++;
+							}
+							for (int i = 0; i < xGap; i++) {
+								for (int j = 0; j < yGap; j++) {
+									int iDiv = i + xDiv * xGap;
+									int jDiv = j + yDiv * yGap;
+									if (iDiv < viewWidth && jDiv < viewHeight) {
+										pixels[iDiv + jDiv * viewWidth] = colorArray(palette.get(k));
+									}
+								}
+							}
+						}
+					}
 				}
-				pixels[i + j * viewWidth] = colorArray(palette.get(k));
+				nDiv *= 2;
+				rendered = nDiv / 2 >= nDivMax;
 			}
 		}
 		updatePixels();
