@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import processing.core.PApplet;
-import table.Table;
+import table.FractalTable;
 
 public class ViewTable extends PApplet {
 
@@ -21,7 +21,7 @@ public class ViewTable extends PApplet {
 
 	public static String filename = "C:/Users/Griffin/git/sound/FractalSynth/tables/t1/t1.table";
 	public static String imagename = "C:/Users/Griffin/git/sound/FractalSynth/tables/t1/t1.jpg";
-	public static Table table;
+	public static FractalTable table;
 
 	public static void main(String[] args) {
 		if (args.length > 0) {
@@ -30,7 +30,7 @@ public class ViewTable extends PApplet {
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
-			table = (Table) in.readObject();
+			table = (FractalTable) in.readObject();
 			in.close();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block

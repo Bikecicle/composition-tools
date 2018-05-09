@@ -94,9 +94,9 @@ public class TableManager {
 		tableList.remove(name);
 	}
 
-	public void generateTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int kMax, double posX,
+	public void generateFractalTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int kMax, double posX,
 			double posY) {
-		Table table = new Table(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
+		Table table = new FractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
 		double scale = 1.0;
 		double angleStep = 2.0 * Math.PI / fRes;
 		for (int i = 0; i < table.data.length; i++) {
@@ -121,6 +121,11 @@ public class TableManager {
 		}
 		saveTable(table);
 		tableList.add(name);
+	}
+	
+	public void generateImageTable(String name, String image) {
+		
+		//Table table = new Table(name, tRes, fRes, kMax);
 	}
 
 	public void filter(String name, Filter filter) {

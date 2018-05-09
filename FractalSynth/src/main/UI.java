@@ -13,7 +13,7 @@ import table.EdgeDetection;
 import table.Invert;
 import table.Power;
 import table.PulseLimiter;
-import table.Table;
+import table.FractalTable;
 
 public class UI {
 
@@ -239,7 +239,7 @@ public class UI {
 			in.nextLine();
 			System.out.println("Source table name:");
 			String name = in.nextLine();
-			Table table = fractalSynth.getTable(name);
+			FractalTable table = fractalSynth.getTable(name);
 			int count = fractalSynth.applyMod(new RandomShift(rMax, table));
 			System.out.println("Complete - " + count + " grains modified");
 			modifyLayer();
@@ -257,7 +257,7 @@ public class UI {
 			in.nextLine();
 			System.out.println("Source table name:");
 			String name = in.nextLine();
-			Table table = fractalSynth.getTable(name);
+			FractalTable table = fractalSynth.getTable(name);
 			int count = fractalSynth.applyMod(new Inflate(dMin, dMax, table));
 			System.out.println("Complete - " + count + " grains modified");
 			modifyLayer();

@@ -3,7 +3,7 @@ package grain;
 import java.util.ArrayList;
 import java.util.List;
 
-import table.Table;
+import table.FractalTable;
 
 public class PulsarMatrix implements Generator {
 
@@ -16,11 +16,11 @@ public class PulsarMatrix implements Generator {
 	private int maxResD;
 	private double zoomVel;
 	private int zoomMax;
-	private Table tableP;
-	private Table tableD;
+	private FractalTable tableP;
+	private FractalTable tableD;
 
 	public PulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD, double zoomVel,
-			int zoomMax, Table tableP, Table tableD) {
+			int zoomMax, FractalTable tableP, FractalTable tableD) {
 		this.fMinP = fMinP;
 		this.fMaxP = fMaxP;
 		this.fResP = fResP;

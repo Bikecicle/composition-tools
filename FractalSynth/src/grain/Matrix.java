@@ -3,7 +3,7 @@ package grain;
 import java.util.ArrayList;
 import java.util.List;
 
-import table.Table;
+import table.FractalTable;
 
 public class Matrix implements Generator {
 	private int fRes;
@@ -12,9 +12,9 @@ public class Matrix implements Generator {
 	private int tRes;
 	private int zoomMax;
 	private int zoomVel;
-	private Table table;
+	private FractalTable table;
 
-	public Matrix(int fRes, int fMin, int fMax, int tRes, int zoomMax, int zoomVel, Table table) {
+	public Matrix(int fRes, int fMin, int fMax, int tRes, int zoomMax, int zoomVel, FractalTable table) {
 		this.fRes = fRes;
 		this.fMin = fMin;
 		this.fMax = fMax;

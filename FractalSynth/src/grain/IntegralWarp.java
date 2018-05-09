@@ -1,12 +1,12 @@
 package grain;
 
-import table.Table;
+import table.FractalTable;
 
 public class IntegralWarp implements Modifier {
 	
-	private Table table;
+	private FractalTable table;
 	
-	public IntegralWarp(Table table) {
+	public IntegralWarp(FractalTable table) {
 		this.table = table;
 	}
 
