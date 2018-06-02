@@ -1,1 +1,1 @@
-# sound
+Information in FractalSynth
