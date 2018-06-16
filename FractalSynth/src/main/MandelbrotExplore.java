@@ -33,8 +33,6 @@ public class MandelbrotExplore extends PApplet {
 	private Palette palette;
 	private int dim = 255;
 
-	private int[] frame;
-
 	public static void main(String[] args) {
 		PApplet.main("main.MandelbrotExplore");
 	}
@@ -50,7 +48,6 @@ public class MandelbrotExplore extends PApplet {
 		palette = new Palette(dim);
 		palette.add(new ColorTag(0, 0, 0, 0));
 		palette.add(new ColorTag(255, 255, 255, dim / 2));
-		frame = new int[viewWidth * viewHeight];
 		ellipseMode(CENTER);
 		noStroke();
 		fill(255);
@@ -105,7 +102,6 @@ public class MandelbrotExplore extends PApplet {
 						if (moved) {
 							break;
 						}
-						int c = 0;
 						if (((xDiv % 2 == 0) && (yDiv % 2 == 1)) || (xDiv % 2 == 1) || (nDiv == nDivMin)) {
 							double x0 = scaleX(xDiv * xGap);
 							double y0 = scaleY(yDiv * yGap);

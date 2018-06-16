@@ -10,6 +10,7 @@ import grain.Modifier;
 import grain.PulsarMatrix;
 import table.Filter;
 import table.FractalTable;
+import table.Table;
 import table.TableManager;
 
 public class FractalSynth {
@@ -47,7 +48,7 @@ public class FractalSynth {
 		return tableManager.getTableList();
 	}
 
-	public FractalTable getTable(String name) {
+	public Table getTable(String name) {
 		return tableManager.getTable(name);
 	}
 	
@@ -69,7 +70,7 @@ public class FractalSynth {
 	}
 
 	public void addTable(String name, String otherName) {
-		FractalTable other = tableManager.getTable(otherName);
+		FractalTable other = (FractalTable) tableManager.getTable(otherName);
 		int tRes = other.tRes;
 		int fRes = other.fRes;
 		double zoomVel = other.zoomVel;
@@ -86,8 +87,8 @@ public class FractalSynth {
 
 	public int genPulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD,
 			double zoomVel, int zoomMax, String tablePName, String tableDName) {
-		FractalTable tableP = tableManager.getTable(tablePName);
-		FractalTable tableD = tableManager.getTable(tableDName);
+		Table tableP = tableManager.getTable(tablePName);
+		Table tableD = tableManager.getTable(tableDName);
 		return grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
 				tableP, tableD));
 	}

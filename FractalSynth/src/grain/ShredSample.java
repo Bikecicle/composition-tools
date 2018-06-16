@@ -1,6 +1,6 @@
 package grain;
 
-import table.FractalTable;
+import table.Table;
 
 public class ShredSample implements Generator {
 
@@ -15,10 +15,10 @@ public class ShredSample implements Generator {
 	private float sMax;
 	private int sRes;
 	private double duration;
-	private FractalTable table;
+	private Table table;
 	private String sample;
 
-	public ShredSample(int bandCount, int fMin, int fMax, float sMin, float sMax, int sRes, double duration, FractalTable table,
+	public ShredSample(int bandCount, int fMin, int fMax, float sMin, float sMax, int sRes, double duration, Table table,
 			String sample) {
 		this.bandCount = bandCount;
 		this.fMin = fMin;

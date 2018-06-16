@@ -1,14 +1,14 @@
 package grain;
 
-import table.FractalTable;
+import table.Table;
 
 public class Inflate implements Modifier {
 
 	private double dMin;
 	private double dMax;
-	private FractalTable table;
+	private Table table;
 
-	public Inflate(double dMin, double dMax, FractalTable table) {
+	public Inflate(double dMin, double dMax, Table table) {
 		this.dMin = dMin;
 		this.dMax = dMax;
 		this.table = table;

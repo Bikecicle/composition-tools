@@ -1,13 +1,13 @@
 package grain;
 
-import table.FractalTable;
+import table.Table;
 
 public class RandomShift implements Modifier {
 
 	private double rMax;
-	private FractalTable table;
+	private Table table;
 
-	public RandomShift(double rMax, FractalTable table) {
+	public RandomShift(double rMax, Table table) {
 		this.rMax = rMax;
 		this.table = table;
 	}

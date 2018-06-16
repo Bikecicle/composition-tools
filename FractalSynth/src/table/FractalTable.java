@@ -35,49 +35,6 @@ public class FractalTable extends Table {
 		data = new int[len][fRes];
 		filters = new ArrayList<String>();
 	}
-	
-	public int get(int t, int f, int tRes, int fRes, double zoomVel) {
-		// Scale time and frequency frames from given resolution to table's
-		// resolution
-		return data[(int) (1.0 * t / tRes * this.tRes * zoomVel / this.zoomVel)][(int) (1.0 * f / fRes * this.fRes)];
-	}
-
-	public int get(double t, int f, int fMin, int fMax, double zoomVel) {
-		// Proper time value given here
-		return data[(int) (t * this.tRes * zoomVel / this.zoomVel)][(int) (1.0 * (f - fMin) / (fMax - fMin) * (this.fRes - 1))];
-	}
-	
-	public int get(double xScaled, double yScaled) {
-		return data[(int) (xScaled * data.length)][(int) (yScaled * data[0].length)];
-	}
-
-	public int getMaxDensity() {
-		// Technically get max total amplitude
-		int maxDen = 0;
-		for (int[] col : data) {
-			int den = 0;
-			for (int val : col)
-				den += val;
-			if (den > maxDen)
-				maxDen = den;
-		}
-		return maxDen;
-	}
-	
-	public int getMaxIteration() {
-		int max = 0;
-		for (int i = 0; i < data.length; i++) {
-			for (int j = 0; j < fRes; j++) {
-				if (data[i][j] > max)
-					max = data[i][j];
-			}
-		}
-		return max;
-	}
-
-	public int length() {
-		return data.length;
-	}
 
 	@Override
 	public String toString() {
