@@ -47,6 +47,11 @@ public class EvolutionManager {
 				log.addGeneration(pop);
 		}
 	}
+	
+	public Population nextGeneration() {
+		runGenerations(1);
+		return pop;
+	}
 
 	public boolean saveLog(String filename) {
 		try {
