@@ -6,10 +6,15 @@ public class Sequence implements Genome {
 	
 	private static final long serialVersionUID = 2759154287214849102L;
 
+	String sample;
 	Strike[] strikes;
 	int strikeCount;
 	
 	double score;
+	
+	public Sequence(String sample) {
+		
+	}
 
 	@Override
 	public Genome breed(Genome other) {

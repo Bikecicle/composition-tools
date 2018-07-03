@@ -14,7 +14,7 @@ public class Population extends ArrayList<Genome> {
 		this.generation = 0;
 	}
 
-	public Population(int generation) {
+public Population(int generation) {
 		super();
 		this.generation = generation;
 	}
