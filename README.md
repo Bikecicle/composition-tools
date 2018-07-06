@@ -1,3 +1,5 @@
+**EvolutionManager** Personal genetic algorithm library - written for both Rhythms and Genetic Planner app
+
 **FractalSynth:** A Mandelbrot-based granular synthesis tool
 
-**GR:** Placeholder for a genetic rhythm generator I am planning
+**Rhythms:** A work-in-progress genetic rhythm generator
