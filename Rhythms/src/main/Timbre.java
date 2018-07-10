@@ -28,8 +28,34 @@ public class Timbre implements Genome {
 		score = 0;
 	}
 
-	public Timbre(String sample, int quant, float tempo) {
-		this.sample = sample;
+	@Override
+	public Genome breed(Genome genome) {
+		Timbre other = (Timbre) genome;
+		Timbre child = new Timbre(sample);
+		double s = 0.5;
+		child.posMin = Math.random() > s ? this.posMin : other.posMin;
+		child.posMax = Math.random() > s ? this.posMax : other.posMax;
+		child.durMin = Math.random() > s ? this.durMin : other.durMin;
+		child.durMax = Math.random() > s ? this.durMax : other.durMax;
+		child.envMin = Sequence.splice(this.envMin, other.envMin);
+		child.envMax = Sequence.splice(this.envMax, other.envMax);
+		child.speedMin = Sequence.splice(this.speedMin, other.speedMin);
+		child.speedMax = Sequence.splice(this.speedMax, other.speedMax);
+		child.mutate();
+		return child;
+	}
+
+	@Override
+	public double getScore() {
+		return score;
+	}
+
+	@Override
+	public int getId() {
+		return hashCode();
+	}
+	
+	public void randomize() {
 		posMin = (float) Math.random();
 		posMax = posMin; // No deviation by default
 		durMin = (float) (Math.random() * DEFAULT_DUR);
@@ -46,41 +72,7 @@ public class Timbre implements Genome {
 			speedMin[i] = 1;
 			speedMax[i] = 1;
 		}
-	}
-
-	@Override
-	public Genome breed(Genome genome) {
-		Timbre other = (Timbre) genome;
-		Timbre child = new Timbre(sample);
-		double s = 0.5;
-		child.posMin = Math.random() > s ? this.posMin : other.posMin;
-		child.posMax = Math.random() > s ? this.posMax : other.posMax;
-		child.durMin = Math.random() > s ? this.durMin : other.durMin;
-		child.durMax = Math.random() > s ? this.durMax : other.durMax;
-		child.envMin = new float[ENVELOPE_DIM];
-		child.envMax = new float[ENVELOPE_DIM];
-		for (int i = 0; i < ENVELOPE_DIM; i++) {
-			child.envMin[i] = Math.random() > s ? this.envMin[i] : other.envMin[i];
-			child.envMax[i] = Math.random() > s ? this.envMax[i] : other.envMax[i];
-		}
-		child.speedMin = new float[SPEED_DIM];
-		child.speedMax = new float[SPEED_DIM];
-		for (int i = 0; i < SPEED_DIM; i++) {
-			child.speedMin[i] = Math.random() > s ? this.speedMin[i] : other.speedMin[i];
-			child.speedMax[i] = Math.random() > s ? this.speedMax[i] : other.speedMax[i];
-		}
-		child.mutate();
-		return child;
-	}
-
-	@Override
-	public double getScore() {
-		return score;
-	}
-
-	@Override
-	public int getId() {
-		return hashCode();
+		score = 0;
 	}
 	
 	public void mutate() {

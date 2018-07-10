@@ -21,8 +21,9 @@ public class Session {
 	int voiceCount;
 	int quant;
 	float tempo;
+	int length;
 	
-	public Session(int voiceCount) {
+	public Session(int voiceCount, int quant, float tempo, int length) {
 		this.voiceCount = voiceCount;
 		timbreEM = new EvolutionManager[voiceCount];
 		sequenceEM = new EvolutionManager[voiceCount];
@@ -32,8 +33,12 @@ public class Session {
 			Population initPopT = new Population();
 			Population initPopS = new Population();
 			for (int g = 0; g < popSize; g++) {
-				initPopT.add(new Timbre(sample, quant, tempo));
-				initPopS.add(new Sequence(sample));
+				Timbre timbre = new Timbre(sample);
+				timbre.randomize();
+				initPopT.add(timbre);
+				Sequence sequence = new Sequence(sample, quant);
+				sequence.randomize();
+				initPopS.add(sequence);
 			}
 			timbreEM[v] = new EvolutionManager(initPopT, selector, false);			
 			sequenceEM[v] = new EvolutionManager(initPopS, selector, false);

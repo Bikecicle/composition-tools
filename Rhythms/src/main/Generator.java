@@ -8,7 +8,7 @@ public class Generator {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Voice count: ");
 		int voiceCount = in.nextInt();
-		Session session = new Session(voiceCount);
+		//Session session = new Session(voiceCount);
 		
 		
 		
