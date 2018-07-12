@@ -11,32 +11,35 @@ import evolution.core.Population;
 
 public class Session {
 	
-	private final double survivalCf = 0.3;
-	private final int popSize = 12;
-	private final int batchRep = 2;
+	public static final double SURVIVAL_CF = 0.3;
+	public static final double MUTATION_RATE = 0.1;
+	public static final int POP_SIZE = 12;
+	public static final int BATCH_REP = 2;
 	
 	String sample;
 	EvolutionManager[] timbreEM;
 	EvolutionManager[] sequenceEM;
 	int voiceCount;
+	int length;
 	int quant;
 	float tempo;
-	int length;
 	
-	public Session(int voiceCount, int quant, float tempo, int length) {
+	public Session(int voiceCount, int length, int quant, float tempo) {
 		this.voiceCount = voiceCount;
+		this.length = length;
+		this.quant = quant;
+		this.tempo = tempo;
 		timbreEM = new EvolutionManager[voiceCount];
 		sequenceEM = new EvolutionManager[voiceCount];
 		for (int v = 0; v < voiceCount; v++) {
-			Selector selector = new SurvivalThreshold(survivalCf);
-			
+			Selector selector = new SurvivalThreshold(SURVIVAL_CF);
 			Population initPopT = new Population();
 			Population initPopS = new Population();
-			for (int g = 0; g < popSize; g++) {
+			for (int g = 0; g < POP_SIZE; g++) {
 				Timbre timbre = new Timbre(sample);
 				timbre.randomize();
 				initPopT.add(timbre);
-				Sequence sequence = new Sequence(sample, quant);
+				Sequence sequence = new Sequence(sample, length, quant);
 				sequence.randomize();
 				initPopS.add(sequence);
 			}
@@ -51,12 +54,12 @@ public class Session {
 		List<List<Integer>> indicesT = new ArrayList<>();
 		List<List<Integer>> indicesS = new ArrayList<>();
 		List<Integer> set = new LinkedList<>();
-		for (int i = 0; i < popSize; i++) {
-			for (int j = 0; j < batchRep; j++) {
+		for (int i = 0; i < POP_SIZE; i++) {
+			for (int j = 0; j < BATCH_REP; j++) {
 				set.add(i);	
 			}	
 		}
-		int batchSize = popSize * batchRep;
+		int batchSize = POP_SIZE * BATCH_REP;
 		for (int v = 0; v < voiceCount; v++) {
 			Collections.shuffle(set);
 			List<Integer> voiceT = new ArrayList<>(set);

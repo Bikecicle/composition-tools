@@ -1,6 +1,7 @@
 package main;
 
 import evolution.core.Genome;
+import evolution.core.Splicer;
 
 public class Timbre implements Genome {
 
@@ -9,7 +10,6 @@ public class Timbre implements Genome {
 	public static final int ENVELOPE_DIM = 128;
 	public static final int SPEED_DIM = 8;
 	public static final float DEFAULT_DUR = 0.2f;
-	public static final float MUTATION_RATE = 0.1f;
 
 	String sample;
 	float posMin;
@@ -21,10 +21,12 @@ public class Timbre implements Genome {
 	float[] speedMin;
 	float[] speedMax;
 
+	double mRate;
 	double score;
 
 	public Timbre(String sample) {
 		this.sample = sample;
+		mRate = Session.MUTATION_RATE;
 		score = 0;
 	}
 
@@ -37,24 +39,15 @@ public class Timbre implements Genome {
 		child.posMax = Math.random() > s ? this.posMax : other.posMax;
 		child.durMin = Math.random() > s ? this.durMin : other.durMin;
 		child.durMax = Math.random() > s ? this.durMax : other.durMax;
-		child.envMin = Sequence.splice(this.envMin, other.envMin);
-		child.envMax = Sequence.splice(this.envMax, other.envMax);
-		child.speedMin = Sequence.splice(this.speedMin, other.speedMin);
-		child.speedMax = Sequence.splice(this.speedMax, other.speedMax);
+		child.envMin = Splicer.splice(this.envMin, other.envMin);
+		child.envMax = Splicer.splice(this.envMax, other.envMax);
+		child.speedMin = Splicer.splice(this.speedMin, other.speedMin);
+		child.speedMax = Splicer.splice(this.speedMax, other.speedMax);
 		child.mutate();
 		return child;
 	}
-
-	@Override
-	public double getScore() {
-		return score;
-	}
-
-	@Override
-	public int getId() {
-		return hashCode();
-	}
 	
+	@Override
 	public void randomize() {
 		posMin = (float) Math.random();
 		posMax = posMin; // No deviation by default
@@ -74,19 +67,29 @@ public class Timbre implements Genome {
 		}
 		score = 0;
 	}
+
+	@Override
+	public double getScore() {
+		return score;
+	}
+
+	@Override
+	public int getId() {
+		return hashCode();
+	}
 	
 	public void mutate() {
-		posMin = (float) (Math.random() > MUTATION_RATE ? posMin : Math.random());
-		posMax = (float) (Math.random() > MUTATION_RATE ? posMax : Math.random());
-		durMin = (float) (Math.random() > MUTATION_RATE ? durMin : Math.random());
-		durMax = (float) (Math.random() > MUTATION_RATE ? durMax : Math.random());
+		posMin = (float) (Math.random() > mRate ? posMin : Math.random());
+		posMax = (float) (Math.random() > mRate ? posMax : Math.random());
+		durMin = (float) (Math.random() > mRate ? durMin : Math.random());
+		durMax = (float) (Math.random() > mRate ? durMax : Math.random());
 		for (int i = 0; i < ENVELOPE_DIM; i++) {
-			envMin[i] = (float) (Math.random() > MUTATION_RATE ? envMin[i] : Math.random());
-			envMax[i] = (float) (Math.random() > MUTATION_RATE ? envMax[i] : Math.random());
+			envMin[i] = (float) (Math.random() > mRate ? envMin[i] : Math.random());
+			envMax[i] = (float) (Math.random() > mRate ? envMax[i] : Math.random());
 		}
 		for (int i = 0; i < SPEED_DIM; i++) {
-			speedMin[i] = (float) (Math.random() > MUTATION_RATE ? speedMin[i] : Math.random());
-			speedMax[i] = (float) (Math.random() > MUTATION_RATE ? speedMax[i] : Math.random());
+			speedMin[i] = (float) (Math.random() > mRate ? speedMin[i] : Math.random());
+			speedMax[i] = (float) (Math.random() > mRate ? speedMax[i] : Math.random());
 		}
 	}
 }
