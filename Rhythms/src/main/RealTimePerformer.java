@@ -33,7 +33,7 @@ public class RealTimePerformer {
         
 
         Csound c = new Csound();
-        c.SetOption("-o" + out);
+        c.SetOption("-odac");
         c.CompileOrc(orc);
         c.ReadScore(sco);
         c.Start();

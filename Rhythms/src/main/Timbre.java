@@ -7,7 +7,7 @@ public class Timbre implements Genome {
 
 	private static final long serialVersionUID = 1008255419750499780L;
 	
-	public static final int ENVELOPE_DIM = 128;
+	public static final int ENVELOPE_DIM = 2;
 	public static final int SPEED_DIM = 8;
 	public static final float DEFAULT_DUR = 0.2f;
 
@@ -91,5 +91,27 @@ public class Timbre implements Genome {
 			speedMin[i] = (float) (Math.random() > mRate ? speedMin[i] : Math.random());
 			speedMax[i] = (float) (Math.random() > mRate ? speedMax[i] : Math.random());
 		}
+	}
+	
+	public float truePos(float c) {
+		return c * (posMax - posMin) + posMin;
+	}
+	
+	public float trueDur(float c) {
+		return c * (durMax - durMin) + durMin;
+	}
+	
+	public float[] trueEnv(float c) {
+		float[] env = new float[ENVELOPE_DIM];
+		for (int i = 0; i < ENVELOPE_DIM; i++)
+			env[i] = c * (envMax[i] - envMin[i]) + envMin[i];
+		return env;
+	}
+	
+	public float[] trueSpeed(float c) {
+		float[] speed = new float[SPEED_DIM];
+		for (int i = 0; i < SPEED_DIM; i++)
+			speed[i] = c * (speedMax[i] - speedMin[i]) + speedMin[i];
+		return speed;
 	}
 }

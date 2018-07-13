@@ -14,6 +14,20 @@ public class Rhythm {
 		this.voiceCount = voiceCount;
 	}
 	
-	
-
+	public String toScore(float bpm, int fID) {
+		String score = "";
+		score += "f 1 0 0 1 \"samples/" + sample + "\" 0.0 0 0";
+		for (int v = 0; v < voiceCount; v++) {
+			float quantLen = 240 / bpm  / sequences[v].quant;
+			for (int s = 0; s < sequences[v].strikeCount; s++) {
+				float strt = sequences[v].strt[s] * quantLen;
+				float dur = timbres[v].trueDur(sequences[v].dur[s]);
+				float amp = 0.5f;
+				float[] env = timbres[v].trueEnv(sequences[v].env[s]);
+				float sStrt = timbres[v].truePos(sequences[v].pos[s]);
+				score += "/ni ";
+			}
+		}
+		return score;
+	}
 }
