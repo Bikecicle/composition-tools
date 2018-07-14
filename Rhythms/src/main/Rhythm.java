@@ -24,7 +24,7 @@ public class Rhythm {
 				float dur = timbres[v].trueDur(sequences[v].dur[s]);
 				float amp = 0.5f;
 				float[] env = timbres[v].trueEnv(sequences[v].env[s]);
-				float sStrt = timbres[v].truePos(sequences[v].pos[s]);
+				float pos = timbres[v].truePos(sequences[v].pos[s]);
 				score += "/ni ";
 			}
 		}

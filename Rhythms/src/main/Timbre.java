@@ -7,7 +7,7 @@ public class Timbre implements Genome {
 
 	private static final long serialVersionUID = 1008255419750499780L;
 	
-	public static final int ENVELOPE_DIM = 2;
+	public static final int ENVELOPE_DIM = 64;
 	public static final int SPEED_DIM = 8;
 	public static final float DEFAULT_DUR = 0.2f;
 

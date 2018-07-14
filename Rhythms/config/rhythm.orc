@@ -11,7 +11,7 @@ instr 1
 	idec		=		p6			; decay
 	kfreqratio	=		1			; frequency mod
 	ifn			=		p7			; function table id
-	iphs		=		p8 * sr		; start phase
+	pos			=		p8 * sr		; start phase
 	
 	kenv linen kamp, irise, idur, idec
 	ares lposcil kenv, kfreqratio, 0, 0, ifn, iphs
