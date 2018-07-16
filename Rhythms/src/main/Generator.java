@@ -1,16 +1,24 @@
 package main;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 import csnd6.Csound;
 import csnd6.CsoundPerformanceThread;
 import csnd6.csnd6;
+import orc.Orchestra;
 
 public class Generator {
 	
 	public static void main(String[] args) {
-		
+		Orchestra orc = Rhythm.getOrchestra();
+		System.out.println(orc);
+		List<HashMap<Integer, String>> paramMap = orc.mapParams();
+		for (int i : paramMap.get(0).keySet()) {
+			System.out.println(i + ": " + paramMap.get(0).get(i));
+		}
+		/**
 		Scanner in = new Scanner(System.in);
 		System.out.println("Voice count: ");
 		int voiceCount = in.nextInt();
@@ -31,28 +39,6 @@ public class Generator {
 			break;
 		}
 		
-		in.close();
+		in.close();*/
 	}
-	
-	private void perform(String sco) {;
-		csnd6.csoundInitialize(csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
-		
-		Scanner so = new Scanner("config/rhythm.orc");
-        String orc = so.useDelimiter("\\Z").next(); 
-        so.close();
-
-        Csound c = new Csound();
-        c.SetOption("-odac");
-        c.CompileOrc(orc);
-        c.ReadScore(sco);
-        c.Start();
-        
-        CsoundPerformanceThread t = new CsoundPerformanceThread(c);  
-        t.Play();
-        t.Join();
-        
-        c.Stop();
-        c.Cleanup();
-	}
-
 }

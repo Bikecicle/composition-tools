@@ -1,4 +1,4 @@
-package main;
+package sco;
 
 public class SoundfileFTable extends FTable {
 	
@@ -8,19 +8,22 @@ public class SoundfileFTable extends FTable {
 	public float iskip;
 	public int iformat;
 	public int ichn;
-
-	public SoundfileFTable(String filename) {
-		super(IFN_DEFAULT, 1);
+	
+	public SoundfileFTable(String filename, int ifn) {
+		super(ifn, 1);
 		this.Sfilnam = "samples/" + filename;
 		this.iskip = 0; // Start at beginning
 		this.iformat = 0; // Defer
 		this.ichn = 0; // Defer
 	}
-
-	@Override
-	public String statement() {
-		return super.statement() + " " + "\"" + Sfilnam + "\" "
-				+ iskip + " " + iformat + " " + ichn;
+	
+	public SoundfileFTable(String filename) {
+		this(filename, IFN_DEFAULT);
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " " + "\"" + Sfilnam + "\" "
+				+ iskip + " " + iformat + " " + ichn;
+	}
 }

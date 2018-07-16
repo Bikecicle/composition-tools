@@ -13,7 +13,6 @@ instr 1
 	ifn			=		p7			; function table id
 	pos			=		p8 * sr		; start phase
 	
-	kenv linen kamp, irise, idur, idec
 	ares lposcil kenv, kfreqratio, 0, 0, ifn, iphs
 	outs ares, ares
      

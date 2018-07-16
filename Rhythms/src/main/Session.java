@@ -76,7 +76,7 @@ public class Session {
 				timbres[v] = (Timbre) timbreEM[v].getPop().get(indicesT.get(v).get(b));
 				sequences[v] = (Sequence) sequenceEM[v].getPop().get(indicesS.get(v).get(b));
 			}
-			batch.add(new Rhythm(sample, timbres, sequences, voiceCount));
+			//batch.add(new Rhythm(sample, timbres, sequences, voiceCount));
 		}
 		return batch;
 	}

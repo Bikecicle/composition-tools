@@ -1,4 +1,4 @@
-package main;
+package sco;
 
 import java.io.Serializable;
 
@@ -20,8 +20,8 @@ public class FTable implements Serializable {
 		this.igen = igen;
 	}
 
-	public String statement() {
+	@Override
+	public String toString() {
 		return "f " + ifn + " " + itime + " " + isize + " " + igen;
 	}
-
 }

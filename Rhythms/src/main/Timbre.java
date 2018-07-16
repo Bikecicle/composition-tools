@@ -101,8 +101,8 @@ public class Timbre implements Genome {
 		return c * (durMax - durMin) + durMin;
 	}
 	
-	public float[] trueEnv(float c) {
-		float[] env = new float[ENVELOPE_DIM];
+	public Float[] trueEnv(float c) {
+		Float[] env = new Float[ENVELOPE_DIM];
 		for (int i = 0; i < ENVELOPE_DIM; i++)
 			env[i] = c * (envMax[i] - envMin[i]) + envMin[i];
 		return env;
