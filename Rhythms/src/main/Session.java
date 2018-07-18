@@ -39,7 +39,7 @@ public class Session {
 				Timbre timbre = new Timbre(sample);
 				timbre.randomize();
 				initPopT.add(timbre);
-				Sequence sequence = new Sequence(sample, length, quant);
+				Sequence sequence = new Sequence(length, quant);
 				sequence.randomize();
 				initPopS.add(sequence);
 			}

@@ -10,7 +10,6 @@ public class Sequence implements Genome {
 	public final int STRIKE_MAX = 64;
 	public final float MUTATION_RATE = 0.1f;
 
-	String sample;
 	int strikeCount;
 	int length; // In measures
 	int quant; // Timesteps per measure
@@ -24,8 +23,7 @@ public class Sequence implements Genome {
 	double mRate;
 	double score;
 
-	public Sequence(String sample, int length, int quant) {
-		this.sample = sample;
+	public Sequence(int length, int quant) {
 		this.length = length;
 		this.quant = quant;
 
@@ -42,7 +40,7 @@ public class Sequence implements Genome {
 	@Override
 	public Genome breed(Genome g1) {
 		Sequence other = (Sequence) g1;
-		Sequence child = new Sequence(sample, length, quant);
+		Sequence child = new Sequence(length, quant);
 		child.strt = Splicer.splice(this.strt, other.strt);
 		child.dur = Splicer.splice(this.dur, other.dur);
 		child.pos = Splicer.splice(this.pos, other.pos);

@@ -11,26 +11,21 @@ public class Log implements Serializable {
 
 	private static final long serialVersionUID = 5378570329356066060L;
 
-	private List<Population> generations;
-	private FamilyTree tree;
+	private List<PopulationRecord> pops;
 
 	public Log() {
-		generations = new ArrayList<Population>();
-		tree = new FamilyTree();
-	}
-
-	public void addGeneration(Population pop) {
-		generations.add(pop);
+		pops = new ArrayList<>();
 	}
 
 	public void addRelationship(Genome parent1, Genome parent2, Genome child) {
-		tree.add(new Relationship(parent1, parent2, child));
+		
+		// TODO tree.add(new Relationship(parent1, parent2, child));
 	}
 
 	public double maxScore() {
 		double max = Double.NEGATIVE_INFINITY;
-		for (Population pop : generations) {
-			double score = pop.get(0).getScore();
+		for (PopulationRecord pop : getPops()) {
+			double score = pop.get(0).score;
 			if (score > max)
 				max = score;
 		}
@@ -39,23 +34,19 @@ public class Log implements Serializable {
 
 	public double minScore() {
 		double min = Double.POSITIVE_INFINITY;
-		for (Population pop : generations) {
-			double score = pop.get(pop.size() - 1).getScore();
+		for (PopulationRecord pop : getPops()) {
+			double score = pop.get(pop.size() - 1).score;
 			if (score < min)
 				min = score;
 		}
 		return min;
 	}
-
-	public int generationCount() {
-		return generations.size();
+	
+	public void addPop(Population pop) {
+		pops.add(new PopulationRecord(pop));
 	}
 
-	public List<Population> getGenerations() {
-		return generations;
-	}
-
-	public FamilyTree getTree() {
-		return tree;
+	public List<PopulationRecord> getPops() {
+		return pops;
 	}
 }

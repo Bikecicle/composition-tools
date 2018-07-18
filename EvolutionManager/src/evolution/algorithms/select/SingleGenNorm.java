@@ -18,7 +18,7 @@ public class SingleGenNorm implements Selector {
 	@Override
 	public Population nextGeneration(Population current) {
 		double[] breedRates = normalizer.normalize(current); // Mapped by index
-		Population next = new Population(current.getGeneration() + 1);
+		Population next = new Population(current.gen + 1);
 		for (int i = 0; i < current.size(); i++) {
 			Genome parent1 = current.get(selectRandom(breedRates));
 			Genome parent2 = current.get(selectRandom(breedRates));

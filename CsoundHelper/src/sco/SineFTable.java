@@ -11,6 +11,17 @@ public class SineFTable extends FTable {
 		this.isize = 16384;
 		this.str1 = 1;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		SineFTable fTable = null;
+		try {
+			fTable = (SineFTable) obj;
+		} catch (ClassCastException e) {
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public String toString() {

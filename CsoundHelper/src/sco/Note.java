@@ -7,11 +7,9 @@ import orc.Orchestra;
 
 public class Note {
 	
-	public List<HashMap<Integer, String>> paramMap;
 	public ParameterList params;
 	
-	public Note(List<HashMap<Integer, String>> paramMap) {
-		this.paramMap = paramMap;
+	public Note() {
 		params = new ParameterList();
 	}
 	
@@ -19,8 +17,7 @@ public class Note {
 		params.add(param);
 	}
 	
-	@Override
-	public String toString() {
+	public String read(List<HashMap<Integer, String>> paramMap) {
 		String inst = params.find(Orchestra.INSTRUMENT).readValue();
 		String s = "i " + inst;
 		HashMap<Integer, String> map = paramMap.get(Integer.parseInt(inst));

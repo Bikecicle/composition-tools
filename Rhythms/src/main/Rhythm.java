@@ -5,6 +5,8 @@ import orc.Value;
 import orc.Variable;
 import sco.Note;
 import sco.Param;
+import sco.Score;
+import sco.SoundfileFTable;
 import sco.ArrayParam;
 
 import java.util.HashMap;
@@ -28,25 +30,23 @@ public class Rhythm {
 		this.voiceCount = voiceCount;
 	}
 	
-	public String getScore(float bpm, int fID, Orchestra orc) {
-		String score = "";
-		List<HashMap<Integer, String>> paramMap = orc.mapParams();
-		int ift = 1;
+	public Score getScore(float bpm, int fID, Orchestra orc) {
+		Score score = new Score(orc.mapParams());
 		for (int v = 0; v < voiceCount; v++) {
+			int ifn = score.addFTable(new SoundfileFTable(samples[v]));
 			float quantLen = 240 / bpm  / sequences[v].quant;
 			for (int s = 0; s < sequences[v].strikeCount; s++) {
-				Note note = new Note(paramMap);
+				Note note = new Note();
 				note.add(new Param<Integer>(Orchestra.INSTRUMENT, 1));
 				note.add(new Param<Float>(Orchestra.START, sequences[v].strt[s] * quantLen));
 				note.add(new Param<Float>(Orchestra.DURATION, timbres[v].trueDur(sequences[v].dur[s])));
 				note.add(new Param<Float>("freqratio", 1.0f));
-				note.add(new Param<Integer>("ft", ift));
+				note.add(new Param<Integer>("fn", ifn));
 				note.add(new Param<Float>("pos", timbres[v].truePos(sequences[v].pos[s])));
 				note.add(new ArrayParam<Float>("env", timbres[v].trueEnv(sequences[v].env[s])));
-				score += note + "\n";
 			}
 		}
-		return score;
+		return null;
 	}
 	
 	public static Orchestra getOrchestra() {
@@ -59,7 +59,7 @@ public class Rhythm {
 		Value kfreqratio = new Variable("k", "freqratio", "=", in.p());
 		Value kloop = new Constant<Integer>(0);
 		Value kend = new Constant<Integer>(0);
-		Value ifn = new Variable("i", "ft", "=", in.p());
+		Value ifn = new Variable("i", "fn", "=", in.p());
 		Value ipos = new Variable("i", "pos", "=", in.p());
 		Value kenv = new Variable("k" , "env", "linseg", in.pn(Timbre.ENVELOPE_DIM));
 		Opcode loop = new Opcode("a", "sig", 2, "lposcilsa", kenv, kfreqratio, kloop, kend, ifn, ipos);

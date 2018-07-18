@@ -22,7 +22,7 @@ public class EvolutionManager {
 		this.logging = logging;
 		if (logging) {
 			log = new Log();
-			log.addGeneration(initPop);
+			log.addPop(initPop);
 			selector.enableLogging(log);
 		}
 	}
@@ -33,10 +33,10 @@ public class EvolutionManager {
 	}
 
 	public void runGenerations(int maxGen) {
-		while (pop.getGeneration() < maxGen) {
+		while (pop.gen < maxGen) {
 			pop = selector.nextGeneration(pop);
 			if (logging)
-				log.addGeneration(pop);
+				log.addPop(pop);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class EvolutionManager {
 		while (pop.getFittest().getScore() < score) {
 			pop = selector.nextGeneration(pop);
 			if (logging)
-				log.addGeneration(pop);
+				log.addPop(pop);
 		}
 	}
 	
@@ -57,7 +57,7 @@ public class EvolutionManager {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
 			out.writeObject(log);
-			System.out.println("Wrote " + log.generationCount() + " generations of data to file");
+			System.out.println("Wrote " + log.getPops().size() + " generations of data to file");
 			out.close();
 			return true;
 		} catch (IOException e) {

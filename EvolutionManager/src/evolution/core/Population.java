@@ -6,31 +6,23 @@ import java.util.Comparator;
 public class Population extends ArrayList<Genome> {
 
 	private static final long serialVersionUID = 2173547797951796680L;
-	
-	private int generation;
-	
+
+	public int gen;
+
 	public Population() {
 		super();
-		this.generation = 0;
+		this.gen = 0;
 	}
 
-public Population(int generation) {
+	public Population(int gen) {
 		super();
-		this.generation = generation;
-	}
-
-	public int getGeneration() {
-		return generation;
-	}
-
-	public void incrementGeneration() {
-		generation++;
+		this.gen = gen;
 	}
 
 	public Genome getFittest() {
 		return this.get(0);
 	}
-	
+
 	@Override
 	public boolean add(Genome arg0) {
 		boolean success = super.add(arg0);
@@ -48,7 +40,7 @@ public Population(int generation) {
 			}
 		});
 	}
-	
+
 	@Override
 	public String toString() {
 		String str = "";
