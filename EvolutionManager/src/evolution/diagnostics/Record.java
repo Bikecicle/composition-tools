@@ -1,16 +1,24 @@
 package evolution.diagnostics;
 
+import evolution.core.Genome;
+
 public class Record {
 
+	public int gen;
 	public int id;
 	public double score;
 	public String details;
 	
-	public boolean hasParents;
-	public int parent1;
-	public int parent2;
+	public int[] parentIds;
 	
-	public Record(int id, double score, String details) {
-		hasParents = false;
+	public Record(int gen, Genome genome, Genome...parents) {
+		this.gen = gen;
+		id = genome.getId();
+		score = genome.getScore();
+		details = genome.toString();
+		parentIds = new int[parents.length];
+		for (int i = 0; i < parents.length; i++) {
+			parentIds[i] = parents[i].getId();
+		}
 	}
 }

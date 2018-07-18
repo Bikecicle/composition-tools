@@ -4,6 +4,7 @@ import evolution.algorithms.normalize.Normalizer;
 import evolution.core.Genome;
 import evolution.core.Population;
 import evolution.diagnostics.Log;
+import evolution.diagnostics.Record;
 
 public class SingleGenNorm implements Selector {
 
@@ -25,10 +26,10 @@ public class SingleGenNorm implements Selector {
 			Genome child = parent1.breed(parent2);
 			next.add(child);
 			if (log != null) {
-				log.addRelationship(parent1, parent2, child);
+				log.add(new Record(next.gen, child, parent1, parent2));
 			}
 		}
-		
+
 		return next;
 	}
 

@@ -3,9 +3,6 @@ package evolution.core;
 public class Splicer {
 	
 	public static float[] splice(float[] g1, float[] g2) {
-		float[] gd = null;
-		float[] gr = null;
-		
 		int a = (int) (Math.random() * g1.length);
 		int b = (int) (Math.random() * g1.length);
 		if (a > b) {
@@ -27,9 +24,6 @@ public class Splicer {
 	}
 	
 	public static int[] splice(int[] g1, int[] g2) {
-		int[] gd = null;
-		int[] gr = null;
-		
 		int a = (int) (Math.random() * g1.length);
 		int b = (int) (Math.random() * g1.length);
 		if (a > b) {

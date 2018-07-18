@@ -1,52 +1,43 @@
 package evolution.diagnostics;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-
 import evolution.core.Genome;
 import evolution.core.Population;
 
-public class Log implements Serializable {
+public class Log extends ArrayList<Record> {
 
 	private static final long serialVersionUID = 5378570329356066060L;
-
-	private List<PopulationRecord> pops;
-
-	public Log() {
-		pops = new ArrayList<>();
-	}
-
-	public void addRelationship(Genome parent1, Genome parent2, Genome child) {
-		
-		// TODO tree.add(new Relationship(parent1, parent2, child));
-	}
-
+	
 	public double maxScore() {
-		double max = Double.NEGATIVE_INFINITY;
-		for (PopulationRecord pop : getPops()) {
-			double score = pop.get(0).score;
-			if (score > max)
-				max = score;
+		double max = Double.MIN_VALUE;
+		for (Record record : this) {
+			if (record.score > max)
+				max = record.score;
 		}
 		return max;
 	}
 
 	public double minScore() {
-		double min = Double.POSITIVE_INFINITY;
-		for (PopulationRecord pop : getPops()) {
-			double score = pop.get(pop.size() - 1).score;
-			if (score < min)
-				min = score;
+		double min = Double.MAX_VALUE;
+		for (Record record : this) {
+			if (record.score < min)
+				min = record.score;
 		}
 		return min;
 	}
 	
-	public void addPop(Population pop) {
-		pops.add(new PopulationRecord(pop));
+	public int maxGen() {
+		int max = Integer.MIN_VALUE;
+		for (Record record : this) {
+			if (record.gen > max)
+				max = record.gen;
+		}
+		return max;
 	}
-
-	public List<PopulationRecord> getPops() {
-		return pops;
+	
+	public void recordPopulation(Population pop) {
+		for (Genome g : pop) {
+			add(new Record(pop.gen, g));
+		}
 	}
 }

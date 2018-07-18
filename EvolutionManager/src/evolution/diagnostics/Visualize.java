@@ -14,22 +14,22 @@ public class Visualize extends PApplet {
 	public static final int viewWidth = 800;
 	public static final int viewHeight = 600;
 	public static final int borderWidth = 20;
-	
+
 	public static final int nodeRadius = 5;
-	
+
 	public static List<Node> nodes;
 	public static List<Edge> edges;
-	
+
 	public static void main(String[] args) {
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 		PApplet.main("planner.internal.core.Visualize");
 	}
-	
+
 	public void settings() {
 		size(viewWidth, viewHeight);
 	}
-	
+
 	public void setup() {
 		Log log = null;
 		try {
@@ -42,23 +42,21 @@ public class Visualize extends PApplet {
 		double maxScore = log.maxScore();
 		double minScore = log.minScore();
 		double scoreRatio = (viewHeight - 2 * borderWidth) / (maxScore - minScore);
-		double genCount = log.getPops().size();
+		double genCount = log.maxGen();
 		double genRatio = (viewWidth - 2 * borderWidth) / (genCount - 1);
 
-		for (PopulationRecord pop : log.getPops()) {
-			int gen = pop.gen;
-			for (Record record : pop) {
-				double score = record.score;
-				int id = record.id;
-				int x = (int) (gen * genRatio + borderWidth);
-				int y = viewHeight - (int) ((score - minScore) * scoreRatio) - borderWidth;
-				nodes.add(new Node(x, y, id, record));
-				edges.add(new Edge(record.parent1, record.id));
-				edges.add(new Edge(record.parent1, record.id));
+		for (Record record : log) {
+			double score = record.score;
+			int id = record.id;
+			int x = (int) (record.gen * genRatio + borderWidth);
+			int y = viewHeight - (int) ((score - minScore) * scoreRatio) - borderWidth;
+			nodes.add(new Node(x, y, id, record));
+			for (int i = 0; i < record.parentIds.length; i++) {
+				edges.add(new Edge(record.parentIds[i], record.id));
 			}
 		}
 	}
-	
+
 	public void draw() {
 		for (Node node : nodes) {
 			node.render();
@@ -67,7 +65,7 @@ public class Visualize extends PApplet {
 			edge.render();
 		}
 	}
-	
+
 	public void mousePressed() {
 		for (Node node : nodes) {
 			if (Math.sqrt(Math.pow(node.x - mouseX, 2) + Math.pow(node.y - mouseY, 2)) < nodeRadius * 2) {
@@ -75,7 +73,7 @@ public class Visualize extends PApplet {
 			}
 		}
 	}
-	
+
 	private class Node {
 		public int x;
 		public int y;
@@ -93,7 +91,7 @@ public class Visualize extends PApplet {
 			ellipse(x, y, nodeRadius, nodeRadius);
 		}
 	}
-	
+
 	private class Edge {
 		public int parentId;
 		public int childId;
