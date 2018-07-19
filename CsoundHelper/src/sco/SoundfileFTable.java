@@ -10,7 +10,7 @@ public class SoundfileFTable extends FTable {
 	public int ichn;
 
 	public SoundfileFTable(String filename, int ifn) {
-		super(ifn, 1);
+		super(ifn, GenRoutine.soundfile);
 		this.Sfilnam = "samples/" + filename;
 		this.iskip = 0; // Start at beginning
 		this.iformat = 0; // Defer
@@ -23,15 +23,7 @@ public class SoundfileFTable extends FTable {
 
 	@Override
 	public boolean equals(Object obj) {
-		SoundfileFTable other = null;
-		try {
-			other = (SoundfileFTable) obj;
-		} catch (ClassCastException e) {
-			return false;
-		}
-		if (this.Sfilnam.equals(other.Sfilnam))
-			return true;
-		return false;
+		return super.equals(obj) && ((SoundfileFTable) obj).Sfilnam.equals(this.Sfilnam);
 	}
 
 	@Override

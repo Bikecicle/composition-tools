@@ -1,24 +1,14 @@
 package main;
 
-import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import csnd6.Csound;
-import csnd6.CsoundPerformanceThread;
-import csnd6.csnd6;
-import orc.Orchestra;
+import sound.Performer;
 
 public class Generator {
-	
+
 	public static void main(String[] args) {
-		Orchestra orc = Rhythm.getOrchestra();
-		System.out.println(orc);
-		List<HashMap<Integer, String>> paramMap = orc.mapParams();
-		for (int i : paramMap.get(0).keySet()) {
-			System.out.println(i + ": " + paramMap.get(0).get(i));
-		}
-		/**
 		Scanner in = new Scanner(System.in);
 		System.out.println("Voice count: ");
 		int voiceCount = in.nextInt();
@@ -28,17 +18,50 @@ public class Generator {
 		int quant = in.nextInt();
 		System.out.println("Tempo (bpm): ");
 		float tempo = in.nextFloat();
-		
-		Session session = new Session(voiceCount, length, quant, tempo);
-		
-		while (true) {
+		System.out.println("Sample path: ");
+		in.nextLine();
+		String sample = in.nextLine();
+
+		Session session = new Session(voiceCount, length, quant, tempo, "samples/" + sample);
+		Performer performer = new Performer();
+
+		int b = 1;
+		boolean stopped = false;
+		while (!stopped) {
+			System.out.println("[Batch " + b + "]");
 			List<Rhythm> batch = session.createBatch();
 			for (Rhythm rhythm : batch) {
-				
+				performer.play(rhythm);
+				while (true) {
+					System.out.println("Rating (0-5): ");
+					try {
+						int r = in.nextInt();
+						if (r < 0 || r > 5) {
+							rhythm.rate(r);
+							break;
+						}	
+					} catch (InputMismatchException e) {
+						in.nextLine();
+					}
+				}
 			}
-			break;
+			boolean valid = false;
+			while (!valid) {
+				System.out.println("(c)ontinue, (r)epeat, (q)uit");
+				String action = in.nextLine();
+				valid = true;
+				if (action.startsWith("c")) {
+					session.advance();
+				} else if (action.startsWith("r")) {
+					// Go over the same population again
+				} else if (action.startsWith("q")) {
+					stopped = true;
+				} else {
+					valid = false;
+				}
+			}
 		}
-		
-		in.close();*/
+
+		in.close();
 	}
 }

@@ -10,7 +10,7 @@ public class ArrayParam<T> extends Param<T[]> {
 	}
 	
 	@Override
-	public String readValue() {
+	public String read() {
 		String s = value[index].toString();
 		index++;
 		return s;

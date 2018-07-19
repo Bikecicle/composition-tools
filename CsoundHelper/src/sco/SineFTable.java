@@ -7,20 +7,9 @@ public class SineFTable extends FTable {
 	public float str1;
 
 	public SineFTable() {
-		super(IFN_DEFAULT, 10);
+		super(IFN_DEFAULT, GenRoutine.sine);
 		this.isize = 16384;
 		this.str1 = 1;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		SineFTable fTable = null;
-		try {
-			fTable = (SineFTable) obj;
-		} catch (ClassCastException e) {
-			return false;
-		}
-		return true;
 	}
 
 	@Override

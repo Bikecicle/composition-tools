@@ -13,6 +13,7 @@ public class Sequence implements Genome {
 	int strikeCount;
 	int length; // In measures
 	int quant; // Timesteps per measure
+	float tempo;
 
 	int[] strt;
 	float[] dur;
@@ -23,10 +24,11 @@ public class Sequence implements Genome {
 	double mRate;
 	double score;
 
-	public Sequence(int length, int quant) {
+	public Sequence(int length, int quant, float tempo) {
 		this.length = length;
 		this.quant = quant;
-
+		this.tempo = tempo;
+		
 		strt = new int[STRIKE_MAX];
 		dur = new float[STRIKE_MAX];
 		pos = new float[STRIKE_MAX];
@@ -40,7 +42,7 @@ public class Sequence implements Genome {
 	@Override
 	public Genome breed(Genome g1) {
 		Sequence other = (Sequence) g1;
-		Sequence child = new Sequence(length, quant);
+		Sequence child = new Sequence(length, quant, tempo);
 		child.strt = Splicer.splice(this.strt, other.strt);
 		child.dur = Splicer.splice(this.dur, other.dur);
 		child.pos = Splicer.splice(this.pos, other.pos);
@@ -85,5 +87,9 @@ public class Sequence implements Genome {
 			env[i] = (float) (Math.random() > mRate ? env[i] : Math.random());
 			speed[i] = (float) (Math.random() > mRate ? speed[i] : Math.random());
 		}
+	}
+	
+	public float getQuantLength() {
+		return 240 / tempo / quant;
 	}
 }

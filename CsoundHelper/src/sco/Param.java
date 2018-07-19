@@ -10,7 +10,7 @@ public class Param<T> {
 		this.value = value;
 	}
 	
-	public String readValue() {
+	public String read() {
 		return value.toString();
 	}
 }

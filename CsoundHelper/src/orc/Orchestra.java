@@ -1,8 +1,9 @@
 package orc;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
+import sco.ParamMap;
 
 public class Orchestra {
 	
@@ -31,16 +32,15 @@ public class Orchestra {
 		instruments.add(instrument);
 	}
 	
-	public List<HashMap<Integer, String>> mapParams() {
-		List<HashMap<Integer, String>> paramMap = new ArrayList<>();
+	public ParamMap mapParams() {
+		ParamMap map = new ParamMap();
 		for (int i = 0; i < instruments.size(); i++) {
-			HashMap<Integer, String> instMap = instruments.get(i).mapInputs();
-			instMap.put(1, INSTRUMENT);
-			instMap.put(2, START);
-			instMap.put(3, DURATION);
-			paramMap.add(instMap);
+			instruments.get(i).mapInputs(map);
+			map.put(i + 1, 1, INSTRUMENT);
+			map.put(i + 1, 2, START);
+			map.put(i + 1, 3, DURATION);
 		}
-		return paramMap;
+		return map;
 	}
 	
 	public String read() {

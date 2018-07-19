@@ -1,6 +1,6 @@
 package orc;
 
-import java.util.HashMap;
+import sco.ParamMap;
 
 public abstract class Value {
 
@@ -8,14 +8,14 @@ public abstract class Value {
 	public boolean terminal;
 	public Value[] params;
 
-	public void mapInputs(HashMap<Integer, String> map) {
+	public void mapInputs(int id, ParamMap map) {
 		for (Value param : params) {
 			if (param.terminal) {
 				if (param.alias.matches("p\\d+")) {
-					map.put(Integer.parseInt(param.alias.substring(1)), alias.substring(1));
+					map.put(id, Integer.parseInt(param.alias.substring(1)), alias.substring(1));
 				}
 			} else {
-				param.mapInputs(map);
+				param.mapInputs(id, map);
 			}
 		}
 	}

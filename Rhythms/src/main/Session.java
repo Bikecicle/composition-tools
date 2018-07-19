@@ -16,21 +16,22 @@ public class Session {
 	public static final int POP_SIZE = 12;
 	public static final int BATCH_REP = 2;
 	
-	String sample;
 	EvolutionManager[] timbreEM;
 	EvolutionManager[] sequenceEM;
+	String[] samples;
 	int voiceCount;
 	int length;
 	int quant;
 	float tempo;
 	
-	public Session(int voiceCount, int length, int quant, float tempo) {
+	public Session(int voiceCount, int length, int quant, float tempo, String sample) {
 		this.voiceCount = voiceCount;
 		this.length = length;
 		this.quant = quant;
 		this.tempo = tempo;
 		timbreEM = new EvolutionManager[voiceCount];
 		sequenceEM = new EvolutionManager[voiceCount];
+		samples = new String[voiceCount];
 		for (int v = 0; v < voiceCount; v++) {
 			Selector selector = new SurvivalThreshold(SURVIVAL_CF);
 			Population initPopT = new Population();
@@ -39,12 +40,13 @@ public class Session {
 				Timbre timbre = new Timbre(sample);
 				timbre.randomize();
 				initPopT.add(timbre);
-				Sequence sequence = new Sequence(length, quant);
+				Sequence sequence = new Sequence(length, quant, tempo);
 				sequence.randomize();
 				initPopS.add(sequence);
 			}
 			timbreEM[v] = new EvolutionManager(initPopT, selector, false);			
 			sequenceEM[v] = new EvolutionManager(initPopS, selector, false);
+			samples[v] = sample;
 		}
 	}
 	
@@ -76,7 +78,7 @@ public class Session {
 				timbres[v] = (Timbre) timbreEM[v].getPop().get(indicesT.get(v).get(b));
 				sequences[v] = (Sequence) sequenceEM[v].getPop().get(indicesS.get(v).get(b));
 			}
-			//batch.add(new Rhythm(sample, timbres, sequences, voiceCount));
+			batch.add(new Rhythm(samples, timbres, sequences));
 		}
 		return batch;
 	}

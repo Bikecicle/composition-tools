@@ -1,26 +1,24 @@
 package orc;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
+import sco.ParamMap;
 
 public class Instrument {
 
 	public Value[] outs;
+	public int id;
 	
-	private int pIndex;
 	private List<Integer> pUsed;
+	private int pIndex;
 
-	public Instrument() {
+	public Instrument(int id) {
+		this.id = id;
 		pIndex = 4;
 		pUsed = new ArrayList<>();
 		for (int i = 0; i < pIndex; i++)
 			pUsed.add(i);
-	}
-
-	public void add(Value value) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void setOuts(Value... values) {
@@ -51,12 +49,10 @@ public class Instrument {
 		return inputs;
 	}
 	
-	public HashMap<Integer, String> mapInputs() {
-		HashMap<Integer, String> map = new HashMap<>();
+	public void mapInputs(ParamMap map) {
 		for (Value out : outs) {
-			out.mapInputs(map);
+			out.mapInputs(id, map);
 		}
-		return map;
 	}
 	
 	public String read() {

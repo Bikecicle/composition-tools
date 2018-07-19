@@ -11,9 +11,9 @@ public class FTable implements Serializable {
 	public int ifn;
 	public int itime;
 	public int isize;
-	public int igen;
+	public GenRoutine igen;
 
-	public FTable(int ifn, int igen) {
+	public FTable(int ifn, GenRoutine igen) {
 		this.ifn = ifn;
 		itime = 0;
 		isize = 0;
@@ -21,6 +21,11 @@ public class FTable implements Serializable {
 	}
 
 	public String read() {
-		return "f " + ifn + " " + itime + " " + isize + " " + igen;
+		return "f " + ifn + " " + itime + " " + isize + " " + igen.id;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return ((FTable) obj).igen == this.igen;
 	}
 }

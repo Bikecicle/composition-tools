@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Score {
 
-	private List<HashMap<Integer, String>> paramMap;
+	private ParamMap map;
 	private List<FTable> fStmt;
 	private List<Note> iStmt;
 	
-	public Score(List<HashMap<Integer, String>> paramMap) {
-		this.paramMap = paramMap;
+	public Score(ParamMap map) {
+		this.map = map;
 		fStmt = new ArrayList<>();
 		iStmt = new ArrayList<>();
 	}
@@ -24,6 +24,10 @@ public class Score {
 		}
 		return -1;
 	}
+	
+	public void addNote(Note note) {
+		iStmt.add(note);
+	}
 
 	public String read() {
 		String s = "";
@@ -31,7 +35,7 @@ public class Score {
 			s += fTable.read() + "\n";
 		}
 		for (Note note : iStmt) {
-			s += note.read(paramMap) + "\n";
+			s += note.read(map) + "\n";
 		}
 		s += "e";
 		return s;

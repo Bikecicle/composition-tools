@@ -1,32 +1,28 @@
 package sco;
 
-import java.util.HashMap;
-import java.util.List;
-
 import orc.Orchestra;
 
 public class Note {
 	
-	public ParameterList params;
+	public ParamList params;
 	
 	public Note() {
-		params = new ParameterList();
+		params = new ParamList();
 	}
 	
 	public void add(Param<?> param) {
 		params.add(param);
 	}
 	
-	public String read(List<HashMap<Integer, String>> paramMap) {
-		String inst = params.find(Orchestra.INSTRUMENT).readValue();
-		String s = "i " + inst;
-		HashMap<Integer, String> map = paramMap.get(Integer.parseInt(inst));
+	public String read(ParamMap map) {
+		int i = Integer.parseInt(params.find(Orchestra.INSTRUMENT).read());
+		String s = "i " + i;
 		int p = 2;
-		String name = map.get(p);
+		String name = map.get(i, p);
 		while (name != null) { 
-			s += " " + params.find(name).readValue();
+			s += " " + params.find(name).read();
 			p++;
-			name = map.get(p);
+			name = map.get(i, p);
 		}
 		return s;
 	}

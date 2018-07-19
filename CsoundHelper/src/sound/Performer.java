@@ -1,23 +1,18 @@
-package main;
+package sound;
 
 import csnd6.Csound;
 import csnd6.CsoundPerformanceThread;
 import csnd6.csnd6;
 
-public class Performer implements Runnable {
+public class Performer {
 
-	private String orc;
-	private String sco;
-	private String out;
+	public static final String RT_OUT = "bob.wav";
 
-	public Performer(String orc, String sco, String out) {
-		this.orc = orc;
-		this.sco = sco;
-		this.out = out;
-	}
-
-	@Override
-	public void run() {
+	public void play(String orc, String sco, String out) {
+		//System.out.println(orc);
+		//System.out.println(sco);
+		//System.out.println(out);
+		
 		csnd6.csoundInitialize(csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
 
 		Csound c = new Csound();
@@ -32,5 +27,13 @@ public class Performer implements Runnable {
 
 		c.Stop();
 		c.Cleanup();
+	}
+
+	public void play(Performable p, String out) {
+		play(p.getOrchestra().read(), p.getScore().read(), out);
+	}
+	
+	public void play(Performable p) {
+		play(p, RT_OUT);
 	}
 }

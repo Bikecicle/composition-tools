@@ -19,10 +19,13 @@ public class Visualize extends PApplet {
 
 	public static List<Node> nodes;
 	public static List<Edge> edges;
+	
+	public static String logPath;
 
 	public static void main(String[] args) {
 		nodes = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
+		logPath = args[0];
 		PApplet.main("planner.internal.core.Visualize");
 	}
 
@@ -33,7 +36,7 @@ public class Visualize extends PApplet {
 	public void setup() {
 		Log log = null;
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream("data/test.log"));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(logPath));
 			log = (Log) in.readObject();
 			in.close();
 		} catch (IOException | ClassNotFoundException e) {

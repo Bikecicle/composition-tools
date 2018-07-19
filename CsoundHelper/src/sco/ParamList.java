@@ -2,7 +2,7 @@ package sco;
 
 import java.util.ArrayList;
 
-public class ParameterList extends ArrayList<Param<?>> {
+public class ParamList extends ArrayList<Param<?>> {
 
 	private static final long serialVersionUID = -5128191780314019039L;
 	
