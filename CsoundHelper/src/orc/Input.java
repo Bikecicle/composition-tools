@@ -1,13 +1,23 @@
 package orc;
 
+import sco.ParamMap;
+
 public class Input extends Value {
 	
-	int index;
-	
+	public int index;
+
 	public Input(int index) {
+		super("p" + index, true);
 		this.index = index;
-		alias = "p" + index;
-		terminal = true;
+	}
+	
+	public void mapInput(int i, ParamMap map) {
+		mapInput(i, index, map);
+	}
+	
+	@Override
+	public void mapInput(int i, int p, ParamMap map) {
+		parent.mapInput(i, p, map);
 	}
 
 	@Override

@@ -10,22 +10,24 @@ public class Orchestra {
 	public static final String INSTRUMENT = "inst";
 	public static final String START = "strt";
 	public static final String DURATION = "dur";
-
+	
+	public static final Value SR = new Constant<String>("sr");
+	public static final Value KSMPS = new Constant<String>("ksmps");
+	public static final Value NCHNLS = new Constant<String>("nchnls");
+	public static final Value DBFS = new Constant<String>("0dbfs");
+	
 	public int sr;
 	public int ksmps;
 	public int nchnls;
-	public float dbfs0;
+	public float dbfs;
 	public List<Instrument> instruments;
-
-	int pIndex;
 	
-	public Orchestra(int sr, int ksmps, int nchnls, float dbfs0) {
+	public Orchestra(int sr, int ksmps, int nchnls, float dbfs) {
 		this.sr = sr;
 		this.ksmps = ksmps;
 		this.nchnls = nchnls;
-		this.dbfs0 = dbfs0;
+		this.dbfs = dbfs;
 		instruments = new ArrayList<>();
-		pIndex = 4;
 	}
 	
 	public void add(Instrument instrument) {
@@ -34,12 +36,15 @@ public class Orchestra {
 	
 	public ParamMap mapParams() {
 		ParamMap map = new ParamMap();
-		for (int i = 0; i < instruments.size(); i++) {
-			instruments.get(i).mapInputs(map);
-			map.put(i + 1, 1, INSTRUMENT);
-			map.put(i + 1, 2, START);
-			map.put(i + 1, 3, DURATION);
+		for (Instrument inst : instruments) {
+			for (Input input : inst.inputs) {
+				input.mapInput(inst.id, map);
+			}
+			map.put(inst.id, 1, INSTRUMENT);
+			map.put(inst.id, 2, START);
+			map.put(inst.id, 3, DURATION);
 		}
+		System.out.println(map);
 		return map;
 	}
 	
@@ -47,7 +52,7 @@ public class Orchestra {
 		String s = "sr = " + sr + "\n" + 
 				"ksmps = " + ksmps + "\n" +
 				"nchnls = " + nchnls + "\n" +
-				"0dbfs = " + dbfs0 + "\n";
+				"0dbfs = " + dbfs + "\n";
 		for (int i = 0; i < instruments.size(); i++) {
 			s += "\n" +
 					"instr " + (i + 1) + "\n" +

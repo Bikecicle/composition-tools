@@ -9,8 +9,10 @@ public class Performer {
 	public static final String RT_OUT = "bob.wav";
 
 	public void play(String orc, String sco, String out) {
-		//System.out.println(orc);
-		//System.out.println(sco);
+		System.out.println("[Orchestra]");
+		System.out.println(orc);
+		System.out.println("[Score]");
+		System.out.println(sco);
 		//System.out.println(out);
 		
 		csnd6.csoundInitialize(csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);

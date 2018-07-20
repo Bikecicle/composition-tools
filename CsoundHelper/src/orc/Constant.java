@@ -2,16 +2,15 @@ package orc;
 
 public class Constant<T> extends Value {
 	
-	T constant;
+	public T constant;
 
 	public Constant(T constant) {
+		super(constant.toString(), true);
 		this.constant = constant;
-		alias = constant.toString();
-		terminal = true;
 	}
 
 	@Override
 	public String read() {
-		return constant.toString();
+		return alias;
 	}
 }

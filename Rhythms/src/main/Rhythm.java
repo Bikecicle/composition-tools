@@ -7,11 +7,11 @@ import sco.Note;
 import sco.Param;
 import sco.Score;
 import sco.SineFTable;
-import sco.SoundfileFTable;
 import sound.Performable;
 import sco.ArrayParam;
 
 import orc.Constant;
+import orc.Expression;
 import orc.Instrument;
 import orc.Opcode;
 
@@ -64,16 +64,17 @@ public class Rhythm implements Performable {
 			int nchnls = 2;
 			float dbfs0 = 1.0f;
 			Orchestra orc = new Orchestra(sr, ksmps, nchnls, dbfs0);
-			Instrument in = new Instrument(1);
-			Value kfreqratio = new Variable("k", "freqratio", "=", in.p());
-			Value kloop = new Constant<Integer>(0);
-			Value kend = new Constant<Integer>(0);
-			Value ifn = new Variable("i", "fn", "=", in.p());
-			Value ipos = new Variable("i", "pos", "=", in.p());
-			Value kenv = new Variable("a", "env", "=", new Constant<Float>(0.5f));
-			Opcode loop = new Opcode("a", "sig", 2, "lposcilsa", kenv, kfreqratio, kloop, kend, ifn, ipos);
-			in.setOuts(loop);
-			orc.add(in);
+			Instrument inst = new Instrument(1);
+			Value freqratio = new Variable("k", "freqratio", "=", inst.p());
+			Value loop = new Constant<Integer>(0);
+			Value end = new Constant<Integer>(0);
+			Value ifn = new Variable("i", "fn", "=", inst.p());
+			Value pos = new Variable("i", "pos", "=", new Expression("*", inst.p(), Orchestra.SR));
+			Value env = new Variable("a", "env", "=", new Constant<Float>(0.5f));
+			Opcode oscil = new Opcode("a", "sig", 2, "lposcilsa", env, freqratio, loop, end, ifn, pos);
+			inst.setOuts(oscil);
+			
+			orc.add(inst);
 		return orc;
 	}
 }

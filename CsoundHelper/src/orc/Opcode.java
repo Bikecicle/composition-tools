@@ -2,14 +2,13 @@ package orc;
 
 public class Opcode extends Value {
 
-	int channels;
+	public int channels;
 	public String opcode;
 
 	public Opcode(String type, String name, int channels, String opcode, Value... params) {
+		super(type + name, false, params);
 		this.channels = channels;
 		this.opcode = opcode;
-		this.params = params;
-		this.alias =  type + name;
 	}
 
 	@Override

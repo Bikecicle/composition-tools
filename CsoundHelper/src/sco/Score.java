@@ -1,7 +1,6 @@
 package sco;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Score {
@@ -22,7 +21,7 @@ public class Score {
 			fStmt.add(fTable);
 			return fTable.ifn;
 		}
-		return -1;
+		return fStmt.get(fStmt.indexOf(fTable)).ifn;
 	}
 	
 	public void addNote(Note note) {

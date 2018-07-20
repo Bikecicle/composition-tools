@@ -2,12 +2,11 @@ package orc;
 
 public class Variable extends Value {
 
-	String operator;
+	public String operator;
 
 	public Variable(String type, String name, String operator, Value... params) {
+		super(type + name, false, params);
 		this.operator = operator;
-		this.params = params;
-		this.alias = type + name;
 	}
 	
 	@Override
