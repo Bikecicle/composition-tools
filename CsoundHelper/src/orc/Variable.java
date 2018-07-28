@@ -2,19 +2,19 @@ package orc;
 
 public class Variable extends Value {
 
-	public String operator;
+	String operator;
 
 	public Variable(String type, String name, String operator, Value... params) {
-		super(type + name, false, params);
+		super(type + name, false, 1, params);
 		this.operator = operator;
 	}
 	
 	@Override
-	public String read() {
+	public String toString() {
 		String s = "";
 		for (Value value : params) {
 			if (!value.terminal)
-				s += value.read() + "\n";
+				s += value + "\n";
 		}
 		s += alias + " " + operator + " ";
 		for (int i = 0; i < params.length; i++) {

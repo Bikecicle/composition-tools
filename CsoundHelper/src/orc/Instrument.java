@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Instrument {
 
-	public Value[] outs;
-	public int id;
-	public List<Input> inputs;
-	
+	Value[] outs;
+	int id;
+	List<Input> inputs;
+
 	private List<Integer> pUsed;
 	private int pIndex;
 
@@ -24,7 +24,7 @@ public class Instrument {
 	public void setOuts(Value... values) {
 		outs = values;
 	}
-	
+
 	public Input p(int index) {
 		Input input = new Input(index);
 		inputs.add(input);
@@ -45,11 +45,20 @@ public class Instrument {
 			inputs[i] = p();
 		return inputs;
 	}
-	
-	public String read() {
+
+	public String toString() {
 		String s = "";
-		for (Value value : outs)
-			s += value.read();
+		for (Value value : outs) {
+			s += value + "\n";
+		}
+		s += "outs ";
+		for (int i = 0; i < outs.length; i++) {
+			for (int j = 0; j < outs[i].channels; j++) {
+				if (i > 0 || j > 0)
+					s += ", ";
+				s += outs[i].alias + j;
+			}
+		}
 		return s;
 	}
 }

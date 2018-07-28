@@ -6,22 +6,22 @@ import java.util.List;
 import sco.ParamMap;
 
 public class Orchestra {
-	
+
 	public static final String INSTRUMENT = "inst";
 	public static final String START = "strt";
 	public static final String DURATION = "dur";
-	
+
 	public static final Value SR = new Constant<String>("sr");
 	public static final Value KSMPS = new Constant<String>("ksmps");
 	public static final Value NCHNLS = new Constant<String>("nchnls");
 	public static final Value DBFS = new Constant<String>("0dbfs");
-	
-	public int sr;
-	public int ksmps;
-	public int nchnls;
-	public float dbfs;
-	public List<Instrument> instruments;
-	
+
+	int sr;
+	int ksmps;
+	int nchnls;
+	float dbfs;
+	List<Instrument> instruments;
+
 	public Orchestra(int sr, int ksmps, int nchnls, float dbfs) {
 		this.sr = sr;
 		this.ksmps = ksmps;
@@ -29,11 +29,11 @@ public class Orchestra {
 		this.dbfs = dbfs;
 		instruments = new ArrayList<>();
 	}
-	
+
 	public void add(Instrument instrument) {
 		instruments.add(instrument);
 	}
-	
+
 	public ParamMap mapParams() {
 		ParamMap map = new ParamMap();
 		for (Instrument inst : instruments) {
@@ -47,17 +47,12 @@ public class Orchestra {
 		System.out.println(map);
 		return map;
 	}
-	
-	public String read() {
-		String s = "sr = " + sr + "\n" + 
-				"ksmps = " + ksmps + "\n" +
-				"nchnls = " + nchnls + "\n" +
-				"0dbfs = " + dbfs + "\n";
+
+	public String toString() {
+		String s = "sr = " + sr + "\n" + "ksmps = " + ksmps + "\n" + "nchnls = " + nchnls + "\n" + "0dbfs = " + dbfs
+				+ "\n";
 		for (int i = 0; i < instruments.size(); i++) {
-			s += "\n" +
-					"instr " + (i + 1) + "\n" +
-					instruments.get(i).read() + "\n" +
-					"endin\n";
+			s += "\n" + "instr " + (i + 1) + "\n" + instruments.get(i) + "\n" + "endin\n";
 		}
 		return s;
 	}

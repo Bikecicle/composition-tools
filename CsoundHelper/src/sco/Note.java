@@ -4,9 +4,10 @@ import orc.Orchestra;
 
 public class Note {
 	
-	public ParamList params;
+	ParamList params;
+	ParamMap map;
 	
-	public Note() {
+	public Note(ParamMap map) {
 		params = new ParamList();
 	}
 	
@@ -14,7 +15,7 @@ public class Note {
 		params.add(param);
 	}
 	
-	public String read(ParamMap map) {
+	public String toString() {
 		int i = Integer.parseInt(params.find(Orchestra.INSTRUMENT).read());
 		String s = "i " + i;
 		int p = 2;

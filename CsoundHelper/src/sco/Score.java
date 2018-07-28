@@ -5,12 +5,10 @@ import java.util.List;
 
 public class Score {
 
-	private ParamMap map;
-	private List<FTable> fStmt;
-	private List<Note> iStmt;
+	List<FTable> fStmt;
+	List<Note> iStmt;
 	
-	public Score(ParamMap map) {
-		this.map = map;
+	public Score() {
 		fStmt = new ArrayList<>();
 		iStmt = new ArrayList<>();
 	}
@@ -28,13 +26,13 @@ public class Score {
 		iStmt.add(note);
 	}
 
-	public String read() {
+	public String toString() {
 		String s = "";
 		for (FTable fTable : fStmt) {
-			s += fTable.read() + "\n";
+			s += fTable + "\n";
 		}
 		for (Note note : iStmt) {
-			s += note.read(map) + "\n";
+			s += note + "\n";
 		}
 		s += "e";
 		return s;

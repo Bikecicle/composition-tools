@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class ParamMap {
 	
-	public HashMap<CompoundKey, String> map;
+	HashMap<CompoundKey, String> map;
 
 	public ParamMap() {
 		map = new HashMap<>();

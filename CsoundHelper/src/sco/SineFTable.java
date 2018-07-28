@@ -4,7 +4,7 @@ public class SineFTable extends FTable {
 	
 	private static final long serialVersionUID = 6055167497295545172L;
 	
-	public float str1;
+	float str1;
 
 	public SineFTable() {
 		super(IFN_DEFAULT, GenRoutine.sine);
@@ -13,7 +13,7 @@ public class SineFTable extends FTable {
 	}
 
 	@Override
-	public String toString() {
-		return super.toString() + " " + str1;
+	public String read() {
+		return super.read() + " " + str1;
 	}
 }

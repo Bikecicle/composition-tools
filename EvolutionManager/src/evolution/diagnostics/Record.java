@@ -4,12 +4,12 @@ import evolution.core.Genome;
 
 public class Record {
 
-	public int gen;
-	public int id;
-	public double score;
-	public String details;
+	int gen;
+	int id;
+	double score;
+	String details;
 	
-	public int[] parentIds;
+	int[] parentIds;
 	
 	public Record(int gen, Genome genome, Genome...parents) {
 		this.gen = gen;

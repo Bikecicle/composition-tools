@@ -1,22 +1,20 @@
 package orc;
 
 public class Opcode extends Value {
-
-	public int channels;
-	public String opcode;
+	
+	String opcode;
 
 	public Opcode(String type, String name, int channels, String opcode, Value... params) {
-		super(type + name, false, params);
-		this.channels = channels;
+		super(type + name, false, channels, params);
 		this.opcode = opcode;
 	}
 
 	@Override
-	public String read() {
+	public String toString() {
 		String s = "";
 		for (Value param : params) {
 			if (!param.terminal)
-				s += param.read() + "\n";
+				s += param + "\n";
 		}
 		for (int i = 0; i < channels; i++) {
 			if (i > 0)

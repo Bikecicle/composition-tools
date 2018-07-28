@@ -11,9 +11,9 @@ import evolution.diagnostics.Log;
 
 public class EvolutionManager {
 
-	private Population pop;
-	private Selector selector;
-	private Log log;
+	Population pop;
+	Selector selector;
+	Log log;
 
 	public EvolutionManager(Population initPop, Selector selector, boolean logging) {
 		this.pop = initPop;

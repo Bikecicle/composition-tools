@@ -10,12 +10,12 @@ import evolution.core.EvolutionManager;
 import evolution.core.Population;
 
 public class Session {
-	
-	public static final double SURVIVAL_CF = 0.3;
-	public static final double MUTATION_RATE = 0.1;
+
+	public static final float SURVIVAL_CF = 0.3f;
+	public static final float MUTATION_RATE = 0.1f;
 	public static final int POP_SIZE = 12;
 	public static final int BATCH_REP = 2;
-	
+
 	EvolutionManager[] timbreEM;
 	EvolutionManager[] sequenceEM;
 	String[] samples;
@@ -23,7 +23,7 @@ public class Session {
 	int length;
 	int quant;
 	float tempo;
-	
+
 	public Session(int voiceCount, int length, int quant, float tempo, String sample) {
 		this.voiceCount = voiceCount;
 		this.length = length;
@@ -44,22 +44,23 @@ public class Session {
 				sequence.randomize();
 				initPopS.add(sequence);
 			}
-			timbreEM[v] = new EvolutionManager(initPopT, selector, false);			
+			timbreEM[v] = new EvolutionManager(initPopT, selector, false);
 			sequenceEM[v] = new EvolutionManager(initPopS, selector, false);
 			samples[v] = sample;
 		}
 	}
-	
+
 	public List<Rhythm> createBatch() {
 		List<Rhythm> batch = new ArrayList<>();
-		// List of lists, each corresponding to a voice and containing shuffled indices for that voice's population
+		// List of lists, each corresponding to a voice and containing shuffled indices
+		// for that voice's population
 		List<List<Integer>> indicesT = new ArrayList<>();
 		List<List<Integer>> indicesS = new ArrayList<>();
 		List<Integer> set = new LinkedList<>();
 		for (int i = 0; i < POP_SIZE; i++) {
 			for (int j = 0; j < BATCH_REP; j++) {
-				set.add(i);	
-			}	
+				set.add(i);
+			}
 		}
 		int batchSize = POP_SIZE * BATCH_REP;
 		for (int v = 0; v < voiceCount; v++) {
@@ -74,7 +75,8 @@ public class Session {
 			Timbre[] timbres = new Timbre[voiceCount];
 			Sequence[] sequences = new Sequence[voiceCount];
 			for (int v = 0; v < voiceCount; v++) {
-				// Set each voice to a genome from its population according to the shuffled indices
+				// Set each voice to a genome from its population according to the shuffled
+				// indices
 				timbres[v] = (Timbre) timbreEM[v].getPop().get(indicesT.get(v).get(b));
 				sequences[v] = (Sequence) sequenceEM[v].getPop().get(indicesS.get(v).get(b));
 			}
@@ -82,7 +84,7 @@ public class Session {
 		}
 		return batch;
 	}
-	
+
 	public void advance() {
 		for (int v = 0; v < voiceCount; v++) {
 			timbreEM[v].nextGeneration();

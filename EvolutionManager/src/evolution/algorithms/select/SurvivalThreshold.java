@@ -7,8 +7,8 @@ import evolution.diagnostics.Record;
 
 public class SurvivalThreshold implements Selector {
 
-	private Log log;
-	private double survivalCf; // Fraction of population to survive each generation
+	Log log;
+	double survivalCf; // Fraction of population to survive each generation
 
 	public SurvivalThreshold(double survivalCf) {
 		this.survivalCf = survivalCf;

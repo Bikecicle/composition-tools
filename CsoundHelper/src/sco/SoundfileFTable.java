@@ -4,10 +4,10 @@ public class SoundfileFTable extends FTable {
 
 	private static final long serialVersionUID = -2596051195054624160L;
 
-	public String Sfilnam;
-	public float iskip;
-	public int iformat;
-	public int ichn;
+	String Sfilnam;
+	float iskip;
+	int iformat;
+	int ichn;
 
 	public SoundfileFTable(String filename, int ifn) {
 		super(ifn, GenRoutine.soundfile);
@@ -27,7 +27,7 @@ public class SoundfileFTable extends FTable {
 	}
 
 	@Override
-	public String toString() {
-		return super.toString() + " " + "\"" + Sfilnam + "\" " + iskip + " " + iformat + " " + ichn;
+	public String read() {
+		return super.read() + " " + "\"" + Sfilnam + "\" " + iskip + " " + iformat + " " + ichn;
 	}
 }

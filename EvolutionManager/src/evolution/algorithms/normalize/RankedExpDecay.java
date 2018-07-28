@@ -4,7 +4,7 @@ import evolution.core.Population;
 
 public class RankedExpDecay implements Normalizer {
 
-	private double decay;
+	double decay;
 
 	public RankedExpDecay(double decay) {
 		this.decay = decay;

@@ -9,12 +9,13 @@ public class Performer {
 	public static final String RT_OUT = "bob.wav";
 
 	public void play(String orc, String sco, String out) {
+
 		System.out.println("[Orchestra]");
 		System.out.println(orc);
 		System.out.println("[Score]");
 		System.out.println(sco);
-		//System.out.println(out);
-		
+		// System.out.println(out);
+
 		csnd6.csoundInitialize(csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
 
 		Csound c = new Csound();
@@ -32,9 +33,9 @@ public class Performer {
 	}
 
 	public void play(Performable p, String out) {
-		play(p.getOrchestra().read(), p.getScore().read(), out);
+		play(p.getOrchestra().toString(), p.getScore().toString(), out);
 	}
-	
+
 	public void play(Performable p) {
 		play(p, RT_OUT);
 	}

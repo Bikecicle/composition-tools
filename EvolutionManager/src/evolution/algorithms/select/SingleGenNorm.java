@@ -8,8 +8,8 @@ import evolution.diagnostics.Record;
 
 public class SingleGenNorm implements Selector {
 
-	private Normalizer normalizer;
-	private Log log;
+	Normalizer normalizer;
+	Log log;
 
 	public SingleGenNorm(Normalizer normalizer) {
 		this.normalizer = normalizer;

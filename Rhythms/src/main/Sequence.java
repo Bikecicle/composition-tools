@@ -16,10 +16,12 @@ public class Sequence implements Genome {
 	float tempo;
 
 	int[] strt;
-	float[] dur;
 	float[] pos;
-	float[] env;
-	float[] speed;
+	float[] att;
+	float[] dec;
+	float[] sus;
+	float[] rel;
+	float[] slev;
 
 	double mRate;
 	double score;
@@ -30,10 +32,12 @@ public class Sequence implements Genome {
 		this.tempo = tempo;
 		
 		strt = new int[STRIKE_MAX];
-		dur = new float[STRIKE_MAX];
 		pos = new float[STRIKE_MAX];
-		env = new float[STRIKE_MAX];
-		speed = new float[STRIKE_MAX];
+		att = new float[STRIKE_MAX];
+		dec = new float[STRIKE_MAX];
+		sus = new float[STRIKE_MAX];
+		rel = new float[STRIKE_MAX];
+		slev = new float[STRIKE_MAX];
 		
 		mRate = Session.MUTATION_RATE;
 		score = 0;
@@ -43,11 +47,13 @@ public class Sequence implements Genome {
 	public Genome breed(Genome g1) {
 		Sequence other = (Sequence) g1;
 		Sequence child = new Sequence(length, quant, tempo);
-		child.strt = Splicer.splice(this.strt, other.strt);
-		child.dur = Splicer.splice(this.dur, other.dur);
-		child.pos = Splicer.splice(this.pos, other.pos);
-		child.env = Splicer.splice(this.env, other.env);
-		child.speed = Splicer.splice(this.speed, other.speed);
+		child.strt = Splicer.spliceInt(this.strt, other.strt);
+		child.pos = Splicer.spliceFloat(this.pos, other.pos);
+		child.att = Splicer.spliceFloat(this.att, other.att);
+		child.dec = Splicer.spliceFloat(this.dec, other.dec);
+		child.sus = Splicer.spliceFloat(this.sus, other.sus);
+		child.rel = Splicer.spliceFloat(this.rel, other.rel);
+		child.slev = Splicer.spliceFloat(this.slev, other.slev);
 		child.mutate();
 		return null;
 	}
@@ -62,10 +68,12 @@ public class Sequence implements Genome {
 				strt[i] = i * tInt + phase;
 			else
 				strt[i] = (int) (Math.random() * length * quant);
-			dur[i] = (float) Math.random();
 			pos[i] = (float) Math.random();
-			env[i] = (float) Math.random();
-			speed[i] = (float) Math.random();
+			att[i] = (float) Math.random();
+			dec[i] = (float) Math.random();
+			sus[i] = (float) Math.random();
+			rel[i] = (float) Math.random();
+			slev[i] = (float) Math.random();
 		}
 	}
 
@@ -81,11 +89,13 @@ public class Sequence implements Genome {
 
 	public void mutate() {
 		for (int i = 0; i < STRIKE_MAX; i++) {
-			strt[i] = (int) (Math.random() > mRate ? strt[i] : Math.random() * length * quant);
-			dur[i] = (float) (Math.random() > mRate ? dur[i] : Math.random());
-			pos[i] = (float) (Math.random() > mRate ? pos[i] : Math.random());
-			env[i] = (float) (Math.random() > mRate ? env[i] : Math.random());
-			speed[i] = (float) (Math.random() > mRate ? speed[i] : Math.random());
+			strt[i] = (int) (Math.random() < mRate ? Math.random() * length * quant : strt[i]);
+			pos[i] = (float) (Math.random() < mRate ? Math.random() : pos[i]);
+			att[i] = (float) (Math.random() < mRate ? Math.random() : att[i]);
+			dec[i] = (float) (Math.random() < mRate ? Math.random() : dec[i]);
+			sus[i] = (float) (Math.random() < mRate ? Math.random() : sus[i]);
+			rel[i] = (float) (Math.random() < mRate ? Math.random() : rel[i]);
+			slev[i] = (float) (Math.random() < mRate ? Math.random() : slev[i]);
 		}
 	}
 	

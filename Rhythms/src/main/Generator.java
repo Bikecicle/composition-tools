@@ -22,7 +22,7 @@ public class Generator {
 		in.nextLine();
 		String sample = in.nextLine();
 
-		Session session = new Session(voiceCount, length, quant, tempo, "samples/" + sample);
+		Session session = new Session(voiceCount, length, quant, tempo, sample);
 		Performer performer = new Performer();
 
 		int b = 1;

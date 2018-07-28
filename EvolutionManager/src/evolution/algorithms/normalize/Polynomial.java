@@ -5,7 +5,7 @@ import evolution.core.Population;
 
 public class Polynomial implements Normalizer {
 
-	private double order;
+	double order;
 
 	public Polynomial(double order) {
 		this.order = order;
