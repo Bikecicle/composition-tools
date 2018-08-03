@@ -16,6 +16,8 @@ import orc.Opcode;
 
 public class Rhythm implements Performable {
 
+	private static Orchestra orc;
+
 	String[] samples;
 	Timbre[] timbres;
 	Sequence[] sequences;
@@ -44,20 +46,22 @@ public class Rhythm implements Performable {
 			float quantLen = sequences[v].getQuantLength();
 			for (int s = 0; s < sequences[v].strikeCount; s++) {
 				Note note = new Note(map);
-				note.add(new Param<Integer>(Orchestra.INSTRUMENT, 1));
-				note.add(new Param<Float>(Orchestra.START, sequences[v].strt[s] * quantLen));
-				note.add(new Param<Integer>("fn", ifn));
+				float pos = realValue(timbres[v].pos, sequences[v].pos[s]);
 				float att = realValue(timbres[v].att, sequences[v].att[s]);
 				float dec = realValue(timbres[v].dec, sequences[v].dec[s]);
-				float sus = realValue(timbres[v].sus, sequences[v].sus[s]); // Calculation only
+				float sus = realValue(timbres[v].sus, sequences[v].sus[s]);
 				float rel = realValue(timbres[v].rel, sequences[v].rel[s]);
+				float slev = realValue(timbres[v].slev, sequences[v].slev[s]);
 				float dur = att + dec + sus + rel;
-				float slev = timbres[v].slev * sequences[v].slev[s];
+				note.add(new Param<Integer>(Orchestra.INSTRUMENT, 1));
+				note.add(new Param<Float>(Orchestra.START, sequences[v].strt[s] * quantLen));
 				note.add(new Param<Float>(Orchestra.DURATION, dur));
+				note.add(new Param<Float>("pos", pos));
 				note.add(new Param<Float>("att", att));
 				note.add(new Param<Float>("dec", dec));
 				note.add(new Param<Float>("rel", rel));
 				note.add(new Param<Float>("slev", slev));
+				note.add(new Param<Integer>("fn", ifn));
 				sco.addNote(note);
 			}
 		}
@@ -66,29 +70,35 @@ public class Rhythm implements Performable {
 
 	@Override
 	public Orchestra getOrchestra() {
-		int sr = 44100;
-		int ksmps = 32;
-		int nchnls = 2;
-		float dbfs = 1.0f;
-		Orchestra orc = new Orchestra(sr, ksmps, nchnls, dbfs);
-		Instrument i = new Instrument(1);
-		Value iatt = new Variable("i", "att", "=", i.p());
-		Value idec = new Variable("i", "dec", "=", i.p());
-		Value islev = new Variable("i", "slev", "=", i.p());
-		Value irel = new Variable("i", "rel", "=", i.p());
-		Value kamp = new Opcode("k", "env", 1, "xadsr", iatt, idec, islev, irel);
-		Value kpitch = new Constant<Integer>(1);
-		Value istart = new Variable("i", "start", "=", i.p());
-		Value ifad = new Constant<Float>(0.05f);
-		Value ifn = new Variable("i", "fn", "=", i.p());
-		Value idur = new Expression("nsamp(%s) / %s - %s", ifn, Orchestra.SR, ifad);
-		Value loop = new Opcode("a", "loop", 2, "flooper", kamp, kpitch, istart, idur, ifad, ifn);
-		i.setOuts(loop);
-		orc.add(i);
+		return getOrcInstance();
+	}
+
+	public static Orchestra getOrcInstance() {
+		if (orc == null) {
+			int sr = 44100;
+			int ksmps = 32;
+			int nchnls = 2;
+			float dbfs = 1.0f;
+			orc = new Orchestra(sr, ksmps, nchnls, dbfs);
+			Instrument i = new Instrument(1);
+			Value kpitch = new Constant<Integer>(1);
+			Value ifad = new Constant<Float>(0.05f);
+			Value ifn = new Variable("i", "fn", "=", i.p());
+			Value ilen = new Variable("i", "len", "=", new Expression("nsamp(%s) / %s - %s", ifn, Orchestra.SR, ifad));
+			Value ipos = new Variable("i", "pos", "=", new Expression("%s * %s", ilen, i.p()));
+			Value iatt = new Variable("i", "att", "=", i.p());
+			Value idec = new Variable("i", "dec", "=", i.p());
+			Value islev = new Variable("i", "slev", "=", i.p());
+			Value irel = new Variable("i", "rel", "=", i.p());
+			Value kamp = new Opcode("k", "amp", 1, "xadsr", iatt, idec, islev, irel);
+			Value loop = new Opcode("a", "sig", 2, "flooper", kamp, kpitch, ipos, ilen, ifad, ifn);
+			i.setOuts(loop);
+			orc.add(i);
+		}
 		return orc;
 	}
-	
+
 	private float realValue(float[] range, float factor) {
-		return factor * (range[1] - range[0]) - range[0];
+		return factor * (range[1] - range[0]) + range[0];
 	}
 }

@@ -30,7 +30,7 @@ public class Sequence implements Genome {
 		this.length = length;
 		this.quant = quant;
 		this.tempo = tempo;
-		
+
 		strt = new int[STRIKE_MAX];
 		pos = new float[STRIKE_MAX];
 		att = new float[STRIKE_MAX];
@@ -38,7 +38,7 @@ public class Sequence implements Genome {
 		sus = new float[STRIKE_MAX];
 		rel = new float[STRIKE_MAX];
 		slev = new float[STRIKE_MAX];
-		
+
 		mRate = Session.MUTATION_RATE;
 		score = 0;
 	}
@@ -86,8 +86,25 @@ public class Sequence implements Genome {
 	public int getId() {
 		return hashCode();
 	}
+	
+	public void addStrike(int strt, float pos, float att, float dec, float sus, float rel, float slev) {
+		int i = strikeCount;
+		strikeCount++;
+		this.strt[i] = strt;
+		this.pos[i] = pos;
+		this.att[i] = att;
+		this.dec[i] = dec;
+		this.sus[i] = sus;
+		this.rel[i] = rel;
+		this.slev[i] = slev;
+	}
+	
+	public float getQuantLength() {
+		return 240 / tempo / quant;
+	}
 
-	public void mutate() {
+	private void mutate() {
+		strikeCount = (int) (Math.random() < mRate ? strikeCount + Math.signum(Math.random() - 0.5) : strikeCount);
 		for (int i = 0; i < STRIKE_MAX; i++) {
 			strt[i] = (int) (Math.random() < mRate ? Math.random() * length * quant : strt[i]);
 			pos[i] = (float) (Math.random() < mRate ? Math.random() : pos[i]);
@@ -97,9 +114,5 @@ public class Sequence implements Genome {
 			rel[i] = (float) (Math.random() < mRate ? Math.random() : rel[i]);
 			slev[i] = (float) (Math.random() < mRate ? Math.random() : slev[i]);
 		}
-	}
-	
-	public float getQuantLength() {
-		return 240 / tempo / quant;
 	}
 }

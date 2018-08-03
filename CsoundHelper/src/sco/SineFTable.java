@@ -13,7 +13,7 @@ public class SineFTable extends FTable {
 	}
 
 	@Override
-	public String read() {
-		return super.read() + " " + str1;
+	public String toString() {
+		return super.toString() + " " + str1;
 	}
 }

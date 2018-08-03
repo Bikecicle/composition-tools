@@ -10,6 +10,8 @@ public abstract class Value {
 	Value parent;
 	int channels;
 	
+	boolean defined;
+	
 	public Value(String alias, boolean terminal, int channels, Value... params) {
 		this.alias = alias;
 		this.terminal = terminal;
@@ -17,6 +19,7 @@ public abstract class Value {
 		this.params = params;
 		for (Value param : params)
 			param.parent = this;
+		defined = false;
 	}
 	
 	public void mapInput(int i, int p, ParamMap map) {

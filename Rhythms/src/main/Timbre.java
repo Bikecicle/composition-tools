@@ -11,24 +11,23 @@ public class Timbre implements Genome {
 	public static final int SPEED_DIM = 8;
 	public static final float DEFAULT_DUR = 0.2f;
 
-	String sample;
-	float[] pos;
-	float[] att;
-	float[] dec;
-	float[] sus;
-	float[] rel;
-	float slev;
+	public float[] pos;
+	public float[] att;
+	public float[] dec;
+	public float[] sus;
+	public float[] rel;
+	public float[] slev;
 
 	double mRate;
 	double score;
 
-	public Timbre(String sample) {
-		this.sample = sample;
+	public Timbre() {
 		pos = new float[2];
 		att = new float[2];
 		dec = new float[2];
 		sus = new float[2];
 		rel = new float[2];
+		slev = new float[2];
 		mRate = Session.MUTATION_RATE;
 		score = 0;
 	}
@@ -36,13 +35,13 @@ public class Timbre implements Genome {
 	@Override
 	public Genome breed(Genome genome) {
 		Timbre other = (Timbre) genome;
-		Timbre child = new Timbre(sample);
+		Timbre child = new Timbre();
 		child.pos = Splicer.chooseRange(this.pos, other.pos);
 		child.att = Splicer.chooseRange(this.att, other.att);
 		child.dec = Splicer.chooseRange(this.dec, other.dec);
 		child.sus = Splicer.chooseRange(this.sus, other.sus);
 		child.rel = Splicer.chooseRange(this.rel, other.rel);
-		child.slev = (float) Splicer.choose(this.slev, other.slev);
+		child.slev = Splicer.chooseRange(this.slev, other.slev);
 		child.mutate();
 		return child;
 	}
@@ -54,7 +53,7 @@ public class Timbre implements Genome {
 		Splicer.randomizeRange(dec, 1);
 		Splicer.randomizeRange(sus, 1);
 		Splicer.randomizeRange(rel, 1);
-		slev = (float) Math.random();
+		Splicer.randomizeRange(slev, 1);
 		score = 0;
 	}
 
@@ -74,6 +73,6 @@ public class Timbre implements Genome {
 		Splicer.mutateRange(dec, 1, Session.MUTATION_RATE);
 		Splicer.mutateRange(sus, 1, Session.MUTATION_RATE);
 		Splicer.mutateRange(rel, 1, Session.MUTATION_RATE);
-		slev = (float) (Math.random() < Session.MUTATION_RATE ? Math.random() : slev);
+		Splicer.mutateRange(slev, 1, Session.MUTATION_RATE);
 	}
 }

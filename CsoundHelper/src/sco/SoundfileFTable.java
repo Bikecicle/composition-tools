@@ -27,7 +27,7 @@ public class SoundfileFTable extends FTable {
 	}
 
 	@Override
-	public String read() {
-		return super.read() + " " + "\"" + Sfilnam + "\" " + iskip + " " + iformat + " " + ichn;
+	public String toString() {
+		return super.toString() + " " + "\"" + Sfilnam + "\" " + iskip + " " + iformat + " " + ichn;
 	}
 }

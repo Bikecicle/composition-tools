@@ -53,10 +53,16 @@ public class Instrument {
 		}
 		s += "outs ";
 		for (int i = 0; i < outs.length; i++) {
+			if (outs[i].channels > 1) {
 			for (int j = 0; j < outs[i].channels; j++) {
 				if (i > 0 || j > 0)
 					s += ", ";
 				s += outs[i].alias + j;
+			}
+			} else {
+				if (i > 0)
+					s += ", ";
+				s += outs[i].alias;
 			}
 		}
 		return s;

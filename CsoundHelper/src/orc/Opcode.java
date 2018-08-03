@@ -1,7 +1,7 @@
 package orc;
 
 public class Opcode extends Value {
-	
+
 	String opcode;
 
 	public Opcode(String type, String name, int channels, String opcode, Value... params) {
@@ -12,14 +12,26 @@ public class Opcode extends Value {
 	@Override
 	public String toString() {
 		String s = "";
+		String o = "";
 		for (Value param : params) {
-			if (!param.terminal)
-				s += param + "\n";
+			if (!param.terminal && !param.defined) {
+				if (param instanceof Opcode) {
+					o += param + "\n";
+				} else {
+					s += param + "\n";
+				}
+				
+			}
 		}
-		for (int i = 0; i < channels; i++) {
-			if (i > 0)
-				s += ", ";
-			s += alias + i;
+		s += o;
+		if (channels > 1) {
+			for (int i = 0; i < channels; i++) {
+				if (i > 0)
+					s += ", ";
+				s += alias + i;
+			}
+		} else {
+			s += alias;
 		}
 		s += " " + opcode + " ";
 		for (int i = 0; i < params.length; i++) {
@@ -27,6 +39,7 @@ public class Opcode extends Value {
 				s += ", ";
 			s += params[i].alias;
 		}
+		defined = true;
 		return s;
 	}
 }

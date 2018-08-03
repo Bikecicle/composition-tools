@@ -11,6 +11,7 @@ public class Constant<T> extends Value {
 
 	@Override
 	public String toString() {
+		defined = true;
 		return alias;
 	}
 }

@@ -44,10 +44,10 @@ public class Orchestra {
 			map.put(inst.id, 2, START);
 			map.put(inst.id, 3, DURATION);
 		}
-		System.out.println(map);
 		return map;
 	}
 
+	@Override
 	public String toString() {
 		String s = "sr = " + sr + "\n" + "ksmps = " + ksmps + "\n" + "nchnls = " + nchnls + "\n" + "0dbfs = " + dbfs
 				+ "\n";

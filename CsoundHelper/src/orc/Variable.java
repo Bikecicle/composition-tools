@@ -13,8 +13,9 @@ public class Variable extends Value {
 	public String toString() {
 		String s = "";
 		for (Value value : params) {
-			if (!value.terminal)
-				s += value + "\n";
+			if (!value.terminal && !value.defined) {
+				s += value;
+			}
 		}
 		s += alias + " " + operator + " ";
 		for (int i = 0; i < params.length; i++) {
@@ -22,6 +23,7 @@ public class Variable extends Value {
 				s += ", ";
 			s += params[i].alias;
 		}
+		defined = true;
 		return s;
 	}
 }

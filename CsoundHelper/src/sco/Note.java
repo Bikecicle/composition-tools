@@ -9,6 +9,7 @@ public class Note {
 	
 	public Note(ParamMap map) {
 		params = new ParamList();
+		this.map = map;
 	}
 	
 	public void add(Param<?> param) {
@@ -16,12 +17,21 @@ public class Note {
 	}
 	
 	public String toString() {
-		int i = Integer.parseInt(params.find(Orchestra.INSTRUMENT).read());
+		int i = 1;
+		try {
+			i = Integer.parseInt(params.find(Orchestra.INSTRUMENT).read());
+		} catch (NumberFormatException | ParameterNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		String s = "i " + i;
 		int p = 2;
 		String name = map.get(i, p);
 		while (name != null) { 
-			s += " " + params.find(name).read();
+			try {
+				s += " " + params.find(name).read();
+			} catch (ParameterNotFoundException e) {
+				e.printStackTrace();
+			}
 			p++;
 			name = map.get(i, p);
 		}

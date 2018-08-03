@@ -20,7 +20,8 @@ public class FTable implements Serializable {
 		this.igen = igen;
 	}
 
-	public String read() {
+	@Override
+	public String toString() {
 		return "f " + ifn + " " + itime + " " + isize + " " + igen.id;
 	}
 	

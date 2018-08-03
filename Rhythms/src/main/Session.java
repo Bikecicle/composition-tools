@@ -37,7 +37,7 @@ public class Session {
 			Population initPopT = new Population();
 			Population initPopS = new Population();
 			for (int g = 0; g < POP_SIZE; g++) {
-				Timbre timbre = new Timbre(sample);
+				Timbre timbre = new Timbre();
 				timbre.randomize();
 				initPopT.add(timbre);
 				Sequence sequence = new Sequence(length, quant, tempo);

@@ -7,6 +7,8 @@ import java.util.Scanner;
 import sound.Performer;
 
 public class Generator {
+	
+	public static final String TEST_OUT = "test.wav";
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -31,7 +33,7 @@ public class Generator {
 			System.out.println("[Batch " + b + "]");
 			List<Rhythm> batch = session.createBatch();
 			for (Rhythm rhythm : batch) {
-				performer.play(rhythm);
+				performer.play(rhythm, TEST_OUT);
 				while (true) {
 					System.out.println("Rating (0-5): ");
 					try {

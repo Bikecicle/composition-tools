@@ -6,16 +6,9 @@ import csnd6.csnd6;
 
 public class Performer {
 
-	public static final String RT_OUT = "bob.wav";
+	public static final String RT_OUT = "dac0";
 
-	public void play(String orc, String sco, String out) {
-
-		System.out.println("[Orchestra]");
-		System.out.println(orc);
-		System.out.println("[Score]");
-		System.out.println(sco);
-		// System.out.println(out);
-
+	public static void play(String orc, String sco, String out) {
 		csnd6.csoundInitialize(csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
 
 		Csound c = new Csound();
@@ -24,19 +17,18 @@ public class Performer {
 		c.ReadScore(sco);
 		c.Start();
 
-		CsoundPerformanceThread t = new CsoundPerformanceThread(c);
-		t.Play();
-		t.Join();
+		while (c.PerformKsmps() == 0) {
+		}
 
 		c.Stop();
 		c.Cleanup();
 	}
 
-	public void play(Performable p, String out) {
+	public static void play(Performable p, String out) {
 		play(p.getOrchestra().toString(), p.getScore().toString(), out);
 	}
 
-	public void play(Performable p) {
+	public static void play(Performable p) {
 		play(p, RT_OUT);
 	}
 }

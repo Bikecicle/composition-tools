@@ -5,8 +5,12 @@ import sco.ParamMap;
 public class Expression extends Value {
 
 	public Expression(String format, Value... params) {
-		super(String.format(format, (Object[]) params), true, 1, params);
+		super(null, false, 1, params);
 		this.params = params;
+		Object[] strs = new String[params.length];
+		for (int i = 0; i < params.length; i++)
+			strs[i] = params[i].alias;
+		alias = String.format(format, strs);
 	}
 
 	@Override
@@ -18,9 +22,11 @@ public class Expression extends Value {
 	public String toString() {
 		String s = "";
 		for (Value param : params) {
-			if (!param.terminal)
+			if (!param.terminal & !param.defined) {
 				s += param + "\n";
+			}
 		}
+		defined = true;
 		return s;
 	}
 }

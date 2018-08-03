@@ -22,6 +22,7 @@ public class Input extends Value {
 
 	@Override
 	public String toString() {
+		defined = true;
 		return alias;
 	}
 }
