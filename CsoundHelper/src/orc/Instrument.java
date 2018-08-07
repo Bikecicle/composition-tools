@@ -49,7 +49,7 @@ public class Instrument {
 	public String toString() {
 		String s = "";
 		for (Value value : outs) {
-			s += value + "\n";
+			s += value + "\r\n";
 		}
 		s += "outs ";
 		for (int i = 0; i < outs.length; i++) {

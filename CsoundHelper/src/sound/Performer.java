@@ -1,5 +1,9 @@
 package sound;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import csnd6.Csound;
 import csnd6.CsoundPerformanceThread;
 import csnd6.csnd6;
@@ -30,5 +34,24 @@ public class Performer {
 
 	public static void play(Performable p) {
 		play(p, RT_OUT);
+	}
+	
+	@SuppressWarnings("resource")
+	public static void playFile(String orcPath, String scoPath, String out) {
+		String orc = null;
+        String sco = null;
+        
+		try {
+			orc = new Scanner(new File(orcPath)).useDelimiter("\\Z").next();
+			sco = new Scanner(new File(scoPath)).useDelimiter("\\Z").next();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		play(orc, sco, out);
+	}
+	
+	public static void playFile(String orcPath, String scoPath) {
+		playFile(orcPath, scoPath, RT_OUT);
 	}
 }

@@ -1,5 +1,12 @@
 package test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+import javax.xml.parsers.FactoryConfigurationError;
+
 import main.Rhythm;
 import main.Sequence;
 import main.Timbre;
@@ -14,7 +21,7 @@ public class TestInstrument {
 		Timbre[] ts = new Timbre[voices];
 		Sequence[] ss = new Sequence[voices];
 
-		fs[0] = "noise.wav";
+		fs[0] = "choir.wav";
 
 		Timbre t = new Timbre();
 		t.pos[0] = 0.2f;
@@ -38,12 +45,14 @@ public class TestInstrument {
 		ss[0] = s;
 
 		Rhythm r = new Rhythm(fs, ts, ss);
-		//String out = "output/test.wav";
+		String out = "output/test.wav";
 		
 		System.out.println(r.getOrchestra());
 		System.out.println(r.getScore());
 		
-		Performer.play(r);
+		Performer.play(r, out);
+	
+		//Performer.playFile("csd/test_orc.orc", "csd/test_sco.sco");
 	}
 
 }

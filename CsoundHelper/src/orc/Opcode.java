@@ -16,9 +16,9 @@ public class Opcode extends Value {
 		for (Value param : params) {
 			if (!param.terminal && !param.defined) {
 				if (param instanceof Opcode) {
-					o += param + "\n";
+					o += param + "\r\n";
 				} else {
-					s += param + "\n";
+					s += param + "\r\n";
 				}
 				
 			}

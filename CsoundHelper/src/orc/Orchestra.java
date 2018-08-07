@@ -49,10 +49,10 @@ public class Orchestra {
 
 	@Override
 	public String toString() {
-		String s = "sr = " + sr + "\n" + "ksmps = " + ksmps + "\n" + "nchnls = " + nchnls + "\n" + "0dbfs = " + dbfs
-				+ "\n";
+		String s = "sr = " + sr + "\r\n" + "ksmps = " + ksmps + "\r\n" + "nchnls = " + nchnls + "\r\n" + "0dbfs = " + dbfs
+				+ "\r\n";
 		for (int i = 0; i < instruments.size(); i++) {
-			s += "\n" + "instr " + (i + 1) + "\n" + instruments.get(i) + "\n" + "endin\n";
+			s += "\r\n" + "instr " + (i + 1) + "\r\n" + instruments.get(i) + "\r\n" + "endin\r\n";
 		}
 		return s;
 	}

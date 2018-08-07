@@ -23,7 +23,7 @@ public class Expression extends Value {
 		String s = "";
 		for (Value param : params) {
 			if (!param.terminal & !param.defined) {
-				s += param + "\n";
+				s += param + "\r\n";
 			}
 		}
 		defined = true;
