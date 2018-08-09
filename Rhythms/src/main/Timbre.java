@@ -10,7 +10,7 @@ public class Timbre implements Genome {
 	public static final int ENVELOPE_DIM = 64;
 	public static final int SPEED_DIM = 8;
 	
-	public static final float DEFAULT_DUR = 0.2f;
+	public static final float DEFAULT_DUR = 0.05f;
 	public static final float MIN_PTCH = 0.5f;
 	public static final float MAX_PTCH = 1.5f;
 

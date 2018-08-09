@@ -39,6 +39,7 @@ public class UI {
 			String action = input("(c)ontinue, (r)epeat, (q)uit", "[crq]", in);
 			if (action.equals("c")) {
 				session.advance();
+				b++;
 			} else if (action.equals("r")) {
 				// Go over the same population again
 			} else if (action.equals("q")) {

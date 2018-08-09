@@ -14,7 +14,7 @@ public class Session {
 	public static final float SURVIVAL_CF = 0.3f;
 	public static final float MUTATION_RATE = 0.1f;
 	public static final int POP_SIZE = 12;
-	public static final int BATCH_REP = 2;
+	public static final int BATCH_REP = 1;
 
 	EvolutionManager[] timbreEM;
 	EvolutionManager[] sequenceEM;

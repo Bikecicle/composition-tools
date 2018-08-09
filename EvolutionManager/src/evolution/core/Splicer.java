@@ -122,4 +122,10 @@ public class Splicer {
 		}
 		return g3;
 	}
+
+	public static int chooseInt(int a, int b) {
+		if (Math.random() < WEIGHT)
+			return a;
+		return b;
+	}
 }

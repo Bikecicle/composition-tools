@@ -49,6 +49,7 @@ public class Sequence implements Genome {
 	public Genome breed(Genome g1) {
 		Sequence other = (Sequence) g1;
 		Sequence child = new Sequence(length, quant, tempo);
+		child.strikeCount = Splicer.chooseInt(this.strikeCount, other.strikeCount);
 		child.strt = Splicer.spliceInt(this.strt, other.strt);
 		child.pos = Splicer.spliceFloat(this.pos, other.pos, strikeCount);
 		child.att = Splicer.spliceFloat(this.att, other.att, strikeCount);
@@ -58,7 +59,7 @@ public class Sequence implements Genome {
 		child.slev = Splicer.spliceFloat(this.slev, other.slev, strikeCount);
 		child.ptch = Splicer.spliceFloat(this.ptch, other.ptch, strikeCount);
 		child.mutate();
-		return null;
+		return child;
 	}
 
 	@Override
