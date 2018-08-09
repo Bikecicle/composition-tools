@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import csnd6.Csound;
-import csnd6.CsoundPerformanceThread;
 import csnd6.csnd6;
 
 public class Performer {

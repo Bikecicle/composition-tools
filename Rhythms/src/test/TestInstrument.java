@@ -1,12 +1,5 @@
 package test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
-import javax.xml.parsers.FactoryConfigurationError;
-
 import main.Rhythm;
 import main.Sequence;
 import main.Timbre;
@@ -14,7 +7,6 @@ import sound.Performer;
 
 public class TestInstrument {
 
-	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		int voices = 1;
 		String[] fs = new String[voices];
@@ -36,21 +28,21 @@ public class TestInstrument {
 		t.rel[1] = 0.2f;
 		t.slev[0] = 0.1f;
 		t.slev[1] = 0.2f;
+		t.ptch[0] = 0.5f;
+		t.ptch[1] = 1.5f;
 		ts[0] = t;
 
 		Sequence s = new Sequence(3, 8, 120);
-		s.addStrike(0, 0, 0, 0, 0, 0, 0);
-		s.addStrike(8, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f);
-		s.addStrike(16, 1, 1, 1, 1, 1, 1);
+		s.addStrike(0, 0, 0, 0, 0, 0, 0, 0);
+		s.addStrike(8, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f);
+		s.addStrike(16, 1, 1, 1, 1, 1, 1, 1);
 		ss[0] = s;
 
 		Rhythm r = new Rhythm(fs, ts, ss);
-		String out = "output/test.wav";
-		
 		System.out.println(r.getOrchestra());
 		System.out.println(r.getScore());
 		
-		Performer.play(r, out);
+		Performer.play(r);
 	
 		//Performer.playFile("csd/test_orc.orc", "csd/test_sco.sco");
 	}

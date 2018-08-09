@@ -9,7 +9,10 @@ public class Timbre implements Genome {
 	
 	public static final int ENVELOPE_DIM = 64;
 	public static final int SPEED_DIM = 8;
+	
 	public static final float DEFAULT_DUR = 0.2f;
+	public static final float MIN_PTCH = 0.5f;
+	public static final float MAX_PTCH = 1.5f;
 
 	public float[] pos;
 	public float[] att;
@@ -17,6 +20,7 @@ public class Timbre implements Genome {
 	public float[] sus;
 	public float[] rel;
 	public float[] slev;
+	public float[] ptch;
 
 	double mRate;
 	double score;
@@ -28,6 +32,7 @@ public class Timbre implements Genome {
 		sus = new float[2];
 		rel = new float[2];
 		slev = new float[2];
+		ptch = new float[2];
 		mRate = Session.MUTATION_RATE;
 		score = 0;
 	}
@@ -42,18 +47,20 @@ public class Timbre implements Genome {
 		child.sus = Splicer.chooseRange(this.sus, other.sus);
 		child.rel = Splicer.chooseRange(this.rel, other.rel);
 		child.slev = Splicer.chooseRange(this.slev, other.slev);
+		child.ptch = Splicer.chooseRange(this.ptch, other.ptch);
 		child.mutate();
 		return child;
 	}
 	
 	@Override
 	public void randomize() {
-		Splicer.randomizeRange(pos, 1);
-		Splicer.randomizeRange(att, 1);
-		Splicer.randomizeRange(dec, 1);
-		Splicer.randomizeRange(sus, 1);
-		Splicer.randomizeRange(rel, 1);
-		Splicer.randomizeRange(slev, 1);
+		Splicer.randomizeRange(pos, 0, 1);
+		Splicer.randomizeRange(att, 0, DEFAULT_DUR);
+		Splicer.randomizeRange(dec, 0, DEFAULT_DUR);
+		Splicer.randomizeRange(sus, 0, DEFAULT_DUR);
+		Splicer.randomizeRange(rel, 0, DEFAULT_DUR);
+		Splicer.randomizeRange(slev, 0, 1);
+		Splicer.randomizeRange(ptch, MIN_PTCH, MAX_PTCH);
 		score = 0;
 	}
 
@@ -68,11 +75,12 @@ public class Timbre implements Genome {
 	}
 	
 	public void mutate() {
-		Splicer.mutateRange(pos, 1, Session.MUTATION_RATE);
-		Splicer.mutateRange(att, 1, Session.MUTATION_RATE);
-		Splicer.mutateRange(dec, 1, Session.MUTATION_RATE);
-		Splicer.mutateRange(sus, 1, Session.MUTATION_RATE);
-		Splicer.mutateRange(rel, 1, Session.MUTATION_RATE);
-		Splicer.mutateRange(slev, 1, Session.MUTATION_RATE);
+		Splicer.mutateRange(pos, 0, 1, Session.MUTATION_RATE);
+		Splicer.mutateRange(att, 2, Session.MUTATION_RATE);
+		Splicer.mutateRange(dec, 2, Session.MUTATION_RATE);
+		Splicer.mutateRange(sus, 2, Session.MUTATION_RATE);
+		Splicer.mutateRange(rel, 2, Session.MUTATION_RATE);
+		Splicer.mutateRange(slev, 0, 1, Session.MUTATION_RATE);
+		Splicer.mutateRange(ptch, MIN_PTCH, MAX_PTCH, Session.MUTATION_RATE);
 	}
 }

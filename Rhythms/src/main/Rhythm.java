@@ -16,6 +16,8 @@ import orc.Opcode;
 
 public class Rhythm implements Performable {
 
+	private static final float AMP = 100;
+	
 	String[] samples;
 	Timbre[] timbres;
 	Sequence[] sequences;
@@ -50,6 +52,7 @@ public class Rhythm implements Performable {
 				float sus = realValue(timbres[v].sus, sequences[v].sus[s]);
 				float rel = realValue(timbres[v].rel, sequences[v].rel[s]);
 				float slev = realValue(timbres[v].slev, sequences[v].slev[s]);
+				float ptch = realValue(timbres[v].ptch, sequences[v].ptch[s]);
 				float dur = att + dec + sus + rel;
 				note.add(new Param<Integer>(Orchestra.INSTRUMENT, 1));
 				note.add(new Param<Float>(Orchestra.START, sequences[v].strt[s] * quantLen));
@@ -60,6 +63,7 @@ public class Rhythm implements Performable {
 				note.add(new Param<Float>("rel", rel));
 				note.add(new Param<Float>("slev", slev));
 				note.add(new Param<Integer>("fn", ifn));
+				note.add(new Param<Float>("pitch", ptch));
 				sco.addNote(note);
 			}
 		}
@@ -74,8 +78,8 @@ public class Rhythm implements Performable {
 		float dbfs = 1.0f;
 		Orchestra orc = new Orchestra(sr, ksmps, nchnls, dbfs);
 		Instrument i = new Instrument(1);
-		Value db = new Constant<Float>(200f);
-		Value kpitch = new Constant<Integer>(1);
+		Value db = new Constant<Float>(AMP);
+		Value kpitch = new Variable("k", "pitch", "=", i.p());
 		Value ifad = new Constant<Float>(0.05f);
 		Value ifn = new Variable("i", "fn", "=", i.p());
 		Value kloopstart = new Variable("k", "strt", "=",
@@ -85,7 +89,6 @@ public class Rhythm implements Performable {
 		Value idec = new Variable("i", "dec", "=", i.p());
 		Value islev = new Variable("i", "slev", "=", i.p());
 		Value irel = new Variable("i", "rel", "=", i.p());
-		Value idel = new Constant<Float>(0.01f);
 		Value kamp = new Opcode("k", "amp", 1, "xadsr", iatt, idec, islev, irel);
 		Value loop = new Opcode("a", "sig", 2, "flooper2", new Expression("%s * %s", kamp, db), kpitch, kloopstart,
 				kloopend, ifad, ifn);

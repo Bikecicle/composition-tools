@@ -20,6 +20,7 @@ public class Splicer {
 		float[] r3 = new float[2];
 		r3[0] = Math.random() > WEIGHT ? r1[0] : r2[0];
 		r3[1] = Math.random() > WEIGHT ? r1[1] : r2[1];
+		
 		if (r3[0] > r3[1]) {
 			float a = r3[0];
 			r3[0] = r3[1];
@@ -28,9 +29,10 @@ public class Splicer {
 		return r3;
 	}
 	
-	public static void randomizeRange(float[] range, float scale) {
-		range[0] = (float) (Math.random() * scale);
-		range[1] = (float) (Math.random() * scale);
+	public static void randomizeRange(float[] range, float min, float max) {
+		range[0] = (float) (Math.random() * (max - min) + min);
+		range[1] = (float) (Math.random() * (max - min) + min);
+		
 		if (range[0] > range[1]) {
 			float a = range[0];
 			range[0] = range[1];
@@ -38,9 +40,10 @@ public class Splicer {
 		}
 	}
 	
-	public static void mutateRange(float[] range, float scale, float rate) {
-		range[0] = (float) (Math.random() < rate ? Math.random() * scale : range[0]);
-		range[1] = (float) (Math.random() < rate ? Math.random() * scale : range[1]);
+	public static void mutateRange(float[] range, float min, float max, float rate) {
+		range[0] = (float) (Math.random() < rate ? Math.random() * (max - min) + min : range[0]);
+		range[1] = (float) (Math.random() < rate ? Math.random() * (max - min) + min : range[1]);
+		
 		if (range[0] > range[1]) {
 			float a = range[0];
 			range[0] = range[1];
@@ -48,9 +51,39 @@ public class Splicer {
 		}
 	}
 	
-	public static float[] spliceFloat(float[] strt, float[] strt2) {
-		int a = (int) (Math.random() * strt.length);
-		int b = (int) (Math.random() * strt.length);
+	public static void mutateRange(float[] range, float factor, float rate) {
+		range[0] = (float) (Math.random() < rate ? Math.random() * factor * range[0] : range[0]);
+		range[1] = (float) (Math.random() < rate ? Math.random() * factor * range[0] : range[1]);
+		
+		if (range[0] > range[1]) {
+			float a = range[0];
+			range[0] = range[1];
+			range[1] = a;
+		}
+	}
+	
+	public static void mutateRangeS(float[] range, float min, float max, float step, float rate) {
+		range[0] = (float) (Math.random() < rate ? (Math.random() * 2 - 1) * step + range[0] : range[0]);
+		if (range[0] > max)
+			range[0] = max;
+		if (range[0] < min)
+			range[0] = min;
+		range[1] = (float) (Math.random() < rate ? (Math.random() * 2 - 1) * step + range[1] : range[1]);
+		if (range[1] > max)
+			range[1] = max;
+		if (range[1] < min)
+			range[1] = min;
+		
+		if (range[0] > range[1]) {
+			float a = range[0];
+			range[0] = range[1];
+			range[1] = a;
+		}
+	}
+	
+	public static float[] spliceFloat(float[] strt, float[] strt2, int limit) {
+		int a = (int) (Math.random() * limit);
+		int b = (int) (Math.random() * limit);
 		if (a > b) {
 			int t = a;
 			a = b;

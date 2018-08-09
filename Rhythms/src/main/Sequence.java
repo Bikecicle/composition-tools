@@ -22,6 +22,7 @@ public class Sequence implements Genome {
 	float[] sus;
 	float[] rel;
 	float[] slev;
+	float[] ptch;
 
 	double mRate;
 	double score;
@@ -38,6 +39,7 @@ public class Sequence implements Genome {
 		sus = new float[STRIKE_MAX];
 		rel = new float[STRIKE_MAX];
 		slev = new float[STRIKE_MAX];
+		ptch = new float[STRIKE_MAX];
 
 		mRate = Session.MUTATION_RATE;
 		score = 0;
@@ -48,12 +50,13 @@ public class Sequence implements Genome {
 		Sequence other = (Sequence) g1;
 		Sequence child = new Sequence(length, quant, tempo);
 		child.strt = Splicer.spliceInt(this.strt, other.strt);
-		child.pos = Splicer.spliceFloat(this.pos, other.pos);
-		child.att = Splicer.spliceFloat(this.att, other.att);
-		child.dec = Splicer.spliceFloat(this.dec, other.dec);
-		child.sus = Splicer.spliceFloat(this.sus, other.sus);
-		child.rel = Splicer.spliceFloat(this.rel, other.rel);
-		child.slev = Splicer.spliceFloat(this.slev, other.slev);
+		child.pos = Splicer.spliceFloat(this.pos, other.pos, strikeCount);
+		child.att = Splicer.spliceFloat(this.att, other.att, strikeCount);
+		child.dec = Splicer.spliceFloat(this.dec, other.dec, strikeCount);
+		child.sus = Splicer.spliceFloat(this.sus, other.sus, strikeCount);
+		child.rel = Splicer.spliceFloat(this.rel, other.rel, strikeCount);
+		child.slev = Splicer.spliceFloat(this.slev, other.slev, strikeCount);
+		child.ptch = Splicer.spliceFloat(this.ptch, other.ptch, strikeCount);
 		child.mutate();
 		return null;
 	}
@@ -74,6 +77,7 @@ public class Sequence implements Genome {
 			sus[i] = (float) Math.random();
 			rel[i] = (float) Math.random();
 			slev[i] = (float) Math.random();
+			ptch[i] = (float) Math.random();
 		}
 	}
 
@@ -87,7 +91,7 @@ public class Sequence implements Genome {
 		return hashCode();
 	}
 	
-	public void addStrike(int strt, float pos, float att, float dec, float sus, float rel, float slev) {
+	public void addStrike(int strt, float pos, float att, float dec, float sus, float rel, float slev, float ptch) {
 		int i = strikeCount;
 		strikeCount++;
 		this.strt[i] = strt;
@@ -97,6 +101,7 @@ public class Sequence implements Genome {
 		this.sus[i] = sus;
 		this.rel[i] = rel;
 		this.slev[i] = slev;
+		this.ptch[i] = ptch;
 	}
 	
 	public float getQuantLength() {
@@ -113,6 +118,7 @@ public class Sequence implements Genome {
 			sus[i] = (float) (Math.random() < mRate ? Math.random() : sus[i]);
 			rel[i] = (float) (Math.random() < mRate ? Math.random() : rel[i]);
 			slev[i] = (float) (Math.random() < mRate ? Math.random() : slev[i]);
+			ptch[i] = (float) (Math.random() < mRate ? Math.random() : ptch[i]);
 		}
 	}
 }
