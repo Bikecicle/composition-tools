@@ -1,5 +1,10 @@
 package main;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +20,7 @@ import evolution.core.Population;
 public class Session implements Serializable {
 
 	private static final long serialVersionUID = 1841382270270688255L;
-	
+
 	public static final float SURVIVAL_CF = 0.3f;
 	public static final float MUTATION_RATE = 0.1f;
 	public static final int POP_SIZE = 12;
@@ -24,7 +29,7 @@ public class Session implements Serializable {
 	String title;
 	String sessionDir;
 	List<Rhythm> saved;
-	
+
 	EvolutionManager[] timbreEM;
 	EvolutionManager[] sequenceEM;
 	String[] samples;
@@ -33,7 +38,8 @@ public class Session implements Serializable {
 	int quant;
 	float tempo;
 
-	public Session(String title, String mainDir, int voiceCount, int length, int quant, float tempo, String... samples) {
+	public Session(String title, String mainDir, int voiceCount, int length, int quant, float tempo,
+			String... samples) {
 		this.title = title;
 		sessionDir = mainDir + title + "/";
 		this.voiceCount = voiceCount;
@@ -60,11 +66,17 @@ public class Session implements Serializable {
 			saved = new ArrayList<>();
 		}
 	}
-	
-	public Session(String title, String mainPath) {
-		
+
+	public static Session loadSession(String title, String mainDir) {
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(mainDir + title + "/" + title + ".rhy"));
+			Session session = (Session) in.readObject();
+			in.close();
+			return session;
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	
 
 	public List<Rhythm> createBatch() {
 		List<Rhythm> batch = new ArrayList<>();
@@ -107,8 +119,8 @@ public class Session implements Serializable {
 			sequenceEM[v].nextGeneration();
 		}
 	}
-	
+
 	public void save() {
-		
+
 	}
 }
