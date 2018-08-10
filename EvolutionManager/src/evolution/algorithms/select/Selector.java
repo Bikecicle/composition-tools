@@ -5,7 +5,6 @@ import evolution.diagnostics.Log;
 
 public interface Selector {
 
-	public Population nextGeneration(Population pop);
+	public abstract Population nextGeneration(Population current, int nextSize, Log log);
 	
-	public void enableLogging(Log log);
 }

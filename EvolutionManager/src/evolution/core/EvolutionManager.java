@@ -21,7 +21,6 @@ public class EvolutionManager {
 		if (logging) {
 			log = new Log();
 			log.recordPopulation(initPop);
-			selector.enableLogging(log);
 		}
 	}
 
@@ -32,13 +31,13 @@ public class EvolutionManager {
 
 	public void runGenerations(int maxGen) {
 		while (pop.gen < maxGen) {
-			pop = selector.nextGeneration(pop);
+			pop = selector.nextGeneration(pop, pop.size(), log);
 		}
 	}
 
 	public void runScoreThreshold(int score) {
 		while (pop.getFittest().getScore() < score) {
-			pop = selector.nextGeneration(pop);
+			pop = selector.nextGeneration(pop, pop.size(), log);
 		}
 	}
 	

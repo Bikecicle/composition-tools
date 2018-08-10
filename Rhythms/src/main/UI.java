@@ -19,8 +19,11 @@ public class UI {
 		int length = Integer.parseInt(input("Length (measures):", INT, in));
 		int quant = Integer.parseInt(input("Quantization (measure division):", INT, in));
 		float tempo = Float.parseFloat(input("Tempo (bpm):", FLOAT, in));
-		String sample = inputFile("Sample:", "samples", in);
-		Session session = new Session(voiceCount, length, quant, tempo, sample);
+		String[] samples = new String[voiceCount];
+		for (int v = 0; v < voiceCount; v++) {
+			samples[v] = inputFile("Voice #" + (v + 1) + " sample:", "samples", in);
+		}
+		Session session = new Session(voiceCount, length, quant, tempo, samples);
 		int b = 1;
 		boolean stopped = false;
 		while (!stopped) {
@@ -32,7 +35,10 @@ public class UI {
 					Performer.play(batch.get(i));
 					System.out.println();
 					System.out.println("[Batch " + b + ", " + (i + 1) + "/" + batch.size() + "]");
-					r = input("Rate (0-5) or (r)epeat:", "[0-5r]", in);
+					r = input("Rate (0-5), (r)epeat, (s)ave:", "[0-5rs]", in);
+				}
+				if (r.equals("s")) {
+					
 				}
 				batch.get(i).rate(Integer.parseInt(r));
 			}

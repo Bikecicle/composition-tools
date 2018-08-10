@@ -9,25 +9,22 @@ import evolution.diagnostics.Record;
 public class SingleGenNorm implements Selector {
 
 	Normalizer normalizer;
-	Log log;
 
 	public SingleGenNorm(Normalizer normalizer) {
 		this.normalizer = normalizer;
-		log = null;
 	}
 
 	@Override
-	public Population nextGeneration(Population current) {
+	public Population nextGeneration(Population current, int nextSize, Log log) {
 		double[] breedRates = normalizer.normalize(current); // Mapped by index
 		Population next = new Population(current.gen + 1);
-		for (int i = 0; i < current.size(); i++) {
+		for (int i = 0; i < nextSize; i++) {
 			Genome parent1 = current.get(selectRandom(breedRates));
 			Genome parent2 = current.get(selectRandom(breedRates));
 			Genome child = parent1.breed(parent2);
 			next.add(child);
-			if (log != null) {
+			if (log != null)
 				log.add(new Record(next.gen, child, parent1, parent2));
-			}
 		}
 
 		return next;
@@ -45,10 +42,5 @@ public class SingleGenNorm implements Selector {
 			}
 		}
 		return -1; // This means rates don't add up to 1.0
-	}
-
-	@Override
-	public void enableLogging(Log log) {
-		this.log = log;
 	}
 }
