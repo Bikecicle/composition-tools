@@ -3,14 +3,17 @@ package main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import evolution.algorithms.select.ExemplarInject;
 import evolution.algorithms.select.RandomSelect;
 import evolution.algorithms.select.Selector;
 import evolution.algorithms.select.SurvivalThreshold;
@@ -21,14 +24,19 @@ public class Session implements Serializable {
 
 	private static final long serialVersionUID = 1841382270270688255L;
 
-	public static final float SURVIVAL_CF = 0.3f;
-	public static final float MUTATION_RATE = 0.1f;
-	public static final int POP_SIZE = 12;
-	public static final int BATCH_REP = 1;
+	public static final String SESSION_EXT = ".rhy";
+	public static final String SET_EXT = ".set";
+
+	public static final float survivalCf = 0.3f;
+	public static final float mutationRate = 0.1f;
+	public static final int popSize = 12;
+	public static final int batchRep = 1;
+
+	public static final boolean logging = true;
 
 	String title;
 	String sessionDir;
-	List<Rhythm> saved;
+	Set set;
 
 	EvolutionManager[] timbreEM;
 	EvolutionManager[] sequenceEM;
@@ -37,11 +45,15 @@ public class Session implements Serializable {
 	int length;
 	int quant;
 	float tempo;
+	
+	int stage;
 
-	public Session(String title, String mainDir, int voiceCount, int length, int quant, float tempo,
+	public Session(String mainDir, String title, int voiceCount, int length, int quant, float tempo,
 			String... samples) {
 		this.title = title;
 		sessionDir = mainDir + title + "/";
+		openDir(mainDir);
+		openDir(sessionDir);
 		this.voiceCount = voiceCount;
 		this.length = length;
 		this.quant = quant;
@@ -49,11 +61,13 @@ public class Session implements Serializable {
 		this.samples = samples;
 		timbreEM = new EvolutionManager[voiceCount];
 		sequenceEM = new EvolutionManager[voiceCount];
+		set = new Set();
 		for (int v = 0; v < voiceCount; v++) {
-			Selector selector = new SurvivalThreshold(new RandomSelect(), SURVIVAL_CF);
+			Selector selectorT = new ExemplarInject(new SurvivalThreshold(new RandomSelect(), survivalCf), set.timbres);
+			Selector selectorS = new ExemplarInject(new SurvivalThreshold(new RandomSelect(), survivalCf), set.sequences);
 			Population initPopT = new Population();
 			Population initPopS = new Population();
-			for (int g = 0; g < POP_SIZE; g++) {
+			for (int g = 0; g < popSize; g++) {
 				Timbre timbre = new Timbre();
 				timbre.randomize();
 				initPopT.add(timbre);
@@ -61,21 +75,17 @@ public class Session implements Serializable {
 				sequence.randomize();
 				initPopS.add(sequence);
 			}
-			timbreEM[v] = new EvolutionManager(initPopT, selector, false);
-			sequenceEM[v] = new EvolutionManager(initPopS, selector, false);
-			saved = new ArrayList<>();
+			timbreEM[v] = new EvolutionManager(initPopT, selectorT, logging);
+			sequenceEM[v] = new EvolutionManager(initPopS, selectorS, logging);
 		}
+		stage = 1;
 	}
-
-	public static Session loadSession(String title, String mainDir) {
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(mainDir + title + "/" + title + ".rhy"));
-			Session session = (Session) in.readObject();
-			in.close();
-			return session;
-		} catch (Exception e) {
-			return null;
-		}
+	
+	public static Session loadSession(String mainDir, String title) throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(mainDir + title + "/" + title + SESSION_EXT));
+		Session session = (Session) in.readObject();
+		in.close();
+		return session;
 	}
 
 	public List<Rhythm> createBatch() {
@@ -85,12 +95,12 @@ public class Session implements Serializable {
 		List<List<Integer>> indicesT = new ArrayList<>();
 		List<List<Integer>> indicesS = new ArrayList<>();
 		List<Integer> set = new LinkedList<>();
-		for (int i = 0; i < POP_SIZE; i++) {
-			for (int j = 0; j < BATCH_REP; j++) {
+		for (int i = 0; i < popSize; i++) {
+			for (int j = 0; j < batchRep; j++) {
 				set.add(i);
 			}
 		}
-		int batchSize = POP_SIZE * BATCH_REP;
+		int batchSize = popSize * batchRep;
 		for (int v = 0; v < voiceCount; v++) {
 			Collections.shuffle(set);
 			List<Integer> voiceT = new ArrayList<>(set);
@@ -118,9 +128,39 @@ public class Session implements Serializable {
 			timbreEM[v].nextGeneration();
 			sequenceEM[v].nextGeneration();
 		}
+		stage++;
+	}
+	
+	public void addToSet(Rhythm rhythm) {
+		set.add(rhythm);
 	}
 
-	public void save() {
+	public void saveSession() throws IOException {
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(sessionDir + title + SESSION_EXT));
+		out.writeObject(this);
+		out.close();
 
+	}
+
+	public void saveSet(String setName) throws FileNotFoundException, IOException {
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(sessionDir + setName + SET_EXT));
+		out.writeObject(set);
+		out.close();
+	}
+	
+	public void loadSet(String setName) throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(sessionDir + setName + SET_EXT));
+		set = (Set) in.readObject();
+		in.close();
+	}
+	
+	
+	private boolean openDir(String path) {
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdir();
+			return true;
+		}
+		return false;
 	}
 }

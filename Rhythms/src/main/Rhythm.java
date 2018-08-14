@@ -15,6 +15,8 @@ import orc.Instrument;
 import orc.Opcode;
 
 public class Rhythm implements Performable {
+	
+	private static final long serialVersionUID = 6111978696319487569L;
 
 	private static final float AMP = 100;
 	
@@ -79,7 +81,7 @@ public class Rhythm implements Performable {
 		Orchestra orc = new Orchestra(sr, ksmps, nchnls, dbfs);
 		Instrument i = new Instrument(1);
 		Value db = new Constant<Float>(AMP);
-		Value kpitch = new Variable("k", "pitch", "=", i.p());
+		Value kpitch = new Constant<Float>(1f); // Variable("k", "pitch", "=", i.p());
 		Value ifad = new Constant<Float>(0.05f);
 		Value ifn = new Variable("i", "fn", "=", i.p());
 		Value kloopstart = new Variable("k", "strt", "=",

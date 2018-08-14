@@ -7,8 +7,8 @@ public class Sequence implements Genome {
 
 	private static final long serialVersionUID = 2759154287214849102L;
 
-	public final int STRIKE_MAX = 64;
-	public final float MUTATION_RATE = 0.1f;
+	public final int strikeMax = 64;
+	public final float mutationRate = 0.1f;
 
 	int strikeCount;
 	int length; // In measures
@@ -32,16 +32,16 @@ public class Sequence implements Genome {
 		this.quant = quant;
 		this.tempo = tempo;
 
-		strt = new int[STRIKE_MAX];
-		pos = new float[STRIKE_MAX];
-		att = new float[STRIKE_MAX];
-		dec = new float[STRIKE_MAX];
-		sus = new float[STRIKE_MAX];
-		rel = new float[STRIKE_MAX];
-		slev = new float[STRIKE_MAX];
-		ptch = new float[STRIKE_MAX];
+		strt = new int[strikeMax];
+		pos = new float[strikeMax];
+		att = new float[strikeMax];
+		dec = new float[strikeMax];
+		sus = new float[strikeMax];
+		rel = new float[strikeMax];
+		slev = new float[strikeMax];
+		ptch = new float[strikeMax];
 
-		mRate = Session.MUTATION_RATE;
+		mRate = Session.mutationRate;
 		score = 0;
 	}
 
@@ -64,14 +64,9 @@ public class Sequence implements Genome {
 
 	@Override
 	public void randomize() {
-		int tInt = (int) (Math.random() * quant) + 1;
-		int phase = (int) (Math.random() * tInt);
-		strikeCount = length * quant / tInt;
-		for (int i = 0; i < STRIKE_MAX; i++) {
-			if (i < strikeCount)
-				strt[i] = i * tInt + phase;
-			else
-				strt[i] = (int) (Math.random() * length * quant);
+		strikeCount = (int) (Math.random() * length * quant) + 1;
+		for (int i = 0; i < strikeMax; i++) {
+			strt[i] = (int) (Math.random() * length * quant);
 			pos[i] = (float) Math.random();
 			att[i] = (float) Math.random();
 			dec[i] = (float) Math.random();
@@ -111,7 +106,7 @@ public class Sequence implements Genome {
 
 	private void mutate() {
 		strikeCount = (int) (Math.random() < mRate ? strikeCount + Math.signum(Math.random() - 0.5) : strikeCount);
-		for (int i = 0; i < STRIKE_MAX; i++) {
+		for (int i = 0; i < strikeMax; i++) {
 			strt[i] = (int) (Math.random() < mRate ? Math.random() * length * quant : strt[i]);
 			pos[i] = (float) (Math.random() < mRate ? Math.random() : pos[i]);
 			att[i] = (float) (Math.random() < mRate ? Math.random() : att[i]);

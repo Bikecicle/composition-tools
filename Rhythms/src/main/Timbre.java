@@ -7,12 +7,9 @@ public class Timbre implements Genome {
 
 	private static final long serialVersionUID = 1008255419750499780L;
 	
-	public static final int ENVELOPE_DIM = 64;
-	public static final int SPEED_DIM = 8;
-	
-	public static final float DEFAULT_DUR = 0.05f;
-	public static final float MIN_PTCH = 0.5f;
-	public static final float MAX_PTCH = 1.5f;
+	public static final float defaultDur = 0.1f;
+	public static final float pitchMin = 0.5f;
+	public static final float pitchMax = 1.5f;
 
 	public float[] pos;
 	public float[] att;
@@ -33,7 +30,7 @@ public class Timbre implements Genome {
 		rel = new float[2];
 		slev = new float[2];
 		ptch = new float[2];
-		mRate = Session.MUTATION_RATE;
+		mRate = Session.mutationRate;
 		score = 0;
 	}
 
@@ -55,12 +52,12 @@ public class Timbre implements Genome {
 	@Override
 	public void randomize() {
 		Splicer.randomizeRange(pos, 0, 1);
-		Splicer.randomizeRange(att, 0, DEFAULT_DUR);
-		Splicer.randomizeRange(dec, 0, DEFAULT_DUR);
-		Splicer.randomizeRange(sus, 0, DEFAULT_DUR);
-		Splicer.randomizeRange(rel, 0, DEFAULT_DUR);
+		Splicer.randomizeRange(att, 0, defaultDur);
+		Splicer.randomizeRange(dec, 0, defaultDur);
+		Splicer.randomizeRange(sus, 0, defaultDur);
+		Splicer.randomizeRange(rel, 0, defaultDur);
 		Splicer.randomizeRange(slev, 0, 1);
-		Splicer.randomizeRange(ptch, MIN_PTCH, MAX_PTCH);
+		Splicer.randomizeRange(ptch, pitchMin, pitchMax);
 		score = 0;
 	}
 
@@ -75,12 +72,12 @@ public class Timbre implements Genome {
 	}
 	
 	public void mutate() {
-		Splicer.mutateRange(pos, 0, 1, Session.MUTATION_RATE);
-		Splicer.mutateRange(att, 2, Session.MUTATION_RATE);
-		Splicer.mutateRange(dec, 2, Session.MUTATION_RATE);
-		Splicer.mutateRange(sus, 2, Session.MUTATION_RATE);
-		Splicer.mutateRange(rel, 2, Session.MUTATION_RATE);
-		Splicer.mutateRange(slev, 0, 1, Session.MUTATION_RATE);
-		Splicer.mutateRange(ptch, MIN_PTCH, MAX_PTCH, Session.MUTATION_RATE);
+		Splicer.mutateRange(pos, 0, 1, Session.mutationRate);
+		Splicer.mutateRange(att, 2, Session.mutationRate);
+		Splicer.mutateRange(dec, 2, Session.mutationRate);
+		Splicer.mutateRange(sus, 2, Session.mutationRate);
+		Splicer.mutateRange(rel, 2, Session.mutationRate);
+		Splicer.mutateRange(slev, 0, 1, Session.mutationRate);
+		Splicer.mutateRange(ptch, pitchMin, pitchMax, Session.mutationRate);
 	}
 }
