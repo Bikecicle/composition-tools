@@ -2,24 +2,24 @@
 
 replace false
 
-table new hf_t1 1000 1000 1.3 15 2048 -0.76833103586615281 -0.10763293884119845
+table new fractal hf_t1 1000 1000 1.3 15 2048 -0.76833103586615281 -0.10763293884119845
 
-table copy hf_t1_e hf_t1
+table copy fractal hf_t1_e hf_t1
 edge 2
 
-table new hf_t2 1000 1000 1.3 15 2048 -0.87393866985915360 0.25538518034271720
+table new fractal hf_t2 1000 1000 1.3 15 2048 -0.87393866985915360 0.25538518034271720
 
-table copy hf_t2_e hf_t2
+table copy fractal hf_t2_e hf_t2
 edge 2
 
-table new hf_t3 1000 1000 1.3 15 2048 -0.8539458232670679 0.2185151590448168
+table new fractal hf_t3 1000 1000 1.3 15 2048 -0.8539458232670679 0.2185151590448168
 
-table copy hf_t3_e hf_t3
+table copy fractal hf_t3_e hf_t3
 edge 2
 
-table new hf_t4 1000 1000 1.3 15 2048 -0.7562408401969853 0.0668701233900052
+table new fractal hf_t4 1000 1000 1.3 15 2048 -0.7562408401969853 0.0668701233900052
 
-table copy hf_t4_e hf_t4
+table copy fractal hf_t4_e hf_t4
 edge 2
 
 # Generate and render sound

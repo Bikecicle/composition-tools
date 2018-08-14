@@ -6,6 +6,8 @@ public class FractalTable extends Table {
 
 	private static final long serialVersionUID = -8279801280032154773L;
 
+	public int tRes;
+	public int fRes;
 	public double posX;
 	public double posY;
 	public int zoomMax;
@@ -13,7 +15,9 @@ public class FractalTable extends Table {
 	
 
 	public FractalTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int iterMax, double posX, double posY) {
-		super(name, tRes, fRes, iterMax);
+		super(name, iterMax);
+		this.tRes = tRes;
+		this.fRes = fRes;
 		this.zoomVel = zoomVel;
 		this.zoomMax = zoomMax;
 		this.posX = posX;
@@ -25,7 +29,9 @@ public class FractalTable extends Table {
 	}
 
 	public FractalTable(String name, FractalTable other) {
-		super(name, other.tRes, other.fRes, other.kMax);
+		super(name, other.kMax);
+		this.tRes = other.tRes;
+		this.fRes = other.fRes;
 		this.zoomVel = other.zoomVel;
 		this.zoomMax = other.zoomMax;
 		this.posX = other.posX;

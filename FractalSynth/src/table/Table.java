@@ -8,16 +8,18 @@ public class Table implements Serializable {
 	static final long serialVersionUID = -3338690167252241696L;
 
 	public String name;
-	public int tRes;
-	public int fRes;
 	public int kMax;
 	public int[][] data;
 	public List<String> filters;
-
-	public Table(String name, int tRes, int fRes, int kMax) {
+	
+	public Table(String name, int[][] data, int kMax) {
 		this.name = name;
-		this.tRes = tRes;
-		this.fRes = fRes;
+		this.data = data;
+		this.kMax = kMax;
+	}
+	
+	public Table(String name, int kMax) {
+		this.name = name;
 		this.kMax = kMax;
 	}
 
@@ -40,8 +42,8 @@ public class Table implements Serializable {
 
 	public int getMaxIteration() {
 		int max = 0;
-		for (int i = 0; i < data.length; i++) {
-			for (int j = 0; j < fRes; j++) {
+		for (int i = 0; i < length(); i++) {
+			for (int j = 0; j < height(); j++) {
 				if (data[i][j] > max)
 					max = data[i][j];
 			}
@@ -51,5 +53,9 @@ public class Table implements Serializable {
 
 	public int length() {
 		return data.length;
+	}
+	
+	public int height() {
+		return data[0].length;
 	}
 }

@@ -155,11 +155,11 @@ public class UI {
 			System.out.println("Y position:");
 			double posY = in.nextDouble();
 			in.nextLine();
-			fractalSynth.addTable(name, tRes, fRes, zoomVel, zoomMax, iterMax, posX, posY);
+			fractalSynth.generateFractalTable(name, tRes, fRes, zoomVel, zoomMax, iterMax, posX, posY);
 		} else if (mode.toLowerCase().startsWith("c")) {
 			System.out.println("Table to copy:");
 			String other = in.nextLine();
-			fractalSynth.addTable(name, other);
+			fractalSynth.generateFractalTable(name, other);
 		}
 		tableMenu();
 	}

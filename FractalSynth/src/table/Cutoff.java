@@ -11,9 +11,9 @@ public class Cutoff implements Filter {
 	@Override
 	public void applyTo(Table table) {
 		int[][] data = table.data;
-		int[][] newData = new int[data.length][table.fRes];
-		for (int t = 0; t < data.length; t++) {
-			for (int f = 0; f < table.fRes; f++) {
+		int[][] newData = new int[table.length()][table.height()];
+		for (int t = 0; t < table.length(); t++) {
+			for (int f = 0; f < table.height(); f++) {
 				if (data[t][f] >= threshold)
 					newData[t][f] = 1;
 				else

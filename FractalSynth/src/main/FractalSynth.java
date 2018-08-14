@@ -64,12 +64,12 @@ public class FractalSynth {
 		tableManager.filter(name, filter);
 	}
 
-	public void addTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int kMax, double posX,
+	public void generateFractalTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int kMax, double posX,
 			double posY) {
 		tableManager.generateFractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
 	}
-
-	public void addTable(String name, String otherName) {
+	
+	public void generateFractalTable(String name, String otherName) {
 		FractalTable other = (FractalTable) tableManager.getTable(otherName);
 		int tRes = other.tRes;
 		int fRes = other.fRes;
@@ -79,6 +79,10 @@ public class FractalSynth {
 		double posX = other.posX;
 		double posY = other.posY;
 		tableManager.generateFractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
+	}
+	
+	public void generateImageTable(String name, String imagePath) {
+		tableManager.generateImageTable(name, imagePath);
 	}
 
 	public String getTableProperties(String name) {

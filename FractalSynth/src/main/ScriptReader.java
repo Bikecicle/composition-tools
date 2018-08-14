@@ -95,7 +95,8 @@ public class ScriptReader {
 					int zoomMax = Integer.parseInt(cmd[9]);
 					Table tableP = fractalSynth.getTable(cmd[10]);
 					Table tableD = fractalSynth.getTable(cmd[11]);
-					int n = fractalSynth.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax, tableP, tableD));
+					int n = fractalSynth.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD,
+							maxResD, zoomVel, zoomMax, tableP, tableD));
 					System.out.println("Generated matrix of size " + n);
 
 				} else if (cmd[0].equals("noise") && !skip) {
@@ -119,7 +120,8 @@ public class ScriptReader {
 					double duration = Double.parseDouble(cmd[7]); // Duration in seconds
 					Table table = fractalSynth.getTable(cmd[8]);
 					String sample = cmd[9];
-					fractalSynth.generateGrains(new ShredSample(bandCount, fMin, fMax, sMin, sMax, sRes, duration, table, sample));
+					fractalSynth.generateGrains(
+							new ShredSample(bandCount, fMin, fMax, sMin, sMax, sRes, duration, table, sample));
 				} else if (cmd[0].equals("overlay")) {
 					System.out.println("Overlaying sample " + cmd[1] + "...");
 					if (cmd.length == 4) {
@@ -162,11 +164,18 @@ public class ScriptReader {
 						skip = false;
 						System.out.println("[Generating new table: " + cmd[2] + "]");
 						if (cmd[1].equals("new")) {
-							fractalSynth.addTable(cmd[2], Integer.parseInt(cmd[3]), Integer.parseInt(cmd[4]),
-									Double.parseDouble(cmd[5]), Integer.parseInt(cmd[6]), Integer.parseInt(cmd[7]),
-									Double.parseDouble(cmd[8]), Double.parseDouble(cmd[9]));
+							if (cmd[2].equals("fractal")) {
+								fractalSynth.generateFractalTable(cmd[3], Integer.parseInt(cmd[4]),
+										Integer.parseInt(cmd[5]), Double.parseDouble(cmd[6]), Integer.parseInt(cmd[7]),
+										Integer.parseInt(cmd[8]), Double.parseDouble(cmd[9]),
+										Double.parseDouble(cmd[10]));
+							} else if (cmd[2].equals("image")) {
+								fractalSynth.generateImageTable(cmd[3], cmd[4]);
+							}
 						} else if (cmd[1].equals("copy")) {
-							fractalSynth.addTable(cmd[2], cmd[3]);
+							if (cmd[2].equals("fractal")) {
+								fractalSynth.generateFractalTable(cmd[3], cmd[4]);
+							}
 						}
 						currentTable = cmd[2];
 					} else {

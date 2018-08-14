@@ -17,7 +17,7 @@ public class Coat {
 		val = new int[width][height][3];
 		FractalSynth fractalSynth = new FractalSynth();
 		Table table = fractalSynth.getTable(tableName);
-		double xScale = 1.0 * table.fRes / width;
+		double xScale = 1.0 * table.height() / width;
 		double yScale = 1.0 * table.length() / height;
 		int iMax = table.getMaxIteration();
 		for (int y = 0; y < height; y++) {

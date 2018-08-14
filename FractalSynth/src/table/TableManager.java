@@ -14,6 +14,7 @@ import java.util.List;
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;
+import visual.ImageLoader;
 
 public class TableManager {
 
@@ -123,9 +124,17 @@ public class TableManager {
 		tableList.add(name);
 	}
 	
-	public void generateImageTable(String name, String image) {
-		
-		//Table table = new Table(name, tRes, fRes, kMax);
+	public void generateImageTable(String name, String imagePath) {
+		ImageLoader image = new ImageLoader(imagePath);
+		image.load();
+		saveTable(new Table(name + "_r", image.red, 1));
+		saveTable(new Table(name + "_g", image.green, 1));
+		saveTable(new Table(name + "_b", image.blue, 1));
+		saveTable(new Table(name + "_a", image.alpha, 1));
+		tableList.add(name + "_r");
+		tableList.add(name + "_g");
+		tableList.add(name + "_b");
+		tableList.add(name + "_a");
 	}
 
 	public void filter(String name, Filter filter) {

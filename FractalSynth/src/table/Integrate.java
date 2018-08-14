@@ -2,13 +2,13 @@ package table;
 
 public class Integrate implements Filter {
 
-	private double maxR; // Seconds to reach kMax at max speed
-	private double zeroP; // Position of zero in kMax (0-1)
-	private double startP; // Starting value in max (0-1)
-	private int max;
-	private int zero;
-	private int start;
-	private boolean rel;
+	double maxR; // Seconds to reach kMax at max speed
+	double zeroP; // Position of zero in kMax (0-1)
+	double startP; // Starting value in max (0-1)
+	int max;
+	int zero;
+	int start;
+	boolean rel;
 
 	public Integrate(double maxR, double zeroP, double startP) {
 		this.maxR = maxR;
@@ -27,7 +27,7 @@ public class Integrate implements Filter {
 	@Override
 	public void applyTo(Table table) {
 		if (rel) {
-			max = (int) (table.kMax * table.tRes * maxR);
+			max = (int) (table.kMax * table.length() * maxR);
 			zero = (int) (table.kMax * zeroP);
 			start = (int) (max * startP);
 		}
