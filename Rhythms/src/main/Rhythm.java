@@ -20,16 +20,14 @@ public class Rhythm implements Performable {
 
 	private static final float AMP = 100;
 	
-	String[] samples;
 	Timbre[] timbres;
 	Sequence[] sequences;
 	int voiceCount;
 
-	public Rhythm(String[] samples, Timbre[] timbres, Sequence[] sequences) {
-		this.samples = samples;
+	public Rhythm(Timbre[] timbres, Sequence[] sequences) {
 		this.timbres = timbres;
 		this.sequences = sequences;
-		voiceCount = samples.length;
+		voiceCount = timbres.length;
 	}
 
 	public void rate(int rating) {
@@ -44,7 +42,7 @@ public class Rhythm implements Performable {
 		ParamMap map = getOrchestra().mapParams();
 		Score sco = new Score();
 		for (int v = 0; v < voiceCount; v++) {
-			int ifn = sco.addFTable(new SoundfileFTable(samples[v]));
+			int ifn = sco.addFTable(new SoundfileFTable(timbres[v].sample));
 			float quantLen = sequences[v].getQuantLength();
 			for (int s = 0; s < sequences[v].strikeCount; s++) {
 				Note note = new Note(map);

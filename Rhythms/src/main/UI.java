@@ -29,12 +29,9 @@ public class UI {
 				int length = Integer.parseInt(input("Length (measures):", INT, in));
 				int quant = Integer.parseInt(input("Quantization (measure division):", INT, in));
 				float tempo = Float.parseFloat(input("Tempo (bpm):", FLOAT, in));
-				String[] samples = new String[voiceCount];
-				String sampleDir = System.getenv("SAMPLES") + "/";
-				for (int v = 0; v < voiceCount; v++) {
-					samples[v] = inputFile("Voice #" + (v + 1) + " sample:", sampleDir, in);
-				}
-				session = new Session(mainDir, title, voiceCount, length, quant, tempo, samples);
+				String mainSampleDir = System.getenv("SAMPLES") + "/";
+				String sampleDir = inputFile("Sample pool directory:", mainSampleDir, in);
+				session = new Session(mainDir, title, voiceCount, length, quant, tempo, sampleDir);
 			} else if (action.equals("l")) {
 				session = Session.loadSession(mainDir, title);
 			}
@@ -48,7 +45,7 @@ public class UI {
 				System.out.println("Starting batch " + session.stage);
 				List<Rhythm> batch = session.createBatch();
 				int i = 0;
-				while (true) {
+				while (i < batch.size()) {
 					Performer.play(batch.get(i));
 					System.out.println();
 					System.out.println("[Batch " + session.stage + ", " + (i + 1) + "/" + batch.size() + "]");
@@ -116,33 +113,11 @@ public class UI {
 		String path = null;
 		while (true) {
 			path = dir + input(prompt, STR, in);
-			String checkPath = checkRandom(path);
-			if (checkPath != null) {
-				path = checkPath;
+			if (new File(path).exists())
 				break;
-			}
 			System.out.println(path + " does not exist");
 		}
 		System.out.println("Sample found: " + path);
 		return path;
-	}
-
-	public static String checkRandom(String p) {
-		String path = p + "";
-		if (p == null)
-			return null;
-		if (path.endsWith(randDir)) {
-			path = checkRandom(path.substring(0, path.length() - randDir.length()));
-			File[] files = new File(path).listFiles();
-			path += files[(int) (files.length * Math.random())].getName();
-			if (new File(path).isDirectory())
-				path += "/";
-			if (path.endsWith(".asd"))
-				path = path.substring(0, path.length() - 4);
-			return path;
-		} else if (new File(path).exists()) {
-			return path;
-		}
-		return null;
 	}
 }

@@ -9,13 +9,10 @@ public class TestInstrument {
 
 	public static void main(String[] args) {
 		int voices = 1;
-		String[] fs = new String[voices];
 		Timbre[] ts = new Timbre[voices];
 		Sequence[] ss = new Sequence[voices];
 
-		fs[0] = "choir.wav";
-
-		Timbre t = new Timbre();
+		Timbre t = new Timbre("Voice/");
 		t.pos[0] = 0.2f;
 		t.pos[1] = 0.8f;
 		t.att[0] = 0.1f;
@@ -38,7 +35,7 @@ public class TestInstrument {
 		s.addStrike(16, 1, 1, 1, 1, 1, 1, 1);
 		ss[0] = s;
 
-		Rhythm r = new Rhythm(fs, ts, ss);
+		Rhythm r = new Rhythm(ts, ss);
 		System.out.println(r.getOrchestra());
 		System.out.println(r.getScore());
 		

@@ -40,7 +40,7 @@ public class Session implements Serializable {
 
 	EvolutionManager[] timbreEM;
 	EvolutionManager[] sequenceEM;
-	String[] samples;
+	String sampleDir;
 	int voiceCount;
 	int length;
 	int quant;
@@ -49,7 +49,7 @@ public class Session implements Serializable {
 	int stage;
 
 	public Session(String mainDir, String title, int voiceCount, int length, int quant, float tempo,
-			String... samples) {
+			String sampleDir) {
 		this.title = title;
 		sessionDir = mainDir + title + "/";
 		openDir(mainDir);
@@ -58,7 +58,7 @@ public class Session implements Serializable {
 		this.length = length;
 		this.quant = quant;
 		this.tempo = tempo;
-		this.samples = samples;
+		this.sampleDir = sampleDir;
 		timbreEM = new EvolutionManager[voiceCount];
 		sequenceEM = new EvolutionManager[voiceCount];
 		set = new Set();
@@ -68,7 +68,7 @@ public class Session implements Serializable {
 			Population initPopT = new Population();
 			Population initPopS = new Population();
 			for (int g = 0; g < popSize; g++) {
-				Timbre timbre = new Timbre();
+				Timbre timbre = new Timbre(sampleDir);
 				timbre.randomize();
 				initPopT.add(timbre);
 				Sequence sequence = new Sequence(length, quant, tempo);
@@ -118,7 +118,7 @@ public class Session implements Serializable {
 				timbres[v] = (Timbre) timbreEM[v].getPop().get(indicesT.get(v).get(b));
 				sequences[v] = (Sequence) sequenceEM[v].getPop().get(indicesS.get(v).get(b));
 			}
-			batch.add(new Rhythm(samples, timbres, sequences));
+			batch.add(new Rhythm(timbres, sequences));
 		}
 		return batch;
 	}
@@ -153,7 +153,6 @@ public class Session implements Serializable {
 		set = (Set) in.readObject();
 		in.close();
 	}
-	
 	
 	private boolean openDir(String path) {
 		File dir = new File(path);

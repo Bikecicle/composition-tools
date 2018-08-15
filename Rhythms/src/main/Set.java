@@ -11,13 +11,11 @@ public class Set extends ArrayList<Rhythm>{
 	
 	List<Genome> timbres;
 	List<Genome> sequences;
-	List<String> samples;
 	
 	public Set() {
 		super();
 		timbres = new ArrayList<>();
 		sequences = new ArrayList<>();
-		samples = new  ArrayList<>();
 	}
 	
 	@Override
@@ -25,7 +23,6 @@ public class Set extends ArrayList<Rhythm>{
 		for (int v = 0; v < e.voiceCount; v++) {
 			timbres.add(e.timbres[v]);
 			sequences.add(e.sequences[v]);
-			samples.add(e.samples[v]);
 		}
 		return super.add(e);
 	}

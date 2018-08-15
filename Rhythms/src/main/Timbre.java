@@ -1,5 +1,7 @@
 package main;
 
+import java.io.File;
+
 import evolution.core.Genome;
 import evolution.core.Splicer;
 
@@ -11,6 +13,9 @@ public class Timbre implements Genome {
 	public static final float pitchMin = 0.5f;
 	public static final float pitchMax = 1.5f;
 
+	String sampleDir;
+	
+	public String sample;
 	public float[] pos;
 	public float[] att;
 	public float[] dec;
@@ -18,11 +23,12 @@ public class Timbre implements Genome {
 	public float[] rel;
 	public float[] slev;
 	public float[] ptch;
-
-	double mRate;
+	
+	float mRate;
 	double score;
 
-	public Timbre() {
+	public Timbre(String sampleDir) {
+		this.sampleDir = sampleDir;
 		pos = new float[2];
 		att = new float[2];
 		dec = new float[2];
@@ -37,7 +43,8 @@ public class Timbre implements Genome {
 	@Override
 	public Genome breed(Genome genome) {
 		Timbre other = (Timbre) genome;
-		Timbre child = new Timbre();
+		Timbre child = new Timbre(sampleDir);
+		child.sample = (String) Splicer.choose(this.sample, other.sample);
 		child.pos = Splicer.chooseRange(this.pos, other.pos);
 		child.att = Splicer.chooseRange(this.att, other.att);
 		child.dec = Splicer.chooseRange(this.dec, other.dec);
@@ -51,6 +58,7 @@ public class Timbre implements Genome {
 	
 	@Override
 	public void randomize() {
+		sample = randomSample();
 		Splicer.randomizeRange(pos, 0, 1);
 		Splicer.randomizeRange(att, 0, defaultDur);
 		Splicer.randomizeRange(dec, 0, defaultDur);
@@ -72,12 +80,23 @@ public class Timbre implements Genome {
 	}
 	
 	public void mutate() {
-		Splicer.mutateRange(pos, 0, 1, Session.mutationRate);
-		Splicer.mutateRange(att, 2, Session.mutationRate);
-		Splicer.mutateRange(dec, 2, Session.mutationRate);
-		Splicer.mutateRange(sus, 2, Session.mutationRate);
-		Splicer.mutateRange(rel, 2, Session.mutationRate);
-		Splicer.mutateRange(slev, 0, 1, Session.mutationRate);
-		Splicer.mutateRange(ptch, pitchMin, pitchMax, Session.mutationRate);
+		if (Math.random() < mRate)
+			sample = randomSample();
+		Splicer.mutateRange(pos, 0, 1, mRate);
+		Splicer.mutateRange(att, 2, mRate);
+		Splicer.mutateRange(dec, 2, mRate);
+		Splicer.mutateRange(sus, 2, mRate);
+		Splicer.mutateRange(rel, 2, mRate);
+		Splicer.mutateRange(slev, 0, 1, mRate);
+		Splicer.mutateRange(ptch, pitchMin, pitchMax, mRate);
+	}
+	
+	public String getPath() { 
+		return sampleDir + sample;
+	}
+	
+	private String randomSample() {
+		File[] samples = new File(sampleDir).listFiles();
+		return samples[(int) (Math.random() * samples.length)].getName();
 	}
 }
