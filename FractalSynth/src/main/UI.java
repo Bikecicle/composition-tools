@@ -2,8 +2,8 @@ package main;
 
 import java.util.Scanner;
 
-import grain.Inflate;
 import grain.RandomShift;
+import grain.mod.Inflate;
 import table.Cutoff;
 import table.Amplify;
 import table.Blur;

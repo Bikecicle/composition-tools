@@ -3,9 +3,8 @@ package visual;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
 import processing.core.PApplet;
-import table.FractalTable;
+import table.Table;
 
 public class ViewTable extends PApplet {
 
@@ -21,7 +20,7 @@ public class ViewTable extends PApplet {
 
 	public static String filename = "C:/Users/Griffin/git/sound/FractalSynth/tables/t1/t1.table";
 	public static String imagename = "C:/Users/Griffin/git/sound/FractalSynth/tables/t1/t1.jpg";
-	public static FractalTable table;
+	public static Table table;
 
 	public static void main(String[] args) {
 		if (args.length > 0) {
@@ -30,7 +29,7 @@ public class ViewTable extends PApplet {
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
-			table = (FractalTable) in.readObject();
+			table = (Table) in.readObject();
 			in.close();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -49,13 +48,9 @@ public class ViewTable extends PApplet {
 		maxIteration = findMaxIteration();
 		xScale = 1.0 * steps / viewWidth;
 		yScale = 1.0 * res / viewHeight;
-		palette = new Palette(maxIteration);
+		palette = new Palette(maxIteration + 1);
 		palette.add(new ColorTag(0, 0, 0, 0));
-		palette.add(new ColorTag(255, 255, 255, maxIteration - 1));
-		noLoop();
-	}
-
-	public void draw() {
+		palette.add(new ColorTag(255, 255, 255, maxIteration));
 		background(255);
 		loadPixels();
 		for (int i = 0; i < viewWidth; i++) {
@@ -64,13 +59,17 @@ public class ViewTable extends PApplet {
 					pixels[i + (viewHeight - j - 1) * viewWidth] = color(
 							table.data[(int) (i * xScale)][(int) (j * yScale)] * 255);
 				} else {
-					pixels[i + (viewHeight - j - 1) * viewWidth] = colorArray(
-							palette.get(table.data[(int) (i * xScale)][(int) (j * yScale)]));
+					pixels[i + (viewHeight - j - 1) * viewWidth] = colorArray(palette.get(table.data[(int) (i * xScale)][(int) (j * yScale)]));
 				}
 			}
 		}
 		updatePixels();
 		save(imagename);
+		noLoop();
+	}
+
+	public void draw() {
+
 	}
 
 	private int colorArray(int[] a) {

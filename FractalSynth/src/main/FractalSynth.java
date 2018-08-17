@@ -1,13 +1,17 @@
 package main;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import grain.FTable;
-import grain.Generator;
 import grain.GrainManager;
-import grain.Modifier;
-import grain.PulsarMatrix;
+import grain.gen.Generator;
+import grain.gen.PulsarMatrix;
+import grain.mod.Modifier;
 import table.Filter;
 import table.FractalTable;
 import table.Table;
@@ -35,7 +39,7 @@ public class FractalSynth {
 	public void openProject(String project) {
 		grainManager = new GrainManager(mainProjectDir, project);
 	}
-	
+
 	public boolean projectLoaded() {
 		return grainManager != null;
 	}
@@ -51,7 +55,7 @@ public class FractalSynth {
 	public Table getTable(String name) {
 		return tableManager.getTable(name);
 	}
-	
+
 	public boolean hasTable(String name) {
 		return tableManager.getTableList().contains(name);
 	}
@@ -64,11 +68,34 @@ public class FractalSynth {
 		tableManager.filter(name, filter);
 	}
 
-	public void generateFractalTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int kMax, double posX,
-			double posY) {
-		tableManager.generateFractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
+	public void generateFractalTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int kMax,
+			double posX, double posY) {
+		Table table = new FractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
+		double scale = 1.0;
+		double angleStep = 2.0 * Math.PI / fRes;
+		for (int i = 0; i < table.data.length; i++) {
+			for (int j = 0; j < fRes; j++) {
+				double angle = angleStep * j;
+				double x0 = Math.cos(angle) * 2.0 / scale + posX;
+				double y0 = Math.sin(angle) * 2.0 / scale + posY;
+				int k = 0;
+				double x = 0.0;
+				double y = 0.0;
+				while ((x * x + y * y) < 4 && k < kMax) {
+					double xtemp = x * x - y * y + x0;
+					y = 2 * x * y + y0;
+					x = xtemp;
+					k++;
+				}
+				table.data[i][j] = k;
+			}
+			scale *= zoomVel / tRes + 1;
+			double progress = Math.round(10000.0 * i / table.data.length) / 100.0;
+			System.out.println("Progress: " + progress + "%");
+		}
+		tableManager.saveTable(table);
 	}
-	
+
 	public void generateFractalTable(String name, String otherName) {
 		FractalTable other = (FractalTable) tableManager.getTable(otherName);
 		int tRes = other.tRes;
@@ -78,11 +105,34 @@ public class FractalSynth {
 		int kMax = other.kMax;
 		double posX = other.posX;
 		double posY = other.posY;
-		tableManager.generateFractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
+		generateFractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
 	}
-	
+
 	public void generateImageTable(String name, String imagePath) {
-		tableManager.generateImageTable(name, imagePath);
+		int kMax = 765;
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File(imagePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int[][] red = new int[img.getWidth()][img.getHeight()];
+		int[][] green = new int[img.getWidth()][img.getHeight()];
+		int[][] blue = new int[img.getWidth()][img.getHeight()];
+		int[][] sum = new int[img.getWidth()][img.getHeight()];
+		for (int x = 0; x < img.getWidth(); x++) {
+			for (int y = 0; y < img.getHeight(); y++) {
+				int rgb = img.getRGB(x, img.getHeight() - y - 1);
+				red[x][y] = (rgb >> 16) & 0xFF;
+				green[x][y] = (rgb >> 8) & 0xFF;
+				blue[x][y] = rgb & 0xFF;
+				sum[x][y] = red[x][y] + green[x][y] + blue[x][y];
+			}
+		}
+		//tableManager.saveTable(new Table(name + "_r", red, kMax));
+		//tableManager.saveTable(new Table(name + "_g", green, kMax));
+		//tableManager.saveTable(new Table(name + "_b", blue, kMax));
+		tableManager.saveTable(new Table(name, sum, kMax));
 	}
 
 	public String getTableProperties(String name) {
@@ -93,10 +143,10 @@ public class FractalSynth {
 			double zoomVel, int zoomMax, String tablePName, String tableDName) {
 		Table tableP = tableManager.getTable(tablePName);
 		Table tableD = tableManager.getTable(tableDName);
-		return grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
-				tableP, tableD));
+		return grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD,
+				zoomVel, zoomMax, tableP, tableD));
 	}
-	
+
 	public int generateGrains(Generator gen) {
 		return grainManager.generateGrains(gen);
 	}
@@ -159,7 +209,7 @@ public class FractalSynth {
 	public List<String> getLayerNames() {
 		return grainManager.layerNames;
 	}
-	
+
 	public boolean hasLayer(String name) {
 		return grainManager.layerNames.contains(name);
 	}

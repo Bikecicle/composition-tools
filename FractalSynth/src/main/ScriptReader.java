@@ -4,15 +4,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import grain.Inflate;
-import grain.NoiseBand;
-import grain.Normalize;
-import grain.Note;
-import grain.OverlaySample;
-import grain.PulsarMatrix;
 import grain.RandomShift;
-import grain.ShredSample;
-import grain.IntegralWarp;
+import grain.gen.NoiseBand;
+import grain.gen.NoiseMatrix;
+import grain.gen.Note;
+import grain.gen.PulsarMatrix;
+import grain.gen.ShredSample;
+import grain.mod.Inflate;
+import grain.mod.IntegralWarp;
+import grain.mod.Normalize;
+import grain.mod.OverlaySample;
 import table.EdgeDetection;
 import table.Integrate;
 import table.Power;
@@ -99,12 +100,22 @@ public class ScriptReader {
 							maxResD, zoomVel, zoomMax, tableP, tableD));
 					System.out.println("Generated matrix of size " + n);
 
-				} else if (cmd[0].equals("noise") && !skip) {
+				} else if (cmd[0].equals("band") && !skip) {
 					System.out.println("Generating noise band...");
 					int n = fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]),
 							Integer.parseInt(cmd[2]), Double.parseDouble(cmd[3]), Double.parseDouble(cmd[4])));
 					System.out.println("Generated matrix of size " + n);
 
+				} else if (cmd[0].equals("noise") && !skip) {
+					System.out.println("Generating noise matrix...");
+					int fMin = Integer.parseInt(cmd[1]);
+					int fMax = Integer.parseInt(cmd[2]);
+					float density = Float.parseFloat(cmd[3]);
+					float duration = Float.parseFloat(cmd[4]);
+					Table table = fractalSynth.getTable(cmd[5]);
+					int n = fractalSynth.generateGrains(new NoiseMatrix(fMin, fMax, density, duration, table));
+					System.out.println("Generated matrix of size " + n);
+					
 				} else if (cmd[0].equals("note") && !skip) {
 					System.out.println("Adding a note...");
 					fractalSynth.generateGrains(
@@ -160,9 +171,9 @@ public class ScriptReader {
 
 				// Table management
 				else if (cmd[0].equals("table")) {
-					if (!fractalSynth.hasTable(cmd[2]) || replace) {
+					if (!fractalSynth.hasTable(cmd[3]) || replace) {
 						skip = false;
-						System.out.println("[Generating new table: " + cmd[2] + "]");
+						System.out.println("[Generating new table: " + cmd[3] + "]");
 						if (cmd[1].equals("new")) {
 							if (cmd[2].equals("fractal")) {
 								fractalSynth.generateFractalTable(cmd[3], Integer.parseInt(cmd[4]),
@@ -170,6 +181,7 @@ public class ScriptReader {
 										Integer.parseInt(cmd[8]), Double.parseDouble(cmd[9]),
 										Double.parseDouble(cmd[10]));
 							} else if (cmd[2].equals("image")) {
+								System.out.println("Loading image: " + cmd[4]);
 								fractalSynth.generateImageTable(cmd[3], cmd[4]);
 							}
 						} else if (cmd[1].equals("copy")) {
@@ -177,9 +189,9 @@ public class ScriptReader {
 								fractalSynth.generateFractalTable(cmd[3], cmd[4]);
 							}
 						}
-						currentTable = cmd[2];
+						currentTable = cmd[3];
 					} else {
-						System.out.println("[Skipping table: " + cmd[2] + "]");
+						System.out.println("[Skipping table: " + cmd[3] + "]");
 						skip = true;
 					}
 				} else if (cmd[0].equals("edge") && !skip) {

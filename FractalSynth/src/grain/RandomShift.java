@@ -1,5 +1,6 @@
 package grain;
 
+import grain.mod.Modifier;
 import table.Table;
 
 public class RandomShift implements Modifier {

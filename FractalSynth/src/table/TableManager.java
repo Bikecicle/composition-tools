@@ -14,7 +14,6 @@ import java.util.List;
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;
-import visual.ImageLoader;
 
 public class TableManager {
 
@@ -83,6 +82,8 @@ public class TableManager {
 		// Render and save a visualization of the table
 		String[] args = { tablePath, imagePath };
 		new Thread(new MediaThread(Medium.tableViewer, args)).start();
+		if (!tableList.contains(table.name))
+			tableList.add(table.name);
 	}
 
 	public void deleteTable(String name) {
@@ -93,48 +94,6 @@ public class TableManager {
 		}
 		dir.delete();
 		tableList.remove(name);
-	}
-
-	public void generateFractalTable(String name, int tRes, int fRes, double zoomVel, int zoomMax, int kMax, double posX,
-			double posY) {
-		Table table = new FractalTable(name, tRes, fRes, zoomVel, zoomMax, kMax, posX, posY);
-		double scale = 1.0;
-		double angleStep = 2.0 * Math.PI / fRes;
-		for (int i = 0; i < table.data.length; i++) {
-			for (int j = 0; j < fRes; j++) {
-				double angle = angleStep * j;
-				double x0 = Math.cos(angle) * 2.0 / scale + posX;
-				double y0 = Math.sin(angle) * 2.0 / scale + posY;
-				int k = 0;
-				double x = 0.0;
-				double y = 0.0;
-				while ((x * x + y * y) < 4 && k < kMax) {
-					double xtemp = x * x - y * y + x0;
-					y = 2 * x * y + y0;
-					x = xtemp;
-					k++;
-				}
-				table.data[i][j] = k;
-			}
-			scale *= zoomVel / tRes + 1;
-			double progress = Math.round(10000.0 * i / table.data.length) / 100.0;
-			System.out.println("Progress: " + progress + "%");
-		}
-		saveTable(table);
-		tableList.add(name);
-	}
-	
-	public void generateImageTable(String name, String imagePath) {
-		ImageLoader image = new ImageLoader(imagePath);
-		image.load();
-		saveTable(new Table(name + "_r", image.red, 1));
-		saveTable(new Table(name + "_g", image.green, 1));
-		saveTable(new Table(name + "_b", image.blue, 1));
-		saveTable(new Table(name + "_a", image.alpha, 1));
-		tableList.add(name + "_r");
-		tableList.add(name + "_g");
-		tableList.add(name + "_b");
-		tableList.add(name + "_a");
 	}
 
 	public void filter(String name, Filter filter) {

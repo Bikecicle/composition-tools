@@ -14,6 +14,7 @@ public class Score {
 	}
 	
 	public int addFTable(FTable fTable) {
+		System.out.println(fTable);
 		if (!fStmt.contains(fTable)) {
 			fTable.ifn = fStmt.size() + 1;
 			fStmt.add(fTable);

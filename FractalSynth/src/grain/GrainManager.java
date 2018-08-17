@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import grain.gen.Generator;
+import grain.mod.Modifier;
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;

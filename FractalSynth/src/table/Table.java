@@ -1,12 +1,13 @@
 package table;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Table implements Serializable {
-
-	static final long serialVersionUID = -3338690167252241696L;
-
+	
+	private static final long serialVersionUID = -8011552819568163620L;
+	
 	public String name;
 	public int kMax;
 	public int[][] data;
@@ -16,11 +17,11 @@ public class Table implements Serializable {
 		this.name = name;
 		this.data = data;
 		this.kMax = kMax;
+		filters = new ArrayList<>();
 	}
 	
 	public Table(String name, int kMax) {
-		this.name = name;
-		this.kMax = kMax;
+		this(name, null, kMax);
 	}
 
 	public int get(double xScaled, double yScaled) {

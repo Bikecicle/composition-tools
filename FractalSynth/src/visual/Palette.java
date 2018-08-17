@@ -61,17 +61,17 @@ public class Palette {
 		}
 	}
 
-	public int[] get( int i ) {
+	public int[] get(int i) {
 		return gradient[i % dim];
 	}
-	
+
 	@Override
 	public String toString() {
 		if (key.isEmpty()) {
 			return null;
 		}
 		String str = "[" + key.get(0);
-		for (int i = 1; i < key.size(); i ++) {
+		for (int i = 1; i < key.size(); i++) {
 			str += ", " + key.get(i);
 		}
 		return str + "]";

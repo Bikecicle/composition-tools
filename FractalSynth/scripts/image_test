@@ -1,0 +1,9 @@
+replace true
+
+table new image pkm C:/Users/Griffin/Pictures/Macbook/pkm.png
+edge 2
+
+layer sig
+noise 100 1000 20 10 pkm
+
+render i_test
