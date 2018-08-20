@@ -80,14 +80,14 @@ public class Session implements Serializable {
 	}
 	
 	public static Session load(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
 		Session session = (Session) in.readObject();
 		in.close();
 		return session;
 	}
 
-	public List<Rhythm> createBatch() {
-		List<Rhythm> batch = new ArrayList<>();
+	public Batch createBatch() {
+		Batch batch = new Batch();
 		// List of lists, each corresponding to a voice and containing shuffled indices
 		// for that voice's population
 		List<List<Integer>> indicesT = new ArrayList<>();
@@ -160,5 +160,13 @@ public class Session implements Serializable {
 	
 	public int getStage() {
 		return stage;
+	}
+	
+	public float getTempo() {
+		return tempo;
+	}
+
+	public void setTempo(float tempo) {
+		this.tempo = tempo;
 	}
 }

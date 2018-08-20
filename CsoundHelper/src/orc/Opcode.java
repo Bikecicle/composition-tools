@@ -1,10 +1,10 @@
 package orc;
 
-public class Opcode extends Value {
+public class Opcode extends Statement {
 
 	String opcode;
 
-	public Opcode(String type, String name, int channels, String opcode, Value... params) {
+	public Opcode(String type, String name, int channels, String opcode, Statement... params) {
 		super(type + name, false, channels, params);
 		this.opcode = opcode;
 	}
@@ -13,15 +13,9 @@ public class Opcode extends Value {
 	public String toString() {
 		String s = "";
 		String o = "";
-		for (Value param : params) {
-			if (!param.terminal && !param.defined) {
-				if (param instanceof Opcode) {
-					o += param + "\r\n";
-				} else {
-					s += param + "\r\n";
-				}
-				
-			}
+		for (Statement param : params) {
+			if (!param.terminal && !param.defined)
+				s += param;
 		}
 		s += o;
 		if (channels > 1) {
@@ -39,6 +33,7 @@ public class Opcode extends Value {
 				s += ", ";
 			s += params[i].alias;
 		}
+		s += "\n";
 		defined = true;
 		return s;
 	}

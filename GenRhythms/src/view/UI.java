@@ -23,6 +23,7 @@ public class UI {
 	public static void main(String[] args) {
 		try {
 			Scanner in = new Scanner(System.in);
+			Performer performer = new Performer();
 			Session session = null;
 			String action = input("(n)ew session, (l)oad saved", "[nl]", in);
 			String title = input("Title:", STR, in);
@@ -39,7 +40,7 @@ public class UI {
 			}
 			String action1 = input("Load set (y/n):", "[yn]", in);
 			if (action1.equals("y")) {
-				String setName = input("Set name:", STR, in);
+				//String setName = input("Set name:", STR, in);
 				//session.load(setName);
 			}
 			boolean stopped = false;
@@ -48,7 +49,7 @@ public class UI {
 				List<Rhythm> batch = session.createBatch();
 				int i = 0;
 				while (i < batch.size()) {
-					Performer.play(batch.get(i));
+					performer.play(batch.get(i));
 					System.out.println();
 					System.out.println("[Batch " + session.getStage() + ", " + (i + 1) + "/" + batch.size() + "]");
 					String r = input("Rate (0-5), (r)epeat, (a)dd to set, (e)nd batch:", "[0-5rae]", in);
@@ -78,10 +79,10 @@ public class UI {
 					} else if (action2.equals("p")) {
 						for (int i1 = 0; i1 < session.getSet().size(); i1++) {
 							System.out.println("Set rhythm " + i + "/" + session.getSet().size() + "]");
-							Performer.play(session.getSet().get(i1));
+							performer.play(session.getSet().get(i1));
 						}
 					} else if (action2.equals("s")) {
-						String setName = input("Save as:", STR, in);
+						//String setName = input("Save as:", STR, in);
 						//session.saveSet(setName);
 					} else if (action2.equals("q")) {
 						stopped = true;

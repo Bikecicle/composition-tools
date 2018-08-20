@@ -64,7 +64,7 @@ public class Sequence implements Genome {
 
 	@Override
 	public void randomize() {
-		strikeCount = (int) (Math.random() * length * quant) + 1;
+		strikeCount = (int) (Math.random() * length * quant / 2) + 1;
 		for (int i = 0; i < strikeMax; i++) {
 			strt[i] = (int) (Math.random() * length * quant);
 			pos[i] = (float) Math.random();

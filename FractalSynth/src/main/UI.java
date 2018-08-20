@@ -2,8 +2,8 @@ package main;
 
 import java.util.Scanner;
 
-import grain.RandomShift;
 import grain.mod.Inflate;
+import grain.mod.RandomShift;
 import table.Cutoff;
 import table.Amplify;
 import table.Blur;
@@ -292,16 +292,14 @@ public class UI {
 			int minResD = in.nextInt();
 			System.out.println("Duty cycle maximum resolution (grains/pulsar):");
 			int maxResD = in.nextInt();
-			System.out.println("Zoom velocity (*/sec):");
-			double zoomVel = in.nextDouble();
-			System.out.println("Zoom max (10^n):");
-			int zoomMax = in.nextInt();
+			System.out.println("Duration (sec):");
+			float dur = in.nextFloat();
 			in.nextLine();
 			System.out.println("Pulsar table name:");
 			String tablePName = in.nextLine();
 			System.out.println("Duty cycle table name:");
 			String tableDName = in.nextLine();
-			fractalSynth.genPulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, zoomVel, zoomMax,
+			fractalSynth.genPulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, dur,
 					tablePName, tableDName);
 			grainMenu();
 		} else if (action.toLowerCase().startsWith("x")) {

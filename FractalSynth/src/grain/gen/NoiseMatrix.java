@@ -33,19 +33,23 @@ public class NoiseMatrix implements Generator {
 			float strt = (float) (Math.random() * duration);
 			float xNorm = strt / duration;
 			int sum = 0;
-			for (int j = 0; j < table.height(); j++) {
-				sum += table.get(xNorm, j / table.height());
+			int x = (int) (table.length() * strt / duration);
+			for (int y = 0; y < table.height(); y++) {
+				sum += table.data[x][y];
 			}
 			int r = (int) (Math.random() * sum);
 			int p = 0;
-			int f = -1;
-			while (p < r && f < table.height()) {
-				f++;
-				p += table.get(xNorm, f / table.height());
+			int y = 0;
+			while (y < table.height()) {
+				p += table.data[x][y];
+				if (p >= r) {
+					break;
+				}
+				y++;
 			}
-			float yNorm = f / table.height();
+			float yNorm = 1.0f * y / table.height();
 			int freq = (int) ((fMax - fMin) * yNorm + fMin);
-			matrix.add(new OscGrain(strt, 1f, 1 / density, freq, Grain.DEFAULT_ATT,
+			matrix.add(new OscGrain(strt, Grain.DEFAULT_DUR, 1 / density, freq, Grain.DEFAULT_ATT,
 					Grain.DEFAULT_DEC, xNorm, yNorm));
 		}
 		layer.addGrains(matrix);

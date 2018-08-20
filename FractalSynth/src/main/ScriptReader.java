@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import grain.RandomShift;
 import grain.gen.NoiseBand;
 import grain.gen.NoiseMatrix;
 import grain.gen.Note;
@@ -14,6 +13,7 @@ import grain.mod.Inflate;
 import grain.mod.IntegralWarp;
 import grain.mod.Normalize;
 import grain.mod.OverlaySample;
+import grain.mod.RandomShift;
 import table.EdgeDetection;
 import table.Integrate;
 import table.Power;
@@ -92,12 +92,11 @@ public class ScriptReader {
 					int fMaxD = Integer.parseInt(cmd[5]);
 					int minResD = Integer.parseInt(cmd[6]);
 					int maxResD = Integer.parseInt(cmd[7]);
-					double zoomVel = Double.parseDouble(cmd[8]);
-					int zoomMax = Integer.parseInt(cmd[9]);
-					Table tableP = fractalSynth.getTable(cmd[10]);
-					Table tableD = fractalSynth.getTable(cmd[11]);
+					float dur = Float.parseFloat(cmd[8]);
+					Table tableP = fractalSynth.getTable(cmd[9]);
+					Table tableD = fractalSynth.getTable(cmd[10]);
 					int n = fractalSynth.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD,
-							maxResD, zoomVel, zoomMax, tableP, tableD));
+							maxResD, dur, tableP, tableD));
 					System.out.println("Generated matrix of size " + n);
 
 				} else if (cmd[0].equals("band") && !skip) {

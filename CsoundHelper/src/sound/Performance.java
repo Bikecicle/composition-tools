@@ -5,7 +5,7 @@ import java.io.Serializable;
 import orc.Orchestra;
 import sco.Score;
 
-public interface Performable extends Serializable {
+public interface Performance extends Serializable {
 	
 	public Score getScore();
 	

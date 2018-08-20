@@ -129,22 +129,28 @@ public class FractalSynth {
 				sum[x][y] = red[x][y] + green[x][y] + blue[x][y];
 			}
 		}
-		//tableManager.saveTable(new Table(name + "_r", red, kMax));
-		//tableManager.saveTable(new Table(name + "_g", green, kMax));
-		//tableManager.saveTable(new Table(name + "_b", blue, kMax));
+		try {
+		tableManager.saveTable(new Table(name + "_r", red, kMax));
+		Thread.sleep(1000);
+		tableManager.saveTable(new Table(name + "_g", green, kMax));
+		Thread.sleep(1000);
+		tableManager.saveTable(new Table(name + "_b", blue, kMax));
+		Thread.sleep(1000);
 		tableManager.saveTable(new Table(name, sum, kMax));
+		Thread.sleep(1000);
+		} catch (Exception e) {
+			
+		}
 	}
 
 	public String getTableProperties(String name) {
 		return tableManager.getTable(name).toString();
 	}
 
-	public int genPulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD,
-			double zoomVel, int zoomMax, String tablePName, String tableDName) {
+	public int genPulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD, float dur, String tablePName, String tableDName) {
 		Table tableP = tableManager.getTable(tablePName);
 		Table tableD = tableManager.getTable(tableDName);
-		return grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD,
-				zoomVel, zoomMax, tableP, tableD));
+		return grainManager.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, dur, tableP, tableD));
 	}
 
 	public int generateGrains(Generator gen) {

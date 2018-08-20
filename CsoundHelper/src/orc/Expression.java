@@ -1,10 +1,8 @@
 package orc;
 
-import sco.ParamMap;
+public class Expression extends Statement {
 
-public class Expression extends Value {
-
-	public Expression(String format, Value... params) {
+	public Expression(String format, Statement... params) {
 		super(null, false, 1, params);
 		this.params = params;
 		Object[] strs = new String[params.length];
@@ -14,16 +12,11 @@ public class Expression extends Value {
 	}
 
 	@Override
-	public void mapInput(int i, int p, ParamMap map) {
-		parent.mapInput(i, p, map);
-	}
-
-	@Override
 	public String toString() {
 		String s = "";
-		for (Value param : params) {
+		for (Statement param : params) {
 			if (!param.terminal & !param.defined) {
-				s += param + "\r\n";
+				s += param;
 			}
 		}
 		defined = true;

@@ -1,5 +1,7 @@
 package sco;
 
+import java.io.File;
+
 public class SoundfileFTable extends FTable {
 
 	private static final long serialVersionUID = -2596051195054624160L;
@@ -11,7 +13,7 @@ public class SoundfileFTable extends FTable {
 
 	public SoundfileFTable(String filename, int ifn) {
 		super(ifn, GenRoutine.soundfile);
-		this.Sfilnam = filename;
+		this.Sfilnam = new File(filename).getAbsolutePath().replace("\\", "/");
 		this.iskip = 0; // Start at beginning
 		this.iformat = 0; // Defer
 		this.ichn = 0; // Defer

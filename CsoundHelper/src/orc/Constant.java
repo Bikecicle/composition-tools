@@ -1,6 +1,6 @@
 package orc;
 
-public class Constant<T> extends Value {
+public class Constant<T> extends Statement {
 	
 	T constant;
 

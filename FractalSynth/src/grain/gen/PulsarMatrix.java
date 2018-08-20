@@ -18,13 +18,11 @@ public class PulsarMatrix implements Generator {
 	private int fMaxD;
 	private int minResD;
 	private int maxResD;
-	private double zoomVel;
-	private int zoomMax;
+	private float dur;
 	private Table tableP;
 	private Table tableD;
 
-	public PulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD, double zoomVel,
-			int zoomMax, Table tableP, Table tableD) {
+	public PulsarMatrix(int fMinP, int fMaxP, int fResP, int fMinD, int fMaxD, int minResD, int maxResD, float dur, Table tableP, Table tableD) {
 		this.fMinP = fMinP;
 		this.fMaxP = fMaxP;
 		this.fResP = fResP;
@@ -32,8 +30,7 @@ public class PulsarMatrix implements Generator {
 		this.fMaxD = fMaxD;
 		this.minResD = minResD;
 		this.maxResD = maxResD;
-		this.zoomVel = zoomVel;
-		this.zoomMax = zoomMax;
+		this.dur = dur;
 		this.tableP = tableP;
 		this.tableD = tableD;
 	}
@@ -43,7 +40,6 @@ public class PulsarMatrix implements Generator {
 		List<Grain> matrix = new ArrayList<Grain>();
 		int tRes = fMaxP;
 		double fStepP = 1.0 * (fMaxP - fMinP) / fResP;
-		double dur = Math.log(Math.pow(10, zoomMax)) / Math.log(zoomVel + 1);
 		int tSteps = (int) (dur * tRes);
 
 		for (int t = 0; t < tSteps; t++) {

@@ -97,6 +97,10 @@ public class Timbre implements Genome {
 	
 	private String randomSample() {
 		File[] samples = new File(sampleDir).listFiles();
-		return sampleDir + "/" + samples[(int) (Math.random() * samples.length)].getName();
+		String sample = ""; 
+		while (!sample.endsWith(".wav")) {
+			sample = sampleDir + "/" + samples[(int) (Math.random() * samples.length)].getName();
+		}
+		return sample;
 	}
 }

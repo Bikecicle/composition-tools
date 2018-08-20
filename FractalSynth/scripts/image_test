@@ -1,9 +1,13 @@
+replace false
+
+table new image ship C:/Users/Griffin/Pictures/20180810072832_1.jpg
+edge 30
+
 replace true
 
-table new image pkm C:/Users/Griffin/Pictures/Macbook/pkm.png
-edge 2
-
 layer sig
-noise 100 1000 20 10 pkm
+pulsar 1 30 25 20 1000 10 100 360 ship pkm
+rshift 0.03 0.1 ship_g
+inflate 0.1 ship_b
 
 render i_test

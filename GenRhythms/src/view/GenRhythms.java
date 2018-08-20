@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -12,19 +14,43 @@ import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
+
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JLabel;
+
+import model.Batch;
+import model.Rhythm;
 import model.Session;
+import sound.Performer;
 
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+import java.awt.ComponentOrientation;
 
 public class GenRhythms {
-	
+
 	public static final String TITLE = "GenRhythms";
+	public static final String SESSION_DIR = "sessions";
+	public static final String SAMPLE_DIR = "samples";
 	public static final int DEFAULT_TEMPO = 120;
+	
+	public static final int RIGHT_BUTTON_WIDTH = 100;
+
+	private JLabel lblBatch;
+	private JLabel lblRhythm;
 
 	private JFrame frame;
+	
+	private Performer performer;
 	private Session session;
+	private Batch batch;
+	private int rIndex;
 
 	/**
 	 * Launch the application.
@@ -46,6 +72,7 @@ public class GenRhythms {
 	 * Create the application.
 	 */
 	public GenRhythms() {
+		performer = new Performer();
 		initialize();
 	}
 
@@ -54,7 +81,6 @@ public class GenRhythms {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		updateTitle();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -67,11 +93,14 @@ public class GenRhythms {
 		JMenuItem mntmNew = new JMenuItem("New");
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CreateSession dialog = new CreateSession();
+				CreateSessionDialog dialog = new CreateSessionDialog();
 				dialog.setVisible(true);
-				if (dialog.accepted)
+				if (dialog.accepted) {
 					session = dialog.session;
-				updateTitle();
+					batch = session.createBatch();
+					rIndex = 0;
+					updateInfo();
+				}
 			}
 		});
 		mnFile.add(mntmNew);
@@ -80,14 +109,23 @@ public class GenRhythms {
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				final JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(Filters.sessionFilter());
+				chooser.setCurrentDirectory(new File(SESSION_DIR));
 				int val = chooser.showSaveDialog(frame);
 				if (val == JFileChooser.APPROVE_OPTION) {
 					try {
-						session.save(chooser.getSelectedFile());
+						File file = chooser.getSelectedFile();
+						String path = file.getPath();
+						if (!path.endsWith(Session.SESSION_EXT)) {
+							file = new File(path + Session.SESSION_EXT);
+						}
+						session.title = file.getName().substring(0, file.getName().length() - 4);
+						session.save(file);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				}
+				updateInfo();
 			}
 		});
 		mnFile.add(mntmSave);
@@ -96,6 +134,8 @@ public class GenRhythms {
 		mntmLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				final JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(Filters.sessionFilter());
+				chooser.setCurrentDirectory(new File(SESSION_DIR));
 				int val = chooser.showOpenDialog(frame);
 				if (val == JFileChooser.APPROVE_OPTION) {
 					try {
@@ -104,37 +144,218 @@ public class GenRhythms {
 						e1.printStackTrace();
 					}
 				}
-				updateTitle();
+				batch = session.createBatch();
+				rIndex = 0;
+				updateInfo();
 			}
 		});
 		mnFile.add(mntmLoad);
-		
+
 		JMenu mnSet = new JMenu("Set");
 		menuBar.add(mnSet);
-		
+
 		JMenuItem mntmExport = new JMenuItem("Export");
+		mntmExport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				final JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(Filters.setFilter());
+				chooser.setCurrentDirectory(new File(SESSION_DIR));
+				int val = chooser.showSaveDialog(frame);
+				if (val == JFileChooser.APPROVE_OPTION) {
+					try {
+						File file = chooser.getSelectedFile();
+						String path = file.getPath();
+						if (!path.endsWith(Session.SET_EXT))
+							file = new File(path + Session.SET_EXT);
+						session.exportSet(file);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		mnSet.add(mntmExport);
-		
+
 		JMenuItem mntmImport = new JMenuItem("Import");
+		mntmImport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				final JFileChooser chooser = new JFileChooser();
+				chooser.setFileFilter(Filters.setFilter());
+				chooser.setCurrentDirectory(new File(SESSION_DIR));
+				int val = chooser.showOpenDialog(frame);
+				if (val == JFileChooser.APPROVE_OPTION) {
+					try {
+						session.importSet(chooser.getSelectedFile());
+					} catch (ClassNotFoundException | IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		mnSet.add(mntmImport);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
-		
+
+		JPanel panel_4 = new JPanel();
+		panel.add(panel_4);
+
 		JLabel lblTempo = new JLabel("Tempo");
-		panel.add(lblTempo);
-		
+		panel_4.add(lblTempo);
+
 		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(DEFAULT_TEMPO), null, null, new Integer(1)));
-		panel.add(spinner);
+		spinner.setToolTipText("Beats per minute as if 4 beats per measure");
+		spinner.setPreferredSize(new Dimension(40, 20));
+		spinner.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		panel_4.add(spinner);
+		spinner.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (session != null)
+					session.setTempo((int) spinner.getValue());
+			}
+		});
+		spinner.setModel(new SpinnerNumberModel(new Integer(120), new Integer(0), null, new Integer(1)));
+
+		JPanel panel_5 = new JPanel();
+		panel.add(panel_5);
+
+		JLabel lblAmp = new JLabel("Amp");
+		panel_5.add(lblAmp);
+
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setToolTipText("Unimplemented");
+		spinner_1.setPreferredSize(new Dimension(40, 20));
+		spinner_1.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(0)));
+		panel_5.add(spinner_1);
+
+		JPanel panel_1 = new JPanel();
+		frame.getContentPane().add(panel_1, BorderLayout.EAST);
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+
+		JButton btnAddToSet = new JButton("Add to Set");
+		btnAddToSet.setToolTipText("List of rhythm exemplars injected back into the gene pool");
+		btnAddToSet.setMinimumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnAddToSet.setMaximumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnAddToSet.setPreferredSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnAddToSet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				session.addToSet(batch.get(rIndex));
+			}
+		});
+		panel_1.add(btnAddToSet);
+
+		JButton btnPlaySet = new JButton("Play Set");
+		btnPlaySet.setToolTipText("Play back all rhythms in the set");
+		btnPlaySet.setMinimumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnPlaySet.setMaximumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnPlaySet.setPreferredSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnPlaySet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (Rhythm rhythm : session.set)
+					performer.play(rhythm);
+			}
+		});
+		panel_1.add(btnPlaySet);
+
+		JButton btnResetGen = new JButton("Reset Gen");
+		btnResetGen.setToolTipText("Wipe ratings and restart current batch");
+		btnResetGen.setPreferredSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnResetGen.setMinimumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnResetGen.setMaximumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnResetGen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				batch.reset();
+				rIndex = 0;
+				updateInfo();
+			}
+		});
+		panel_1.add(btnResetGen);
+
+		JButton btnEndBatch = new JButton("Skip Gen");
+		btnEndBatch.setToolTipText("Jump to next generation");
+		btnEndBatch.setMinimumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnEndBatch.setMaximumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnEndBatch.setPreferredSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnEndBatch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				batch.reset();
+				session.advance();
+				batch = session.createBatch();
+				rIndex = 0;
+				updateInfo();
+			}
+		});
+		panel_1.add(btnEndBatch);
+
+		JPanel panel_2 = new JPanel();
+		frame.getContentPane().add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new BorderLayout(0, 0));
+
+		JSlider slider = new JSlider();
+		slider.setPaintTicks(true);
+		slider.setSnapToTicks(true);
+		slider.setPaintLabels(true);
+		slider.setMinimum(1);
+		slider.setMaximum(5);
+		slider.setMajorTickSpacing(1);
+		panel_2.add(slider, BorderLayout.CENTER);
+
+		JLabel lblRating = new JLabel("Rating");
+		lblRating.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_2.add(lblRating, BorderLayout.NORTH);
+
+		JButton btnPlay = new JButton("Play");
+		btnPlay.setToolTipText("Play back the current rhythm");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				performer.play(batch.get(rIndex));
+			}
+		});
+		panel_2.add(btnPlay, BorderLayout.WEST);
+
+		JButton btnNext = new JButton("Next");
+		btnNext.setToolTipText("Apply rating to current rhythm and bring up the next one");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				batch.get(rIndex).rate(slider.getValue());
+				if (rIndex < batch.size() - 1) {
+					rIndex++;
+					updateInfo();
+					performer.play(batch.get(rIndex));
+				} else {
+					BatchEndDialog dialog = new BatchEndDialog();
+					dialog.setVisible(true);
+					if (dialog.next) {
+						session.advance();
+						batch = session.createBatch();
+						rIndex = 0;
+						updateInfo();
+						performer.play(batch.get(rIndex));
+					}
+				}
+			}
+		});
+		panel_2.add(btnNext, BorderLayout.EAST);
+
+		JPanel panel_3 = new JPanel();
+		frame.getContentPane().add(panel_3, BorderLayout.WEST);
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.Y_AXIS));
+
+		lblBatch = new JLabel("Generation #");
+		panel_3.add(lblBatch);
+
+		lblRhythm = new JLabel("Rhythm #");
+		panel_3.add(lblRhythm);
 	}
-	
-	private void updateTitle() { 
+
+	private void updateInfo() {
 		if (session == null) {
 			frame.setTitle(TITLE);
 		} else {
 			frame.setTitle(TITLE + " - " + session.title);
+			lblBatch.setText("Generation " + session.getStage());
+			lblRhythm.setText("Rhythm " + (rIndex + 1) + "/" + batch.size());
 		}
 	}
 }

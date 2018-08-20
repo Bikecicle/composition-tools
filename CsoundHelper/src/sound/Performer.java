@@ -2,6 +2,7 @@ package sound;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import csnd6.Csound;
@@ -11,9 +12,35 @@ public class Performer {
 
 	public static final String RT_OUT = "dac0";
 
-	public static void play(String orc, String sco, String out) {
-		csnd6.csoundInitialize(csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
+	String out;
+	PrintWriter trace;
+	int iter;
 
+	public Performer(String out) {
+		csnd6.csoundInitialize(csnd6.CSOUNDINIT_NO_ATEXIT | csnd6.CSOUNDINIT_NO_SIGNAL_HANDLER);
+		this.out = out;
+		try {
+			trace = new PrintWriter(new File("trace.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		iter = 0;
+	}
+
+	public Performer() {
+		this(RT_OUT);
+	}
+
+	public void play(String orc, String sco) {
+		trace.println("[Performance " + iter + "]");
+		trace.println();
+		trace.println(orc);
+		trace.println();
+		trace.println(sco);
+		trace.println();
+		trace.flush();
+		iter++;
+		
 		Csound c = new Csound();
 		c.SetOption("-o" + out);
 		c.CompileOrc(orc);
@@ -27,19 +54,15 @@ public class Performer {
 		c.Cleanup();
 	}
 
-	public static void play(Performable p, String out) {
-		play(p.getOrchestra().toString(), p.getScore().toString(), out);
+	public void play(Performance performance) {
+		play(performance.getOrchestra().toString(), performance.getScore().toString());
 	}
 
-	public static void play(Performable p) {
-		play(p, RT_OUT);
-	}
-	
 	@SuppressWarnings("resource")
-	public static void playFile(String orcPath, String scoPath, String out) {
+	public void playFile(String orcPath, String scoPath) {
 		String orc = null;
-        String sco = null;
-        
+		String sco = null;
+
 		try {
 			orc = new Scanner(new File(orcPath)).useDelimiter("\\Z").next();
 			sco = new Scanner(new File(scoPath)).useDelimiter("\\Z").next();
@@ -47,10 +70,6 @@ public class Performer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		play(orc, sco, out);
-	}
-	
-	public static void playFile(String orcPath, String scoPath) {
-		playFile(orcPath, scoPath, RT_OUT);
+		play(orc, sco);
 	}
 }
