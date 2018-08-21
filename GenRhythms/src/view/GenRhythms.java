@@ -26,6 +26,7 @@ import sound.Performer;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.SliderUI;
 import javax.swing.event.ChangeEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -44,6 +45,8 @@ public class GenRhythms {
 
 	private JLabel lblBatch;
 	private JLabel lblRhythm;
+	private JSlider sliderT;
+	private JSlider sliderS;
 
 	private JFrame frame;
 	
@@ -292,19 +295,6 @@ public class GenRhythms {
 		frame.getContentPane().add(panel_2, BorderLayout.SOUTH);
 		panel_2.setLayout(new BorderLayout(0, 0));
 
-		JSlider slider = new JSlider();
-		slider.setPaintTicks(true);
-		slider.setSnapToTicks(true);
-		slider.setPaintLabels(true);
-		slider.setMinimum(1);
-		slider.setMaximum(5);
-		slider.setMajorTickSpacing(1);
-		panel_2.add(slider, BorderLayout.CENTER);
-
-		JLabel lblRating = new JLabel("Rating");
-		lblRating.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_2.add(lblRating, BorderLayout.NORTH);
-
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setToolTipText("Play back the current rhythm");
 		btnPlay.addActionListener(new ActionListener() {
@@ -318,7 +308,8 @@ public class GenRhythms {
 		btnNext.setToolTipText("Apply rating to current rhythm and bring up the next one");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				batch.get(rIndex).rate(slider.getValue());
+				batch.get(rIndex).rateTimbre(sliderT.getValue());
+				batch.get(rIndex).rateSequence(sliderS.getValue());
 				if (rIndex < batch.size() - 1) {
 					rIndex++;
 					updateInfo();
@@ -347,6 +338,44 @@ public class GenRhythms {
 
 		lblRhythm = new JLabel("Rhythm #");
 		panel_3.add(lblRhythm);
+		
+		JPanel panel_6 = new JPanel();
+		frame.getContentPane().add(panel_6, BorderLayout.CENTER);
+		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.Y_AXIS));
+		
+		JPanel panel_7 = new JPanel();
+		panel_6.add(panel_7);
+				panel_7.setLayout(new BorderLayout(0, 0));
+		
+				JLabel lblTimbreRating = new JLabel("Timbre Rating");
+				panel_7.add(lblTimbreRating, BorderLayout.NORTH);
+				lblTimbreRating.setHorizontalAlignment(SwingConstants.CENTER);
+				
+						sliderT = new JSlider();
+						panel_7.add(sliderT, BorderLayout.CENTER);
+						sliderT.setPaintTicks(true);
+						sliderT.setSnapToTicks(true);
+						sliderT.setPaintLabels(true);
+						sliderT.setMinimum(1);
+						sliderT.setMaximum(5);
+						sliderT.setMajorTickSpacing(1);
+						
+						JPanel panel_8 = new JPanel();
+						panel_6.add(panel_8);
+						panel_8.setLayout(new BorderLayout(0, 0));
+						
+						JLabel lblSequenceRating = new JLabel("Sequence Rating");
+						lblSequenceRating.setHorizontalAlignment(SwingConstants.CENTER);
+						panel_8.add(lblSequenceRating, BorderLayout.NORTH);
+						
+						sliderS = new JSlider();
+						sliderS.setSnapToTicks(true);
+						sliderS.setPaintTicks(true);
+						sliderS.setPaintLabels(true);
+						sliderS.setMinimum(1);
+						sliderS.setMaximum(5);
+						sliderS.setMajorTickSpacing(1);
+						panel_8.add(sliderS, BorderLayout.CENTER);
 	}
 
 	private void updateInfo() {

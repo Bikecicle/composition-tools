@@ -30,9 +30,12 @@ public class Rhythm implements Performance {
 		voiceCount = timbres.length;
 	}
 
-	public void rate(int rating) {
+	public void rateTimbre(int rating) {
 		for (Timbre timbre : timbres)
 			timbre.score += rating;
+	}
+	
+	public void rateSequence(int rating) {
 		for (Sequence sequence : sequences)
 			sequence.score += rating;
 	}
