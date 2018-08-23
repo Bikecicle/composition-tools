@@ -10,19 +10,19 @@ public class Sequence implements Genome {
 	public final int strikeMax = 64;
 	public final float mutationRate = 0.1f;
 
-	int strikeCount;
-	int length; // In measures
-	int quant; // Timesteps per measure
-	float tempo;
+	public int strikeCount;
+	public int length; // In measures
+	public int quant; // Timesteps per measure
+	public float tempo;
 
-	int[] strt;
-	float[] pos;
-	float[] att;
-	float[] dec;
-	float[] sus;
-	float[] rel;
-	float[] slev;
-	float[] ptch;
+	public int[] strt;
+	public float[] pos;
+	public float[] att;
+	public float[] dec;
+	public float[] sus;
+	public float[] rel;
+	public float[] slev;
+	public float[] ptch;
 
 	double mRate;
 	double score;
@@ -102,6 +102,12 @@ public class Sequence implements Genome {
 	
 	public float getQuantLength() {
 		return 240 / tempo / quant;
+	}
+	
+	public void removeAt(int t) {
+		for (int i = 0; i < strikeCount; i++) {
+			if ()
+		}
 	}
 
 	private void mutate() {

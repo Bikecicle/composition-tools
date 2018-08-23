@@ -20,9 +20,9 @@ public class Rhythm implements Performance {
 
 	private static final float AMP = 100;
 	
-	Timbre[] timbres;
-	Sequence[] sequences;
-	int voiceCount;
+	public Timbre[] timbres;
+	public Sequence[] sequences;
+	public int voiceCount;
 
 	public Rhythm(Timbre[] timbres, Sequence[] sequences) {
 		this.timbres = timbres;

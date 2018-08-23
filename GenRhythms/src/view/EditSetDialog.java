@@ -76,6 +76,4 @@ public class EditSetDialog extends JDialog {
 			}
 		}
 	}
-
-	private class R
 }
