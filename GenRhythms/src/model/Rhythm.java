@@ -54,7 +54,7 @@ public class Rhythm implements Performance {
 		for (int v = 0; v < voiceCount; v++) {
 			int ift = sco.addFTable(new SoundfileFTable(timbres[v].sample));
 			float quantLen = sequences[v].getQuantLength();
-			for (int s = 0; s < sequences[v].strikeCount; s++) {
+			for (int s = 0; s < sequences[v].sCount; s++) {
 				Note note = new Note(map);
 				float pos = realValue(timbres[v].pos, sequences[v].pos[s]);
 				float att = realValue(timbres[v].att, sequences[v].att[s]);
@@ -62,7 +62,6 @@ public class Rhythm implements Performance {
 				float sus = realValue(timbres[v].sus, sequences[v].sus[s]);
 				float rel = realValue(timbres[v].rel, sequences[v].rel[s]);
 				float slev = realValue(timbres[v].slev, sequences[v].slev[s]);
-				float ptch = realValue(timbres[v].ptch, sequences[v].ptch[s]);
 				float dur = att + dec + sus + rel;
 				note.add(new Param<Integer>(Orchestra.INSTRUMENT, 1));
 				note.add(new Param<Float>(Orchestra.START, sequences[v].strt[s] * quantLen));
@@ -73,7 +72,6 @@ public class Rhythm implements Performance {
 				note.add(new Param<Float>("rel", rel));
 				note.add(new Param<Float>("slev", slev));
 				note.add(new Param<Integer>("ft", ift));
-				note.add(new Param<Float>("pitch", ptch));
 				sco.addNote(note);
 			}
 		}
