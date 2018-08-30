@@ -29,6 +29,7 @@ public class CreateSessionDialog extends JDialog {
 	private JSpinner voiceSpinner;
 	private JSpinner measureSpinner;
 	private JSpinner quantSpinner;
+	private JSpinner lenSpinner;
 	private JButton okButton;
 
 	Session session;
@@ -138,6 +139,24 @@ public class CreateSessionDialog extends JDialog {
 			}
 		}
 		{
+			JPanel panel = new JPanel();
+			contentPanel.add(panel);
+			{
+				JLabel lblNoteLength = new JLabel("Note length");
+				panel.add(lblNoteLength);
+			}
+			{
+				lenSpinner = new JSpinner();
+				quantSpinner.setPreferredSize(new Dimension(40, 20));
+				lenSpinner.addChangeListener(new ChangeListener() {
+					public void stateChanged(ChangeEvent e) {
+						checkComplete();
+					}
+				});
+				panel.add(lenSpinner);
+			}
+		}
+		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -147,7 +166,7 @@ public class CreateSessionDialog extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						session = new Session("untitled", (int) voiceSpinner.getValue(),
 								(int) measureSpinner.getValue(), (int) quantSpinner.getValue(),
-								GenRhythms.DEFAULT_TEMPO, sampleField.getText());
+								GenRhythms.DEFAULT_TEMPO, GenRhythms.DEFAULT_AMP, (int) lenSpinner.getValue(), sampleField.getText());
 						accepted = true;
 						setVisible(false);
 					}
@@ -173,7 +192,7 @@ public class CreateSessionDialog extends JDialog {
 
 	private void checkComplete() {
 		if ((int) voiceSpinner.getValue() > 0 && (int) measureSpinner.getValue() > 0
-				&& (int) quantSpinner.getValue() > 0 && !sampleField.getText().equals(""))
+				&& (int) quantSpinner.getValue() > 0 && !sampleField.getText().equals("") && (int) lenSpinner.getValue() > 0)
 			okButton.setEnabled(true);
 		else
 			okButton.setEnabled(false);

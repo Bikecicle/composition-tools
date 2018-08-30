@@ -5,13 +5,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import view.RhythmGrid;
+import model.Hit;
 import model.Rhythm;
 import model.Sequence;
 import model.Timbre;
 
 import java.awt.BorderLayout;
 
-public class TestSequenceGrid {
+public class TestRhythmGrid {
 
 	private JFrame frame;
 
@@ -22,7 +23,7 @@ public class TestSequenceGrid {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestSequenceGrid window = new TestSequenceGrid();
+					TestRhythmGrid window = new TestRhythmGrid();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +35,7 @@ public class TestSequenceGrid {
 	/**
 	 * Create the application.
 	 */
-	public TestSequenceGrid() {
+	public TestRhythmGrid() {
 		initialize();
 	}
 
@@ -50,7 +51,7 @@ public class TestSequenceGrid {
 		Timbre[] ts = new Timbre[voices];
 		Sequence[] ss = new Sequence[voices];
 
-		Timbre t = new Timbre(null);
+		Timbre t = new Timbre(null, 1, 1);
 		t.sample = "C:/Users/Griffin/Documents/Ableton/User Library/Samples/tools/340619__mickyman5000__drill-sharp-stops-1.wav";
 		t.pos[0] = 0f;
 		t.pos[1] = 1f;
@@ -64,21 +65,19 @@ public class TestSequenceGrid {
 		t.rel[1] = 0f;
 		t.slev[0] = 1f;
 		t.slev[1] = 1f;
-		t.ptch[0] = 0.5f;
-		t.ptch[1] = 1.5f;
 		ts[0] = t;
 		ts[1] = t;
 
 		Sequence s1 = new Sequence(3, 8, 120);
-		s1.addStrike(0, 0, 0, 0, 0, 0, 0, 0);
-		s1.addStrike(8, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f);
-		s1.addStrike(16, 1, 1, 1, 1, 1, 1, 1);
+		s1.addHit(new Hit(0, 0, 0, 0, 0, 0, 0));
+		s1.addHit(new Hit(8, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f));
+		s1.addHit(new Hit(16, 1, 1, 1, 1, 1, 1));
 		ss[0] = s1;
 		
 		Sequence s2 = new Sequence(3, 8, 120);
-		s2.addStrike(2, 0, 0, 0, 0, 0, 0, 0);
-		s2.addStrike(3, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f);
-		s2.addStrike(15, 1, 1, 1, 1, 1, 1, 1);
+		s2.addHit(new Hit(2, 0, 0, 0, 0, 0, 0));
+		s2.addHit(new Hit(3, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f));
+		s2.addHit(new Hit(15, 1, 1, 1, 1, 1, 1));
 		ss[1] = s2;
 
 		Rhythm r = new Rhythm(ts, ss);

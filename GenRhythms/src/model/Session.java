@@ -43,30 +43,25 @@ public class Session implements Serializable {
 	EvolutionManager[] sequenceEM;
 	String sampleDir;
 	int voiceCount;
-	int length;
-	int quant;
-	float tempo;
-	
+
+	Batch current;
 	int stage;
 
-	public Session(String title, int voiceCount, int length, int quant, float tempo,
-			String sampleDir) {
+	public Session(String title, int voiceCount, int length, int quant, float tempo, float amp, float defaultDur, String sampleDir) {
 		this.title = title;
 		this.voiceCount = voiceCount;
-		this.length = length;
-		this.quant = quant;
-		this.tempo = tempo;
 		this.sampleDir = sampleDir;
 		timbreEM = new EvolutionManager[voiceCount];
 		sequenceEM = new EvolutionManager[voiceCount];
 		set = new Set();
 		for (int v = 0; v < voiceCount; v++) {
 			Selector selectorT = new ExemplarInject(new SurvivalThreshold(new RandomSelect(), survivalCf), set.timbres);
-			Selector selectorS = new ExemplarInject(new SurvivalThreshold(new RandomSelect(), survivalCf), set.sequences);
+			Selector selectorS = new ExemplarInject(new SurvivalThreshold(new RandomSelect(), survivalCf),
+					set.sequences);
 			Population initPopT = new Population();
 			Population initPopS = new Population();
 			for (int g = 0; g < popSize; g++) {
-				Timbre timbre = new Timbre(sampleDir);
+				Timbre timbre = new Timbre(sampleDir, amp, defaultDur);
 				timbre.randomize();
 				initPopT.add(timbre);
 				Sequence sequence = new Sequence(length, quant, tempo);
@@ -78,7 +73,7 @@ public class Session implements Serializable {
 		}
 		stage = 1;
 	}
-	
+
 	public static Session load(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file.getAbsolutePath()));
 		Session session = (Session) in.readObject();
@@ -86,8 +81,8 @@ public class Session implements Serializable {
 		return session;
 	}
 
-	public Batch createBatch() {
-		Batch batch = new Batch();
+	public void createBatch() {
+		current = new Batch();
 		// List of lists, each corresponding to a voice and containing shuffled indices
 		// for that voice's population
 		List<List<Integer>> indicesT = new ArrayList<>();
@@ -116,9 +111,12 @@ public class Session implements Serializable {
 				timbres[v] = (Timbre) timbreEM[v].getPop().get(indicesT.get(v).get(b));
 				sequences[v] = (Sequence) sequenceEM[v].getPop().get(indicesS.get(v).get(b));
 			}
-			batch.add(new Rhythm(timbres, sequences));
+			current.add(new Rhythm(timbres, sequences));
 		}
-		return batch;
+	}
+	
+	public Batch getCurrentBatch() {
+		return current;
 	}
 
 	public void advance() {
@@ -131,11 +129,11 @@ public class Session implements Serializable {
 		}
 		stage++;
 	}
-	
+
 	public void addToSet(Rhythm rhythm) {
 		set.add(rhythm);
 	}
-	
+
 	public void save(File file) throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 		out.writeObject(this);
@@ -147,26 +145,34 @@ public class Session implements Serializable {
 		out.writeObject(set);
 		out.close();
 	}
-	
+
 	public void importSet(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 		set.addAll((Set) in.readObject());
 		in.close();
 	}
-	
+
 	public Set getSet() {
 		return set;
 	}
-	
+
 	public int getStage() {
 		return stage;
 	}
 	
-	public float getTempo() {
-		return tempo;
-	}
-
 	public void setTempo(float tempo) {
-		this.tempo = tempo;
+		for (Rhythm r : current) {
+			for (Sequence s : r.sequences) {
+				s.tempo = tempo;
+			}
+		}
+	}
+	
+	public void setAmp(float amp) {
+		for (Rhythm r: current) {
+			for (Timbre t : r.timbres) {
+				t.amp = amp;
+			}
+		}
 	}
 }

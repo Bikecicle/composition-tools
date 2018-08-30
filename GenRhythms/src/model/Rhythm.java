@@ -17,8 +17,6 @@ import orc.Opcode;
 public class Rhythm implements Performance {
 	
 	private static final long serialVersionUID = 6111978696319487569L;
-
-	private static final float AMP = 100;
 	
 	public Timbre[] timbres;
 	public Sequence[] sequences;
@@ -53,19 +51,20 @@ public class Rhythm implements Performance {
 		Score sco = new Score();
 		for (int v = 0; v < voiceCount; v++) {
 			int ift = sco.addFTable(new SoundfileFTable(timbres[v].sample));
-			float quantLen = sequences[v].getQuantLength();
-			for (int s = 0; s < sequences[v].sCount; s++) {
+			float quantLen = sequences[v].getQuantLen();
+			for (int s = 0; s < sequences[v].hCount; s++) {
 				Note note = new Note(map);
-				float pos = realValue(timbres[v].pos, sequences[v].pos[s]);
-				float att = realValue(timbres[v].att, sequences[v].att[s]);
-				float dec = realValue(timbres[v].dec, sequences[v].dec[s]);
-				float sus = realValue(timbres[v].sus, sequences[v].sus[s]);
-				float rel = realValue(timbres[v].rel, sequences[v].rel[s]);
-				float slev = realValue(timbres[v].slev, sequences[v].slev[s]);
+				float pos = realValue(timbres[v].pos, sequences[v].hits[s].pos);
+				float att = realValue(timbres[v].att, sequences[v].hits[s].att);
+				float dec = realValue(timbres[v].dec, sequences[v].hits[s].dec);
+				float sus = realValue(timbres[v].sus, sequences[v].hits[s].sus);
+				float rel = realValue(timbres[v].rel, sequences[v].hits[s].rel);
+				float slev = realValue(timbres[v].slev, sequences[v].hits[s].slev);
 				float dur = att + dec + sus + rel;
 				note.add(new Param<Integer>(Orchestra.INSTRUMENT, 1));
-				note.add(new Param<Float>(Orchestra.START, sequences[v].strt[s] * quantLen));
+				note.add(new Param<Float>(Orchestra.START, sequences[v].hits[s].strt * quantLen));
 				note.add(new Param<Float>(Orchestra.DURATION, dur));
+				note.add(new Param<Float>("amp", timbres[v].amp));
 				note.add(new Param<Float>("pos", pos));
 				note.add(new Param<Float>("att", att));
 				note.add(new Param<Float>("dec", dec));
@@ -86,10 +85,10 @@ public class Rhythm implements Performance {
 		float dbfs = 1.0f;
 		Orchestra orc = new Orchestra(sr, ksmps, nchnls, dbfs);
 		Instrument i = new Instrument(1);
-		Statement db = new Constant<Float>(AMP);
+		Statement db = new Variable("i", "amp", "=", i.p("amp"));
 		Statement kpitch = new Constant<Float>(1f); // Variable("k", "pitch", "=", i.p());
 		Statement ifad = new Constant<Float>(0f);
-		Statement ifn = new Variable("i", "fn", "=", i.p("ft"));
+		Statement ifn = new Variable("i", "ft", "=", i.p("ft"));
 		Statement kloopstart = new Constant<Float>(0f);
 		Statement kloopend = new Variable("k", "end", "=", new Expression("nsamp(%s) / %s", ifn, Orchestra.SR, i.dur));
 		Statement ipos = new Variable("i", "pos", "=", new Expression("(nsamp(%s) / %s - %s) * %s", ifn, Orchestra.SR, i.dur, i.p("pos")));
@@ -97,7 +96,7 @@ public class Rhythm implements Performance {
 		Statement idec = new Variable("i", "dec", "=", i.p("dec"));
 		Statement islev = new Variable("i", "slev", "=", i.p("slev"));
 		Statement irel = new Variable("i", "rel", "=", i.p("rel"));
-		Statement kamp = new Opcode("k", "amp", 1, "xadsr", iatt, idec, islev, irel);
+		Statement kamp = new Opcode("k", "env", 1, "xadsr", iatt, idec, islev, irel);
 		Statement loop = new Opcode("a", "sig", 2, "flooper2", new Expression("%s * %s", kamp, db), kpitch, kloopstart,
 				kloopend, ifad, ifn, ipos);
 		i.setOuts(loop);

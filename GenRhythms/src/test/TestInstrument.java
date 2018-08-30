@@ -1,5 +1,6 @@
 package test;
 
+import model.Hit;
 import model.Rhythm;
 import model.Sequence;
 import model.Timbre;
@@ -12,8 +13,7 @@ public class TestInstrument {
 		Timbre[] ts = new Timbre[voices];
 		Sequence[] ss = new Sequence[voices];
 
-		Timbre t = new Timbre(null);
-		t.sample = "C:/Users/Griffin/Documents/Ableton/User Library/Samples/tools/340619__mickyman5000__drill-sharp-stops-1.wav";
+		Timbre t = new Timbre("C:/Users/Griffin/Documents/Ableton/User Library/Samples/tools", 1, 1);
 		t.pos[0] = 0f;
 		t.pos[1] = 1f;
 		t.att[0] = 0.00000001f;
@@ -26,14 +26,12 @@ public class TestInstrument {
 		t.rel[1] = 0f;
 		t.slev[0] = 1f;
 		t.slev[1] = 1f;
-		t.ptch[0] = 0.5f;
-		t.ptch[1] = 1.5f;
 		ts[0] = t;
 
 		Sequence s = new Sequence(3, 8, 120);
-		s.addStrike(0, 0, 0, 0, 0, 0, 0, 0);
-		s.addStrike(8, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f);
-		s.addStrike(16, 1, 1, 1, 1, 1, 1, 1);
+		s.addHit(new Hit(0, 0, 0, 0, 0, 0, 0));
+		s.addHit(new Hit(8, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f));
+		s.addHit(new Hit(16, 1, 1, 1, 1, 1, 1));
 		ss[0] = s;
 
 		Rhythm r = new Rhythm(ts, ss);

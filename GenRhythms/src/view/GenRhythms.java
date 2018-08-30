@@ -26,7 +26,6 @@ import sound.Performer;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.SliderUI;
 import javax.swing.event.ChangeEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -40,6 +39,8 @@ public class GenRhythms {
 	public static final String SESSION_DIR = "sessions";
 	public static final String SAMPLE_DIR = "samples";
 	public static final int DEFAULT_TEMPO = 120;
+	public static final float DEFAULT_DUR = 0.1f;
+	public static final float DEFAULT_AMP = 100f;
 	
 	public static final int RIGHT_BUTTON_WIDTH = 100;
 
@@ -100,7 +101,8 @@ public class GenRhythms {
 				dialog.setVisible(true);
 				if (dialog.accepted) {
 					session = dialog.session;
-					batch = session.createBatch();
+					session.createBatch();
+					batch = session.getCurrentBatch();
 					rIndex = 0;
 					updateInfo();
 				}
@@ -147,7 +149,7 @@ public class GenRhythms {
 						e1.printStackTrace();
 					}
 				}
-				batch = session.createBatch();
+				batch = session.getCurrentBatch();
 				rIndex = 0;
 				updateInfo();
 			}
@@ -215,10 +217,10 @@ public class GenRhythms {
 		spinner.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (session != null)
-					session.setTempo((int) spinner.getValue());
+					session.setTempo((float) spinner.getValue());
 			}
 		});
-		spinner.setModel(new SpinnerNumberModel(new Integer(120), new Integer(0), null, new Integer(1)));
+		spinner.setModel(new SpinnerNumberModel(new Float(DEFAULT_TEMPO), new Float(0), null, new Float(1)));
 
 		JPanel panel_5 = new JPanel();
 		panel.add(panel_5);
@@ -227,9 +229,15 @@ public class GenRhythms {
 		panel_5.add(lblAmp);
 
 		JSpinner spinner_1 = new JSpinner();
+		spinner_1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if (session != null)
+					session.setAmp((float) spinner_1.getValue());
+			}
+		});
 		spinner_1.setToolTipText("Unimplemented");
 		spinner_1.setPreferredSize(new Dimension(40, 20));
-		spinner_1.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(0)));
+		spinner_1.setModel(new SpinnerNumberModel(new Float(DEFAULT_AMP), new Float(0), null, new Float(1)));
 		panel_5.add(spinner_1);
 
 		JPanel panel_1 = new JPanel();
@@ -284,7 +292,7 @@ public class GenRhythms {
 			public void actionPerformed(ActionEvent e) {
 				batch.reset();
 				session.advance();
-				batch = session.createBatch();
+				session.createBatch();
 				rIndex = 0;
 				updateInfo();
 			}
@@ -319,7 +327,7 @@ public class GenRhythms {
 					dialog.setVisible(true);
 					if (dialog.next) {
 						session.advance();
-						batch = session.createBatch();
+						session.createBatch();
 						rIndex = 0;
 						updateInfo();
 						performer.play(batch.get(rIndex));
