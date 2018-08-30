@@ -11,7 +11,7 @@ public class SoundfileFTable extends FTable {
 
 	public SoundfileFTable(String filename) {
 		super(IFN_DEFAULT, Instrument.sample.genRoutine);
-		this.Sfilnam = "samples/" + filename;
+		this.Sfilnam = filename;
 		this.iskip = 0; // Start at beginning
 		this.iformat = 0; // Defer
 		this.ichn = 0; // Defer

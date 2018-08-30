@@ -1,20 +1,20 @@
 replace false
 
-table new fractal st_t1 1000 1000 1.3 15 4096 -0.7439275637948262 0.14843933305284235
+#table new fractal st_t1 1000 1000 1.3 15 4096 -0.7439275637948262 0.14843933305284235
 
 table new fractal st_t2 1000 1000 1.3 15 4096 -0.87393866985915360 0.25538518034271720
 
-table new fractal st_t3 1000 1000 1.3 15 4096 -1.3997140634938772 -0.0003448143650132
+#table new fractal st_t3 1000 1000 1.3 15 4096 -1.3997140634938772 -0.0003448143650132
 
 replace true
 
-layer voice
-shred 10 0 10000 -1 1 10 240 st_t3 uh.wav
+layer piano
+shred 10 0 10000 -1 1 10 240 st_t2 samples/lydian.wav
 
-#layer piano
-#shred 10 0 10000 -1 1 10 240 st_t2 lydian.wav
+layer atonal
+shred 10 0 10000 -1 1 10 240 st_t2 samples/atonal.wav
 
-layer violin
-shred 10 0 10000 -1 1 10 240 st_t1 ave_maria.wav
+layer bass
+shred 10 0 10000 -1 1 10 240 st_t2 samples/bass.wav
 
 render s_test
