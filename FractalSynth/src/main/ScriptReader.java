@@ -9,6 +9,7 @@ import grain.gen.NoiseMatrix;
 import grain.gen.Note;
 import grain.gen.PulsarMatrix;
 import grain.gen.ShredSample;
+import grain.gen.SimpleMatrix;
 import grain.mod.Inflate;
 import grain.mod.IntegralWarp;
 import grain.mod.Normalize;
@@ -97,8 +98,16 @@ public class ScriptReader {
 					Table tableD = fractalSynth.getTable(cmd[10]);
 					int n = fractalSynth.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD,
 							maxResD, dur, tableP, tableD));
+					
+				} else if (cmd[0].equals("matrix")) {
+					System.out.println("Generating simple matrix...");
+					int fMinP = Integer.parseInt(cmd[1]);
+					int fMaxP = Integer.parseInt(cmd[2]);
+					int fD = Integer.parseInt(cmd[3]);
+					float dur = Float.parseFloat(cmd[4]);
+					Table table = fractalSynth.getTable(cmd[5]);
+					int n = fractalSynth.generateGrains(new SimpleMatrix(fMinP, fMaxP, fD, dur, table));
 					System.out.println("Generated matrix of size " + n);
-
 				} else if (cmd[0].equals("band") && !skip) {
 					System.out.println("Generating noise band...");
 					int n = fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]),

@@ -6,8 +6,7 @@ edge 30
 replace true
 
 layer sig
-pulsar 1 30 25 20 1000 10 100 360 ship pkm
-rshift 0.03 0.1 ship_g
-inflate 0.1 ship_b
+matrix 20 60 60 30 pkm
+inflate 0.01
 
 render i_test
