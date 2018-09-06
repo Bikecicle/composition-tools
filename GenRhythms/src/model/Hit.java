@@ -1,9 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 import evolution.core.Splicer;
 
-public class Hit {
+public class Hit implements Serializable {
 
+	private static final long serialVersionUID = -7706295663011164110L;
+	
 	public int strt;
 	public float pos;
 	public float att;

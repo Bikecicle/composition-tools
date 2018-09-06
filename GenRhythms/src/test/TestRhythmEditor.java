@@ -5,6 +5,7 @@ import model.Hit;
 import model.Rhythm;
 import model.Sequence;
 import model.Timbre;
+import sound.Performer;
 
 public class TestRhythmEditor {
 
@@ -62,7 +63,8 @@ public class TestRhythmEditor {
 		ss[2] = new Sequence(3, 8, 120);
 
 		Rhythm r = new Rhythm(ts, ss);
-		RhythmEditor window = new RhythmEditor(r);
+		Performer p = new Performer();
+		RhythmEditor window = new RhythmEditor(r, p);
 		window.setVisible(true);
 	}
 }

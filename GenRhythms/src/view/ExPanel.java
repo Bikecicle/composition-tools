@@ -3,7 +3,6 @@ package view;
 import javax.swing.JPanel;
 
 import model.Rhythm;
-import model.Set;
 import sound.Performer;
 
 import javax.swing.JLabel;
@@ -13,6 +12,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
 public class ExPanel extends JPanel {
+	
+	private static final long serialVersionUID = 5276273220646917842L;
 	
 	Rhythm rhythm;
 	Performer performer;
@@ -42,7 +43,7 @@ public class ExPanel extends JPanel {
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RhythmEditor rhythmEditor = new RhythmEditor(rhythm);
+				RhythmEditor rhythmEditor = new RhythmEditor(rhythm, performer);
 				rhythmEditor.setVisible(true);
 			}
 		});

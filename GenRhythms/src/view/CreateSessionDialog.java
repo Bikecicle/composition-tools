@@ -41,7 +41,7 @@ public class CreateSessionDialog extends JDialog {
 	public CreateSessionDialog() {
 		setResizable(false);
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setBounds(100, 100, 450, 152);
+		setBounds(100, 100, 509, 180);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -90,7 +90,7 @@ public class CreateSessionDialog extends JDialog {
 			{
 				voiceSpinner = new JSpinner();
 				voiceSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-				voiceSpinner.setPreferredSize(new Dimension(40, 20));
+				voiceSpinner.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
 				voiceSpinner.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent arg0) {
 						checkComplete();
@@ -109,7 +109,7 @@ public class CreateSessionDialog extends JDialog {
 			{
 				measureSpinner = new JSpinner();
 				measureSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-				measureSpinner.setPreferredSize(new Dimension(40, 20));
+				measureSpinner.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
 				measureSpinner.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent e) {
 						checkComplete();
@@ -129,7 +129,7 @@ public class CreateSessionDialog extends JDialog {
 			{
 				quantSpinner = new JSpinner();
 				quantSpinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-				quantSpinner.setPreferredSize(new Dimension(40, 20));
+				quantSpinner.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
 				quantSpinner.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent e) {
 						checkComplete();
@@ -147,7 +147,9 @@ public class CreateSessionDialog extends JDialog {
 			}
 			{
 				lenSpinner = new JSpinner();
-				quantSpinner.setPreferredSize(new Dimension(40, 20));
+				lenSpinner.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 26));
+				lenSpinner.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
+				quantSpinner.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
 				lenSpinner.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent e) {
 						checkComplete();
@@ -166,7 +168,7 @@ public class CreateSessionDialog extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						session = new Session("untitled", (int) voiceSpinner.getValue(),
 								(int) measureSpinner.getValue(), (int) quantSpinner.getValue(),
-								GenRhythms.DEFAULT_TEMPO, GenRhythms.DEFAULT_AMP, (int) lenSpinner.getValue(), sampleField.getText());
+								GenRhythms.DEFAULT_TEMPO, GenRhythms.DEFAULT_AMP, (float) lenSpinner.getValue(), sampleField.getText());
 						accepted = true;
 						setVisible(false);
 					}
@@ -192,7 +194,7 @@ public class CreateSessionDialog extends JDialog {
 
 	private void checkComplete() {
 		if ((int) voiceSpinner.getValue() > 0 && (int) measureSpinner.getValue() > 0
-				&& (int) quantSpinner.getValue() > 0 && !sampleField.getText().equals("") && (int) lenSpinner.getValue() > 0)
+				&& (int) quantSpinner.getValue() > 0 && !sampleField.getText().equals("") && (float) lenSpinner.getValue() > 0)
 			okButton.setEnabled(true);
 		else
 			okButton.setEnabled(false);
