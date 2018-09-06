@@ -6,32 +6,60 @@ import java.awt.Label;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.SpinnerNumberModel;
 
 public class MinMaxPanel extends JPanel {
 
 	private static final long serialVersionUID = -6109418252463419627L;
 
-	public MinMaxPanel(String name, float[] data, int spinnerWidth) {
-		super();
+	JSpinner spinnerMin;
+	JSpinner spinnerMax;
 
+	String name;
+	float[] data;
+
+	public MinMaxPanel(String name) {
+		super();
+		this.name = name;
+		initialize();
+	}
+
+	private void initialize() {
 		Label label = new Label(name);
 		add(label);
 
 		JLabel lblMin = new JLabel("min");
 		add(lblMin);
 
-		JSpinner spinnerPosMin = new JSpinner();
-		spinnerPosMin.setPreferredSize(new Dimension(spinnerWidth, 20));
-		spinnerPosMin.setValue(data[0]);
-		add(spinnerPosMin);
+		spinnerMin = new JSpinner();
+		spinnerMin.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+		spinnerMin.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				data[0] = (float) spinnerMin.getValue();
+			}
+		});
+		spinnerMin.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
+		add(spinnerMin);
 
 		JLabel lblMax = new JLabel("max");
 		add(lblMax);
 
-		JSpinner spinnerPosMax = new JSpinner();
-		spinnerPosMax.setPreferredSize(new Dimension(spinnerWidth, 20));
-		spinnerPosMax.setValue(data[1]);
-		add(spinnerPosMax);
+		spinnerMax = new JSpinner();
+		spinnerMax.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
+		spinnerMax.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				data[1] = (float) spinnerMax.getValue();
+			}
+		});
+		spinnerMax.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
+		add(spinnerMax);
 	}
 
+	public void setData(float[] data) {
+		this.data = data;
+		spinnerMin.setValue(data[0]);
+		spinnerMax.setValue(data[1]);
+	}
 }

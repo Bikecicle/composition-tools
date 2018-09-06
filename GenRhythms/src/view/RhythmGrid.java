@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import model.Hit;
 import model.Rhythm;
+import model.Timbre;
 
 public class RhythmGrid extends JPanel {
 
@@ -105,5 +106,9 @@ public class RhythmGrid extends JPanel {
 	
 	public Hit getCurrentHit() {
 		return rhythm.sequences[voice].getAtTime(time);
+	}
+
+	public Timbre getCurrentTimbre() {
+		return rhythm.timbres[voice];
 	}
 }

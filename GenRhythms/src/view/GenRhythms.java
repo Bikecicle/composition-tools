@@ -256,18 +256,18 @@ public class GenRhythms {
 		});
 		panel_1.add(btnAddToSet);
 
-		JButton btnPlaySet = new JButton("Play Set");
-		btnPlaySet.setToolTipText("Play back all rhythms in the set");
-		btnPlaySet.setMinimumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
-		btnPlaySet.setMaximumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
-		btnPlaySet.setPreferredSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
-		btnPlaySet.addActionListener(new ActionListener() {
+		JButton btnViewSet = new JButton("View Set");
+		btnViewSet.setToolTipText("Play back all rhythms in the set");
+		btnViewSet.setMinimumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnViewSet.setMaximumSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnViewSet.setPreferredSize(new Dimension(RIGHT_BUTTON_WIDTH, 23));
+		btnViewSet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (Rhythm rhythm : session.set)
-					performer.play(rhythm);
+				EditSetDialog dialog = new EditSetDialog(session.set, performer);
+				dialog.setVisible(true);
 			}
 		});
-		panel_1.add(btnPlaySet);
+		panel_1.add(btnViewSet);
 
 		JButton btnResetGen = new JButton("Reset Gen");
 		btnResetGen.setToolTipText("Wipe ratings and restart current batch");
