@@ -7,8 +7,7 @@ public class SineFTable extends FTable {
 	float str1;
 
 	public SineFTable() {
-		super(IFN_DEFAULT, GenRoutine.sine);
-		this.isize = 16384;
+		super(IFN_DEFAULT, 0, 16384, GenRoutine.sine);
 		this.str1 = 1;
 	}
 

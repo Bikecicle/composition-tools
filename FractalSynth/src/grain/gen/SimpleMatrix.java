@@ -6,7 +6,7 @@ import java.util.List;
 import grain.Grain;
 import grain.Layer;
 import grain.OscGrain;
-import grain.SineFTable;
+import sco.SineFTable;
 import table.Table;
 
 public class SimpleMatrix implements Generator {

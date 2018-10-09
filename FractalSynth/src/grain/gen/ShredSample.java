@@ -1,8 +1,8 @@
 package grain.gen;
 
 import grain.Layer;
-import grain.SoundfileFTable;
 import grain.WarpGrain;
+import sco.SoundfileFTable;
 import table.Table;
 
 public class ShredSample implements Generator {
@@ -43,7 +43,7 @@ public class ShredSample implements Generator {
 		float slen = 1.0f / sRes;
 		for (int i = 0; i < bandCount; i++) {
 			int ifreq = fMin + (i * iband) + (iband / 2);
-			float[] segments = new float[total];
+			Float[] segments = new Float[total];
 			double yScaled = 1.0 * i / bandCount;
 			for (int j = 0; j < total; j++) {
 				double xScaled = 1.0 * j / total;

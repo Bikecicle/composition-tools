@@ -3,7 +3,7 @@ package grain.gen;
 import grain.Grain;
 import grain.Layer;
 import grain.OscGrain;
-import grain.SineFTable;
+import sco.SineFTable;
 
 public class NoiseBand implements Generator {
 	

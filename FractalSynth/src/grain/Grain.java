@@ -2,6 +2,11 @@ package grain;
 
 import java.io.Serializable;
 
+import orc.Orchestra;
+import sco.Note;
+import sco.Param;
+import sco.ParamMap;
+
 public abstract class Grain implements Serializable, Comparable<Grain> {
 
 	private static final long serialVersionUID = 7289961340282365917L;
@@ -19,28 +24,33 @@ public abstract class Grain implements Serializable, Comparable<Grain> {
 	public static final int NUMBER_OF_CHANNELS = 2;
 	public static final float AMP_SCALE = 1.0f;
 
-	public Instrument gType;
+	public GrainType gType;
 	public float strt;
 	public float dur;
 	public float amp;
-	public float att;
-	public float dec;
 	public double xNorm;
 	public double yNorm;
 
-	public Grain(Instrument gType, float strt, float dur, float amp, float att, float dec, double xNorm, double yNorm) {
+	public Grain(GrainType gType, float strt, float dur, float amp, double xNorm, double yNorm) {
 		this.gType = gType;
 		this.strt = strt;
 		this.dur = dur;
 		this.amp = amp;
-		this.att = att;
-		this.dec = dec;
 		this.xNorm = xNorm;
 		this.yNorm = yNorm;
 	}
 
 	public String statement() {
 		return "i " + gType.id + " " + strt + " " + dur + " " + amp;
+	}
+	
+	public Note getNote(ParamMap paramMap) {
+		Note note = new Note(paramMap);
+		note.add(new Param<Integer>(Orchestra.INSTRUMENT, gType.id));
+		note.add(new Param<Float>("strt", strt));
+		note.add(new Param<Float>("dur", dur));
+		note.add(new Param<Float>("amp", amp));
+		return note;
 	}
 
 	public boolean overlaps(Grain other) {

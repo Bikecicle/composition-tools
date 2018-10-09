@@ -30,8 +30,6 @@ public class Inflate implements Modifier {
 			} else {
 				g.dur = (float) dMax;
 			}
-			g.att = g.dur / 4;
-			g.dec = g.dur / 4;
 		}
 		return layer.sequence.size();
 	}

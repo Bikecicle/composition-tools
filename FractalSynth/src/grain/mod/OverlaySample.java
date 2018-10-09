@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import grain.Grain;
-import grain.Instrument;
+import grain.GrainType;
 import grain.Layer;
 import grain.OscGrain;
 import grain.SampleGrain;
-import grain.SoundfileFTable;
+import sco.SoundfileFTable;
 
 public class OverlaySample implements Modifier {
 
@@ -34,7 +34,7 @@ public class OverlaySample implements Modifier {
 		int count = 0;
 		int fID = layer.addFTable(new SoundfileFTable(filename));
 		for (Grain g : layer.sequence) {
-			if (g.gType == Instrument.osc) {
+			if (g.gType == GrainType.osc) {
 				OscGrain og = (OscGrain) g;
 				SampleGrain sg = new SampleGrain(og.strt, og.dur, og.amp, og.att, og.dec, fMod, og.strt, og.freq, band,
 						fID, og.xNorm, og.yNorm);

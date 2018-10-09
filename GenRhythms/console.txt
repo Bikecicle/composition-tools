@@ -1,0 +1,676 @@
+Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
+	at view.GenRhythms$13.actionPerformed(GenRhythms.java:310)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340562__mickyman5000__metallic-twanging.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340498__mickyman5000__steel-drum-bangs.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340569__mickyman5000__hollow-thuds-many-2.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340512__mickyman5000__steel-disk-scraping-concrete-fast-1.wav sr = 48000, orch sr = 44100.0
+0dBFS level = 32768.0
+--Csound version 6.11 (double samples) May 11 2018
+[commit: eabe0dc8662062d4f9fd7cfcd6d9bbb2d286a495]
+libsndfile-1.0.29pre1
+rtaudio: PortAudio module enabled ...
+using callback interface
+rtmidi: PortMIDI module enabled
+graphics suppressed, ascii substituted
+0dBFS level = 1.0
+orch now loaded
+audio buffered in 4096 sample-frame blocks
+PortAudio V19.6.0-devel, revision unknown
+   0: dac0 (Microsoft Sound Mapper - Output [MME])
+   1: dac1 (Speakers (Realtek High Definiti [MME])
+   2: dac2 (Speakers (3- HTC Vive) [MME])
+   3: dac3 (SE20HS02-4 (NVIDIA High Definit [MME])
+   4: dac4 (Primary Sound Driver [Windows DirectSound])
+   5: dac5 (Speakers (Realtek High Definition Audio) [Windows DirectSound])
+   6: dac6 (Speakers (3- HTC Vive) [Windows DirectSound])
+   7: dac7 (SE20HS02-4 (NVIDIA High Definition Audio) [Windows DirectSound)
+   8: dac8 (ASIO4ALL v2 [ASIO])
+   9: dac9 (Speakers (3- HTC Vive) [Windows WASAPI])
+  10: dac10 (SE20HS02-4 (NVIDIA High Definition Audio) [Windows WASAPI])
+  11: dac11 (Speakers (Realtek High Definition Audio) [Windows WASAPI])
+  12: dac12 (Speakers (Realtek HD Audio output) [Windows WDM-KS])
+  13: dac13 (Output (NVIDIA High Definition Audio) [Windows WDM-KS])
+  14: dac14 (Speakers (HTC Vive) [Windows WDM-KS])
+PortAudio: selected output device 'Microsoft Sound Mapper - Output'
+writing 8192 sample blks of 64-bit floats to dac0
+SECTION 1:
+ftable 1:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340562__mickyman5000__metallic-twanging.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340562__mickyman5000__metallic-twanging.wav
+  defer length 110812
+ftable 1:	221625 points, scalemax 1.000
+                              '
+__________________________-____________________._____________.__________________
+  '   '    ''   '''' ''''' '    ''' ' ' '''              '' ' ' '' '   ''''   '
+     _                               -
+ftable 2:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340498__mickyman5000__steel-drum-bangs.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340498__mickyman5000__steel-drum-bangs.wav
+  defer length 249364
+ftable 2:	498729 points, scalemax 1.000
+                         '
+
+                                           .       -'                    -
+_________'.______-_________________.________.________.__________._-_.______-____
+'   -''    '  ' '  '      _  ''          '   '   '     '  ''''''   '   ''   ''
+ .                               '        .
+                                  '
+  '
+
+
+
+                                                  .
+ftable 3:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340569__mickyman5000__hollow-thuds-many-2.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340569__mickyman5000__hollow-thuds-many-2.wav
+  defer length 261026
+ftable 3:	522053 points, scalemax 1.000
+ '
+
+
+
+
+
+                                -
+                                 '
+__'-______..___'__.____-__________-__________________._____.______._________-___
+'   '- ' '    ' -' '  ' -'''        -'''   -''  '   ' '  '_    ''  ---' '    ''
+                                                  '                        -
+ftable 4:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340512__mickyman5000__steel-disk-scraping-concrete-fast-1.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340512__mickyman5000__steel-disk-scraping-concrete-fast-1.wav
+  defer length 48194
+ftable 4:	96389 points, scalemax 1.000
+                            .
+                          _       .
+                           '  _  _    _
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340536__mickyman5000__metallic-hits-various.wav sr = 48000, orch sr = 44100.0
+
+            _                  -       -   ._
+______________._.___'''___________________-_______-._._.________________________
+'  ''    ''  '   ''    ' -         ' '  '    --' -  ' ' '   ''' '' '''' '''''  '
+                        .
+                   .
+                             -           -
+
+
+                                '
+ftable 5:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340536__mickyman5000__metallic-hits-various.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340536__mickyman5000__metallic-hits-various.wav
+  defer length 2454608
+ftable 5:	4909217 points, scalemax 1.000
+                                                                     _
+__________________'_____________________________________________________________
+'   ''    '''' ' ' '' '' ''''  ' ' ' '' ''' ''''''' ' '''' ''''    ''   ' '''  .
+                                                                      '
+new alloc for instr 1:
+B  0.000 ..  0.500 T  0.500 TT  0.500 M: 41.81588 46.17701
+	 number of samples out of range:      945     1345
+new alloc for instr 1:
+new alloc for instr 1:
+B  0.500 ..  0.625 T  0.625 TT  0.625 M: 36.16838 31.13667
+	 number of samples out of range:     4119     4012
+new alloc for instr 1:
+B  0.625 ..  0.750 T  0.750 TT  0.750 M: 65.85892 44.47702
+	 number of samples out of range:     4785     4700
+B  0.750 ..  0.875 T  0.875 TT  0.875 M: 10.36496 12.84223
+	 number of samples out of range:     2230     2297
+B  0.875 ..  1.000 T  1.000 TT  1.000 M: 20.13008 24.27394
+	 number of samples out of range:     1697     1988
+new alloc for instr 1:
+B  1.000 ..  1.375 T  1.375 TT  1.375 M: 34.81212 43.61944
+	 number of samples out of range:     4257     3855
+B  1.375 ..  1.625 T  1.625 TT  1.625 M: 10.05598 13.46169
+	 number of samples out of range:     3409     3438
+B  1.625 ..  1.750 T  1.750 TT  1.750 M: 12.10397 20.53481
+	 number of samples out of range:       95      553
+B  1.750 ..  2.750 T  2.750 TT  2.750 M: 41.68546 45.97154
+	 number of samples out of range:     1561     2140
+B  2.750 ..  3.000 T  3.000 TT  3.000 M: 29.45494 38.97949
+	 number of samples out of range:      903     1545
+B  3.000 ..  3.125 T  3.125 TT  3.125 M: 21.59327 41.41416
+	 number of samples out of range:     1792     2259
+B  3.125 ..  3.250 T  3.250 TT  3.250 M: 35.25964 46.45822
+	 number of samples out of range:     2747     3480
+B  3.250 ..  3.500 T  3.500 TT  3.500 M: 15.50613 25.99328
+	 number of samples out of range:     1183     2311
+B  3.500 ..  3.625 T  3.625 TT  3.625 M: 42.51392 46.81282
+	 number of samples out of range:      870     1134
+B  3.625 ..  3.875 T  3.875 TT  3.875 M: 85.79530 57.52893
+	 number of samples out of range:     5076     5945
+B  3.875 ..  4.059 T  4.059 TT  4.059 M: 11.27595  7.98040
+	 number of samples out of range:      764      593
+Score finished in csoundPerformKsmps() with 2.
+inactive allocs returned to freespace
+end of score.		   overall amps: 85.79530 57.52893
+	   overall samples out of range:    36433    41595
+0 errors in performance
+Elapsed time at end of performance: real: 5.753s, CPU: 5.753s
+closing device
+44 8192 sample blks of 64-bit floats written to dac0
+0dBFS level = 32768.0
+--Csound version 6.11 (double samples) May 11 2018
+[commit: eabe0dc8662062d4f9fd7cfcd6d9bbb2d286a495]
+libsndfile-1.0.29pre1
+rtaudio: PortAudio module enabled ...
+using callback interface
+rtmidi: PortMIDI module enabled
+graphics suppressed, ascii substituted
+0dBFS level = 1.0
+orch now loaded
+audio buffered in 4096 sample-frame blocks
+PortAudio V19.6.0-devel, revision unknown
+   0: dac0 (Microsoft Sound Mapper - Output [MME])
+   1: dac1 (Speakers (Realtek High Definiti [MME])
+   2: dac2 (Speakers (3- HTC Vive) [MME])
+   3: dac3 (SE20HS02-4 (NVIDIA High Definit [MME])
+   4: dac4 (Primary Sound Driver [Windows DirectSound])
+   5: dac5 (Speakers (Realtek High Definition Audio) [Windows DirectSound])
+   6: dac6 (Speakers (3- HTC Vive) [Windows DirectSound])
+   7: dac7 (SE20HS02-4 (NVIDIAWARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340562__mickyman5000__metallic-twanging.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340498__mickyman5000__steel-drum-bangs.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340569__mickyman5000__hollow-thuds-many-2.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340512__mickyman5000__steel-disk-scraping-concrete-fast-1.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340536__mickyman5000__metallic-hits-various.wav sr = 48000, orch sr = 44100.0
+ High Definition Audio) [Windows DirectSound)
+   8: dac8 (ASIO4ALL v2 [ASIO])
+   9: dac9 (Speakers (3- HTC Vive) [Windows WASAPI])
+  10: dac10 (SE20HS02-4 (NVIDIA High Definition Audio) [Windows WASAPI])
+  11: dac11 (Speakers (Realtek High Definition Audio) [Windows WASAPI])
+  12: dac12 (Speakers (Realtek HD Audio output) [Windows WDM-KS])
+  13: dac13 (Output (NVIDIA High Definition Audio) [Windows WDM-KS])
+  14: dac14 (Speakers (HTC Vive) [Windows WDM-KS])
+PortAudio: selected output device 'Microsoft Sound Mapper - Output'
+writing 8192 sample blks of 64-bit floats to dac0
+SECTION 1:
+ftable 1:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340562__mickyman5000__metallic-twanging.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340562__mickyman5000__metallic-twanging.wav
+  defer length 110812
+ftable 1:	221625 points, scalemax 1.000
+                              '
+__________________________-____________________._____________.__________________
+  '   '    ''   '''' ''''' '    ''' ' ' '''              '' ' ' '' '   ''''   '
+     _                               -
+ftable 2:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340498__mickyman5000__steel-drum-bangs.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340498__mickyman5000__steel-drum-bangs.wav
+  defer length 249364
+ftable 2:	498729 points, scalemax 1.000
+                         '
+
+                                           .       -'                    -
+_________'.______-_________________.________.________.__________._-_.______-____
+'   -''    '  ' '  '      _  ''          '   '   '     '  ''''''   '   ''   ''
+ .                               '        .
+                                  '
+  '
+
+
+
+                                                  .
+ftable 3:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340569__mickyman5000__hollow-thuds-many-2.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340569__mickyman5000__hollow-thuds-many-2.wav
+  defer length 261026
+ftable 3:	522053 points, scalemax 1.000
+ '
+
+
+
+
+
+                                -
+                                 '
+__'-______..___'__.____-__________-__________________._____.______._________-___
+'   '- ' '    ' -' '  ' -'''        -'''   -''  '   ' '  '_    ''  ---' '    ''
+                                                  '                        -
+ftable 4:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340512__mickyman5000__steel-disk-scraping-concrete-fast-1.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340512__mickyman5000__steel-disk-scraping-concrete-fast-1.wav
+  defer length 48194
+ftable 4:	96389 points, scalemax 1.000
+                            .
+                          _       .
+                           '  _  _    _
+
+            _                  -       -   ._
+______________._.___'''___________________-_______-._._.________________________
+'  ''    ''  '   ''    ' -         ' '  '    --' -  ' ' '   ''' '' '''' '''''  '
+                        .
+                   .
+                             -           -
+
+
+                                '
+ftable 5:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340536__mickyman5000__metallic-hits-various.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340536__mickyman5000__metallic-hits-various.wav
+  defer length 2454608
+ftable 5:	4909217 points, scalemax 1.000
+                                                                     WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340566__mickyman5000__metallic-smash.wav sr = 48000, orch sr = 44100.0
+_
+__________________'_____________________________________________________________
+'   ''    '''' ' ' '' '' ''''  ' ' ' '' ''' ''''''' ' '''' ''''    ''   ' '''  .
+                                                                      '
+new alloc for instr 1:
+B  0.000 ..  0.500 T  0.500 TT  0.500 M: 41.81588 46.17701
+	 number of samples out of range:      945     1345
+new alloc for instr 1:
+new alloc for instr 1:
+B  0.500 ..  0.625 T  0.625 TT  0.625 M: 36.16838 31.13667
+	 number of samples out of range:     4119     4012
+new alloc for instr 1:
+B  0.625 ..  0.750 T  0.750 TT  0.750 M: 65.85892 44.47702
+	 number of samples out of range:     4785     4700
+B  0.750 ..  0.875 T  0.875 TT  0.875 M: 10.36496 12.84223
+	 number of samples out of range:     2230     2297
+B  0.875 ..  1.000 T  1.000 TT  1.000 M: 20.13008 24.27394
+	 number of samples out of range:     1697     1988
+new alloc for instr 1:
+B  1.000 ..  1.375 T  1.375 TT  1.375 M: 34.81212 43.61944
+	 number of samples out of range:     4257     3855
+B  1.375 ..  1.625 T  1.625 TT  1.625 M: 10.05598 13.46169
+	 number of samples out of range:     3409     3438
+B  1.625 ..  1.750 T  1.750 TT  1.750 M: 12.10397 20.53481
+	 number of samples out of range:       95      553
+B  1.750 ..  2.750 T  2.750 TT  2.750 M: 41.68546 45.97154
+	 number of samples out of range:     1561     2140
+B  2.750 ..  3.000 T  3.000 TT  3.000 M: 29.45494 38.97949
+	 number of samples out of range:      903     1545
+B  3.000 ..  3.125 T  3.125 TT  3.125 M: 21.59327 41.41416
+	 number of samples out of range:     1792     2259
+B  3.125 ..  3.250 T  3.250 TT  3.250 M: 35.25964 46.45822
+	 number of samples out of range:     2747     3480
+B  3.250 ..  3.500 T  3.500 TT  3.500 M: 15.50613 25.99328
+	 number of samples out of range:     1183     2311
+B  3.500 ..  3.625 T  3.625 TT  3.625 M: 42.51392 46.81282
+	 number of samples out of range:      870     1134
+B  3.625 ..  3.875 T  3.875 TT  3.875 M: 85.79530 57.52893
+	 number of samples out of range:     5076     5945
+B  3.875 ..  4.059 T  4.059 TT  4.059 M: 11.27595  7.98040
+	 number of samples out of range:      764      593
+Score finished in csoundPerformKsmps() with 2.
+inactive allocs returned to freespace
+end of score.		   overall amps: 85.79530 57.52893
+	   overall samples out of range:    36433    41595
+0 errors in performance
+Elapsed time at end of performance: real: 4.183s, CPU: 4.182s
+closing device
+44 8192 sample blks of 64-bit floats written to dac0
+0dBFS level = 32768.0
+--Csound version 6.11 (double samples) May 11 2018
+[commit: eabe0dc8662062d4f9fd7cfcd6d9bbb2d286a495]
+libsndfile-1.0.29pre1
+rtaudio: PortAudio module enabled ...
+using callback interface
+rtmidi: PortMIDI module enabled
+graphics suppressed, ascii substituted
+0dBFS level = 1.0
+orch now loaded
+audio buffered in 4096 sample-frame blocks
+PortAudio V19.6.0-devel, revision unknown
+   0: dac0 (Microsoft Sound Mapper - Output [MME])
+   1: dac1 (Speakers (Realtek High Definiti [MME])
+   2: dac2 (Speakers (3- HTC Vive) [MME])
+   3: dac3 (SE20HS02-4 (NVIDIA High Definit [MME])
+   4: dac4 (Primary Sound Driver [Windows DirectSound])
+   5: dac5 (Speakers (Realtek High Definition Audio) [Windows DirectSound])
+   6: dac6 (Speakers (3- HTC Vive) [Windows DirectSound])
+   7: dac7 (SE20HS02-4 (NVIDIA High Definition Audio) [Windows DirectSound)
+   8: dac8 (ASIO4ALL v2 [ASIO])
+   9: dac9 (Speakers (3- HTC Vive) [Windows WASAPI])
+  10: dac10 (SE20HS02-4 (NVIDIA High Definition Audio) [Windows WASAPI])
+  11: dac11 (Speakers (Realtek High Definition Audio) [Windows WASAPI])
+  12: dac12 (Speakers (Realtek HD Audio output) [Windows WDM-KS])
+  13: dac13 (Output (NVIDIA High Definition Audio) [Windows WDM-KS])
+  14: dac14 (Speakers (HTC Vive) [Windows WDM-KS])
+PortAudio: selected output device 'Microsoft Sound Mapper - Output'
+writing 8192 sample blks of 64-bit floats to dac0
+SECTION 1:
+ftable 1:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340566__mickyman5000__metallic-smash.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340498__mickyman5000__steel-drum-bangs.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340569__mickyman5000__hollow-thuds-many-2.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340568__mickyman5000__hollow-metallic-thud.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340554__mickyman5000__metallic-rattle-2.wav sr = 48000, orch sr = 44100.0
+Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340566__mickyman5000__metallic-smash.wav
+  defer length 77856
+ftable 1:	155713 points, scalemax 1.000
+        ' '  '' '      ' '       ''
+
+
+
+                           .
+       '       _                         _
+                 _
+                                   .
+                      '   -         .                 .     -
+__________________.____________________________--__._'_._._.__.______.___.______
+  ' '                        _          .     _  '      ' '    -''--' ' '     '
+                     _                       '    '
+         -                  .         '
+      _    -                   .           .
+                   .                      '
+                        -
+                                     .
+                                '
+
+            _       -         _
+ftable 2:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340498__mickyman5000__steel-drum-bangs.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340498__mickyman5000__steel-drum-bangs.wav
+  defer length 249364
+ftable 2:	498729 points, scalemax 1.000
+                         '
+
+                                           .       -'                    -
+_________'.______-_________________.________.________.__________._-_.______-____
+'   -''    '  ' '  '      _  ''          '   '   '     '  ''''''   '   ''   ''
+ .                               '        .
+                                  '
+  '
+
+
+
+                                                  .
+ftable 3:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340569__mickyman5000__hollow-thuds-many-2.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340569__mickyman5000__hollow-thuds-many-2.wav
+  defer length 261026
+ftable 3:	522053 points, scalemax 1.000
+ '
+
+
+
+
+
+                                -
+                                 '
+__'-______..___'__.____-__________-__________________._____.______._________-___
+'   '- ' '    ' -' '  ' -'''        -'''   -''  '   ' '  '_    ''  ---' '    ''
+                                                  '                        -
+ftable 4:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340568__mickyman5000__hollow-metallic-thud.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340568__mickyman5000__hollow-metallic-thud.wav
+  defer length 15840
+ftable 4:	31681 points, scalemax 1.000
+               '
+                 -
+                  -
+                -           -
+___________________________'_._-_____-_-_.______________________________________
+ '''  ' '' ' '       -        '  . '    - -' '- ' - '  '  ''' '  '  '   '  '' '
+                    '   '--         -
+                      .
+                   _
+
+
+
+
+              -
+ftable 5:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340554__mickyman5000__metallic-rattle-2.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340554__mickyman5000__metallic-rattle-2.wav
+  defer length 60344
+ftable 5:	120689 points, scalemax 1.000
+                  .
+          _         .
+______'______._____'_____-__'_._________________________________________________
+    ''  -       _-   '-'.      -' ' '''  '  '''''''''' ''''''        '''  ' '' '
+         '  _  '          .-
+              '
+           .
+new alloc for instr 1:
+B  0.000 ..  0.250 T  0.250 TT  0.250 M:  9.00131  7.22008
+	 number of samples out of range:     1342      920
+new alloc for instr 1:
+new alloc for instr 1:
+new alloc for instr 1:
+B  0.250 ..  0.500 T  0.500 TT  0.500 M:167.49174143.41248
+	 number of samples out of range:     6118     6002
+B  0.500 ..  0.750 T  0.750 TT  0.750 M:121.85060106.76412
+	 number of samples out of range:     8005     8003
+B  0.750 ..  0.875 T  0.875 TT  0.875 M:119.97247 96.22368
+	 number of samples out of range:     4409     4307
+B  0.875 ..  1.000 T  1.000 TT  1.000 M: 21.49664 20.59644
+	 number of samples out of range:     2377     2355
+B  1.000 ..  1.125 T  1.125 TT  1.125 M: 44.00461 31.33212
+	 number of samples out of range:     3552     3334
+B  1.125 ..  1.250 T  1.250 TT  1.250 M:  2.61477  2.29070
+	 number of samples out of range:      553      241
+B  1.250 ..  1.375 T  1.375 TT  1.375 M: 10.34472  8.12993
+	 number of samples out of range:      921      803
+B  1.375 ..  1.750 T  1.750 TT  1.750 M: 19.29077 34.49252
+	 number of samples out of range:     3887     3315
+B  1.750 ..  1.875 T  1.875 TT  1.875 M: 94.12450 81.20008
+	 number of samples out of range:     3400     3381
+B  1.875 ..  2.125 T  2.125 TT  2.125 M:122.26235130.23905
+	 number of samples out of range:     6636     6519
+B  2.125 ..  2.250 T  2.250 TT  2.250 M: 66.42610 62.18978
+	 number of samples out of range:     4237     4092
+B  2.250 ..  2.375 T  2.375 TT  2.375 M: 15.74109 11.06894
+	 number of samples out of range:     3752     3514
+B  2.375 ..  2.500 T  2.500 TT  2.500 M: 95.38976 95.36338
+	 number of samples out of range:     2538     2347
+B  2.500 ..  2.625 T  2.625 TT  2.625 M: 47.38138 42.04920
+	 number of samples out of range:     4632     4569
+B  2.625 ..  3.000 T  3.000 TT  3.000 M: 20.57476 21.13560
+	 number of samples out of range:     4236     4199
+B  3.000 ..  3.125 T  3.125 TT  3.125 M:  1.45951  2.08130
+	 number of samples out of range:       70      208
+B  3.125 ..  3.250 T  3.250 TT  3.250 M: 69.76263 71.47191
+	 number of samples out of range:     2658     2591
+B  3.250 ..  3.500 T  3.500 TT  3.500 M: 13.14932  9.98658
+	 number of samples out of range:     3168     3011
+B  3.500 ..  3.625 T  3.625 TT  3.625 M:  8.99475  7.32024
+	 number of samples out of range:     1100      821
+B  3.625 ..  3.765 T  3.765 TT  3.765 M: 85.98221 48.88071
+	 number of samples out of range:     2955     2867
+B  3.765 ..  3.841 T  3.841 TT  3.841 M:  8.55942  9.74524
+	 number of samples out of range:     2118     2803
+Score finished in csoundPerformKsmps() with 2.
+inactive allocs returned to freespace
+end of score.		   overall amps:167.49174143.41248
+	   overall samples out of range:    72664    70202
+0 errors in performance
+Elapsed time at end of performance: real: 4.099s, CPU: 4.099s
+closing device
+42 8192 sample blks of 64-bit floats written to dac0
+0dBFS level = 32768.0
+--Csound version 6.11 (double samples) May 11 2018
+[commit: eabe0dc8662062d4f9fd7cfcd6d9bbb2d286a495]
+libsndfile-1.0.29pre1
+rtaudio: PortAudio module enabled ...
+using callback interface
+rtmidi: PortMIDI module enabled
+graphics suppressed, ascii substituted
+0dBFS level = 1.0
+orch now loaded
+audio buffered in 4096 sample-frame blocks
+PortAudio V19.6.0-devel, revision unknown
+   0: dac0 (Microsoft Sound Mapper - Output [MME])
+   1: dac1 (Speakers (Realtek High Definiti [MME])
+   2: dac2 (Speakers (3- HTC Vive) [MME])
+   3: dac3 (SE20HS02-4 (NVIDIA High Definit [MME])
+   4: dac4 (Primary Sound Driver [Windows DirectSound])
+   5: dac5 (Speakers (Realtek High Definition Audio) [Windows DirectSound])
+   6: dac6 (Speakers (3- HTC Vive) [Windows DirectSound])
+   7: dac7 (SE20HS02-4 (NVIDIA High Definition Audio) [Windows DirectSound)
+   8: dac8 (ASIO4ALL v2 [ASIO])
+   9: dac9 (Speakers (3- HTC Vive) [Windows WASAPI])
+  10: dac10 (SE20HS02-4 (NVIDIA High Definition Audio) [Windows WASAPI])
+  11: dac11 (Speakers (Realtek High Definition Audio) [Windows WASAPI])
+  12: dac12 (Speakers (Realtek HD Audio output) [Windows WDM-KS])
+  13: dac13 (Output (NVIDIA High Definition Audio) [Windows WDM-KS])
+  14: dac14 (Speakers (HTC Vive) [Windows WDM-KS])
+PortAudio: selected output device 'Microsoft Sound Mapper - Output'
+writing 8192 sample blks of 64-bit floats to dac0
+SECTION 1:
+ftable 1:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/toolsWARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340562__mickyman5000__metallic-twanging.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340574__mickyman5000__metallic-rattle-heavy-2.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340576__mickyman5000__repeated-metal-rattles.wav sr = 48000, orch sr = 44100.0
+WARNING: C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340536__mickyman5000__metallic-hits-various.wav sr = 48000, orch sr = 44100.0
+/340562__mickyman5000__metallic-twanging.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340562__mickyman5000__metallic-twanging.wav
+  defer length 110812
+ftable 1:	221625 points, scalemax 1.000
+                              '
+__________________________-____________________._____________.__________________
+  '   '    ''   '''' ''''' '    ''' ' ' '''              '' ' ' '' '   ''''   '
+     _                               -
+ftable 2:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340574__mickyman5000__metallic-rattle-heavy-2.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340574__mickyman5000__metallic-rattle-heavy-2.wav
+  defer length 116125
+ftable 2:	232251 points, scalemax 1.000
+           -
+             _     -   .-
+_________________'________--_._.__.--._'.____.__.________.______________________
+' '''  ' '    __'   '._     ' ' -     '    .  '. -  '-. - '     ' '' ' ' '''' '
+                  .
+            .
+ftable 3:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340576__mickyman5000__repeated-metal-rattles.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340576__mickyman5000__repeated-metal-rattles.wav
+  defer length 317402
+ftable 3:	634805 points, scalemax 1.000
+                                                      -
+
+
+
+
+____________'_____-.______________-_____.._____._._____'________________________
+'  '.'     '  '' '     ''_-''  ''_ ''  '   '      ' ''  ''   '_   ''' '    '_- '
+ftable 4:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340560__mickyman5000__nut-gun-medium-1.wav
+audio sr = 44100, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340560__mickyman5000__nut-gun-medium-1.wav
+  defer length 330863
+ftable 4:	661727 points, scalemax 1.000
+                             -
+  _   _      _
+_              --  .  '     . _ - .  -   .   _           '         _'     __ -
+____.______.__.___'____'__-______-____-___-.__._____._._-_--__'-______-'______'_
+   _ -  -'-          -         -                 ''  -           '_  .  _   _  -
+                         .                  -      '            '        _
+ '     '            '               '  '                    '
+                        _
+                                               .
+ftable 5:
+deferred alloc for C:/Users/Griffin/Documents/GitHub/composition-tools/GenRhythms/samples/tools/340536__mickyman5000__metallic-hits-various.wav
+audio sr = 48000, stereo, reading both channels
+opening WAV infile C:\Users\Griffin\Documents\GitHub\composition-tools\GenRhythms\samples\tools\340536__mickyman5000__metallic-hits-various.wav
+  defer length 2454608
+ftable 5:	4909217 points, scalemax 1.000
+                                                                     _
+__________________'_____________________________________________________________
+'   ''    '''' ' ' '' '' ''''  ' ' ' '' ''' ''''''' ' '''' ''''    ''   ' '''  .
+                                                                      '
+new alloc for instr 1:
+new alloc for instr 1:
+B  0.000 ..  0.375 T  0.375 TT  0.375 M: 35.48626 49.95642
+	 number of samples out of range:     1437     2117
+new alloc for instr 1:
+B  0.375 ..  0.500 T  0.500 TT  0.500 M: 22.09127 27.66629
+	 number of samples out of range:     3985     4120
+new alloc for instr 1:
+new alloc for instr 1:
+B  0.500 ..  0.625 T  0.625 TT  0.625 M: 41.00441 49.71746
+	 number of samples out of range:     4738     4799
+B  0.625 ..  0.875 T  0.875 TT  0.875 M: 62.74265 53.00865
+	 number of samples out of range:     7793     7958
+B  0.875 ..  1.000 T  1.000 TT  1.000 M:  0.15282  0.18270
+B  1.000 ..  1.375 T  1.375 TT  1.375 M: 64.16495 56.24965
+	 number of samples out of range:     6472     6879
+B  1.375 ..  1.750 T  1.750 TT  1.750 M: 42.12634 37.85207
+	 number of samples out of range:     5945     6076
+B  1.750 ..  2.000 T  2.000 TT  2.000 M: 24.62995 25.15547
+	 number of samples out of range:     5983     6155
+B  2.000 ..  2.125 T  2.125 TT  2.125 M: 11.65240 25.92535
+	 number of samples out of range:      877     1468
+B  2.125 ..  2.500 T  2.500 TT  2.500 M: 32.49425 42.76532
+	 number of samples out of range:      498      713
+B  2.500 ..  2.750 T  2.750 TT  2.750 M: 28.53060 45.88938
+	 number of samples out of range:     1064     1730
+B  2.750 ..  2.875 T  2.875 TT  2.875 M:  2.23063  2.28746
+	 number of samples out of range:       81       44
+B  2.875 ..  3.000 T  3.000 TT  3.000 M: 51.87216 44.09688
+	 number of samples out of range:     2467     2519
+B  3.000 ..  3.125 T  3.125 TT  3.125 M: 45.78236 45.75123
+	 number of samples out of range:     2955     3349
+B  3.125 ..  3.375 T  3.375 TT  3.375 M: 39.23513 55.19540
+	 number of samples out of range:     2761     3753
+B  3.375 ..  3.625 T  3.625 TT  3.625 M: 29.14578 47.86560
+	 number of samples out of range:     1738     2377
+B  3.625 ..  3.875 T  3.875 TT  3.875 M: 31.46734 44.42916
+	 number of samples out of range:     1047     2040
+B  3.875 ..  4.061 T  4.061 TT  4.061 M: 50.68522 69.68155
+	 number of samples out of range:     6355     6465
+B  4.061 ..  4.073 T  4.074 TT  4.074 M:  3.76845  2.49919
+	 number of samples out of range:      187      158
+Score finished in csoundPerformKsmps() with 2.
+inactive allocs returned to freespace
+end of score.		   overall amps: 64.16495 69.68155
+	   overall samples out of range:    56383    62720
+0 errors in performance
+Elapsed time at end of performance: real: 4.286s, CPU: 4.286s
+closing device
+44 8192 sample blks of 64-bit floats written to dac0

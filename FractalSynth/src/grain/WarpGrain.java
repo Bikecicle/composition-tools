@@ -1,5 +1,10 @@
 package grain;
 
+import sco.ArrayParam;
+import sco.Note;
+import sco.Param;
+import sco.ParamMap;
+
 public class WarpGrain extends Grain {
 
 	private static final long serialVersionUID = 3055216104560554640L;
@@ -11,13 +16,13 @@ public class WarpGrain extends Grain {
 	public int ifn;
 	public float smin;
 	public float smax;
-	public float[] segments;
+	public Float[] segments;
 	public float slen;
 	public int id;
 
-	public WarpGrain(float strt, float amp, int ifreq, int iband, int ifn, float smin, float smax, float[] segments,
+	public WarpGrain(float strt, float amp, int ifreq, int iband, int ifn, float smin, float smax, Float[] segments,
 			float slen, int id) {
-		super(Instrument.warp, strt, TIE_DUR, amp, 0, 0, 0, 0);
+		super(GrainType.warp, strt, TIE_DUR, amp, 0, 0);
 		this.ifn = ifn;
 		this.ifreq = ifreq;
 		this.iband = iband;
@@ -45,6 +50,20 @@ public class WarpGrain extends Grain {
 			stmt += "\ni " + gType.id + "." + id + " " + sstrt + " " + sdur + " " + amp + " " + ts + " " + te + " " + slen;
 		}
 		return stmt;
+	}
+	
+	@Override
+	public Note getNote(ParamMap paramMap) {
+		Note note = super.getNote(paramMap);
+		note.add(new Param<Integer>("ifn", ifn));
+		note.add(new Param<Integer>("ifreq", ifreq));
+		note.add(new Param<Integer>("iband", iband));
+		note.add(new Param<Float>("smin", smin));
+		note.add(new Param<Float>("smax", smax));
+		note.add(new ArrayParam<Float>("segments", segments));
+		note.add(new Param<Float>("slen", slen));
+		note.add(new Param<Integer>("id", id));
+		return note;
 	}
 
 }

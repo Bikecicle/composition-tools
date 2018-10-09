@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import grain.gen.NoiseBand;
 import grain.gen.NoiseMatrix;
-import grain.gen.Note;
+import grain.gen.Single;
 import grain.gen.PulsarMatrix;
 import grain.gen.ShredSample;
 import grain.gen.SimpleMatrix;
@@ -127,7 +127,7 @@ public class ScriptReader {
 				} else if (cmd[0].equals("note") && !skip) {
 					System.out.println("Adding a note...");
 					fractalSynth.generateGrains(
-							new Note(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]), Integer.parseInt(cmd[3])));
+							new Single(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]), Integer.parseInt(cmd[3])));
 				} else if (cmd[0].equals("shred") && !skip) {
 					System.out.println("Shredding sample " + cmd[9] + " using table " + cmd[8] + "...");
 					int bandCount = Integer.parseInt(cmd[1]);

@@ -2,12 +2,10 @@ package grain;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,13 +81,6 @@ public class GrainManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		writeScore(active);
-		System.out.println(active.name + " - score saved");
-		// String[] args = new String[2];
-		// args[0] = layerDir + layer.name + ".sco";
-		// args[1] = imageDir + layer.name + ".jpg";
-		// ViewStream.main(args);
-
 	}
 
 	public Layer loadLayer(String name) {
@@ -153,33 +144,6 @@ public class GrainManager {
 		}
 	}
 
-	public void writeScore(Layer layer) {
-		int sCount = layer.sequence.size() / MAX_GRAINS + 1;
-		List<List<Grain>> sections = new ArrayList<List<Grain>>();
-		for (int s = 0; s < sCount; s++) {
-			sections.add(new ArrayList<Grain>());
-		}
-		for (int g = 0; g < layer.sequence.size(); g++) {
-			sections.get(g / MAX_GRAINS).add(layer.sequence.get(g));
-		}
-
-		try {
-			for (int s = 0; s < sCount; s++) {
-				PrintWriter out = new PrintWriter(layerPath + layer.name + "_" + s + ".sco");
-				for (FTable ft : layer.fTables) {
-					out.println(ft.statement());
-				}
-				for (Grain g : sections.get(s)) {
-					out.println(g.statement());
-				}
-				out.println("e");
-				out.close();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void visualizeLayers() {
 		save();
 		for (String name : layerNames) {
@@ -216,7 +180,7 @@ public class GrainManager {
 		active.addGrains(other.sequence);
 		if (active.duration < other.duration)
 			active.duration = other.duration;
-		active.fTables.addAll(other.fTables);
+		// TODO active.fTables.addAll(other.fTables);
 	}
 	
 	public int generateGrains(Generator gen) {

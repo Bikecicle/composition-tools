@@ -12,7 +12,7 @@ public class SoundfileFTable extends FTable {
 	int ichn;
 
 	public SoundfileFTable(String filename, int ifn) {
-		super(ifn, GenRoutine.soundfile);
+		super(ifn, 0, 0, GenRoutine.soundfile);
 		this.Sfilnam = new File(filename).getAbsolutePath().replace("\\", "/");
 		this.iskip = 0; // Start at beginning
 		this.iformat = 0; // Defer

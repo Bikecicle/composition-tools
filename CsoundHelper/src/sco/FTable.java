@@ -8,15 +8,15 @@ public class FTable implements Serializable {
 
 	public static final int IFN_DEFAULT = 0; // placeholder - set by engine if remains at 0
 
-	int ifn;
-	int itime;
-	int isize;
-	GenRoutine igen;
+	public int ifn;
+	public int itime;
+	public int isize;
+	public GenRoutine igen;
 
-	public FTable(int ifn, GenRoutine igen) {
+	public FTable(int ifn, int itime, int isize, GenRoutine igen) {
 		this.ifn = ifn;
-		itime = 0;
-		isize = 0;
+		this.itime = itime;
+		this.isize = isize;
 		this.igen = igen;
 	}
 

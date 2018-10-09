@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import grain.FTable;
 import grain.GrainManager;
 import grain.gen.Generator;
 import grain.gen.PulsarMatrix;
 import grain.mod.Modifier;
+import sco.FTable;
 import table.Filter;
 import table.FractalTable;
 import table.Table;
@@ -225,6 +225,6 @@ public class FractalSynth {
 	}
 
 	public void addFTable(FTable ft) {
-		grainManager.active.fTables.add(ft);
+		grainManager.active.addFTable(ft);
 	}
 }

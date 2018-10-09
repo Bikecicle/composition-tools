@@ -12,6 +12,13 @@ public class Note {
 		this.map = map;
 	}
 	
+	public Note(int inst, float strt, float dur, ParamMap map) {
+		this(map);
+		add(new Param<Integer>(Orchestra.INSTRUMENT, inst));
+		add(new Param<Float>(Orchestra.START, strt));
+		add(new Param<Float>(Orchestra.DURATION, dur));
+	}
+	
 	public void add(Param<?> param) {
 		params.add(param);
 	}

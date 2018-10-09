@@ -2,15 +2,15 @@ package grain.gen;
 
 import grain.Layer;
 import grain.OscGrain;
-import grain.SineFTable;
+import sco.SineFTable;
 
-public class Note implements Generator {
+public class Single implements Generator {
 	
 	double start;
 	double duration;
 	int frequency;
 	
-	public Note(double start, double duration, int frequency) {
+	public Single(double start, double duration, int frequency) {
 		this.start = start;
 		this.duration = duration;
 		this.frequency = frequency;

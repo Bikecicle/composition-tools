@@ -2,7 +2,7 @@ package sco;
 
 public enum GenRoutine {
 
-	soundfile(1), sine(10);
+	soundfile(1), sine(10), window(20);
 	
 	int id;
 	
