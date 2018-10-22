@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.swing.JLabel;
 
 import model.Batch;
+import model.Rhythm;
 import model.Session;
 import sound.Performer;
 
@@ -42,7 +43,6 @@ public class GenRhythms {
 	public static final float DEFAULT_AMP = 100f;
 	
 	public static final int RIGHT_BUTTON_WIDTH = 100;
-	public static final int SPINNER_WIDTH = 50;
 
 	private JLabel lblBatch;
 	private JLabel lblRhythm;

@@ -34,7 +34,7 @@ public class HitPanel extends JPanel {
 
 		spinnerPosS = new JSpinner();
 		panel_9.add(spinnerPosS);
-		spinnerPosS.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerPosS.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 
 		JPanel panel_10 = new JPanel();
 		add(panel_10);
@@ -43,7 +43,7 @@ public class HitPanel extends JPanel {
 		panel_10.add(label_s_att);
 
 		spinnerAttS = new JSpinner();
-		spinnerAttS.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerAttS.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 		panel_10.add(spinnerAttS);
 
 		JPanel panel_11 = new JPanel();
@@ -53,7 +53,7 @@ public class HitPanel extends JPanel {
 		panel_11.add(label_s_dec);
 
 		spinnerDecS = new JSpinner();
-		spinnerDecS.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerDecS.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 		panel_11.add(spinnerDecS);
 
 		JPanel panel_12 = new JPanel();
@@ -63,7 +63,7 @@ public class HitPanel extends JPanel {
 		panel_12.add(label_s_sus);
 
 		spinnerSusS = new JSpinner();
-		spinnerSusS.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerSusS.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 		panel_12.add(spinnerSusS);
 
 		JPanel panel_13 = new JPanel();
@@ -73,7 +73,7 @@ public class HitPanel extends JPanel {
 		panel_13.add(label_s_rel);
 
 		spinnerRelS = new JSpinner();
-		spinnerRelS.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerRelS.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 		panel_13.add(spinnerRelS);
 
 		JPanel panel_14 = new JPanel();
@@ -83,7 +83,7 @@ public class HitPanel extends JPanel {
 		panel_14.add(label_s_slev);
 
 		spinnerSlevS = new JSpinner();
-		spinnerSlevS.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerSlevS.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 		panel_14.add(spinnerSlevS);
 	}
 

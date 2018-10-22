@@ -40,7 +40,7 @@ public class MinMaxPanel extends JPanel {
 				data[0] = (float) spinnerMin.getValue();
 			}
 		});
-		spinnerMin.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerMin.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 		add(spinnerMin);
 
 		JLabel lblMax = new JLabel("max");
@@ -53,7 +53,7 @@ public class MinMaxPanel extends JPanel {
 				data[1] = (float) spinnerMax.getValue();
 			}
 		});
-		spinnerMax.setPreferredSize(new Dimension(GenRhythms.SPINNER_WIDTH, 20));
+		spinnerMax.setPreferredSize(new Dimension(RhythmEditor.spinnerWidth, 20));
 		add(spinnerMax);
 	}
 
