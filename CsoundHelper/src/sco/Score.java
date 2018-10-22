@@ -1,12 +1,15 @@
 package sco;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Score {
+public class Score implements Serializable {
 
-	List<FTable> fStmt;
-	List<Note> iStmt;
+	private static final long serialVersionUID = 7387462845135577591L;
+	
+	ArrayList<FTable> fStmt;
+	ArrayList<Note> iStmt;
 	
 	public Score() {
 		fStmt = new ArrayList<>();

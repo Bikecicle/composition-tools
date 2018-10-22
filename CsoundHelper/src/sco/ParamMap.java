@@ -1,8 +1,11 @@
 package sco;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class ParamMap {
+public class ParamMap implements Serializable {
+
+	private static final long serialVersionUID = 4383530773644064693L;
 	
 	HashMap<CompoundKey, String> map;
 

@@ -1,8 +1,12 @@
 package sco;
 
+import java.io.Serializable;
+
 import orc.Orchestra;
 
-public class Note {
+public class Note implements Serializable {
+
+	private static final long serialVersionUID = -8110279429328357926L;
 	
 	ParamList params;
 	ParamMap map;

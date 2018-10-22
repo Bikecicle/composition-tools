@@ -1,6 +1,10 @@
 package sco;
 
-public class Param<T> {
+import java.io.Serializable;
+
+public class Param<T> implements Serializable {
+	
+	private static final long serialVersionUID = -2948861334151666048L;
 	
 	String name;
 	T value;

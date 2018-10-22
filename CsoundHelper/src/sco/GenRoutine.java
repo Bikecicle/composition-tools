@@ -1,6 +1,8 @@
 package sco;
 
-public enum GenRoutine {
+import java.io.Serializable;
+
+public enum GenRoutine implements Serializable {
 
 	soundfile(1), sine(10), window(20);
 	

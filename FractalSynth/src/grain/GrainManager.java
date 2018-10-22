@@ -14,6 +14,8 @@ import grain.mod.Modifier;
 import main.FractalSynth;
 import main.MediaThread;
 import main.Medium;
+import sound.Performance;
+import sound.Performer;
 import visual.ViewStream;
 
 public class GrainManager {
@@ -159,15 +161,9 @@ public class GrainManager {
 		String path = soundPath + title + "/";
 		System.out.println("Rendering layers to " + path);
 		FractalSynth.openDir(path);
-		File[] files = new File(layerPath).listFiles();
-		for (File file : files) {
-			if (file.getName().endsWith(".sco")) {
-				System.out.println("Rendering " + file.getName());
-				String sco = layerPath + file.getName();
-				String out = path + title + "_" + file.getName().replace(".sco", ".wav");
-				String[] args = { sco, out };
-				new Thread(new MediaThread(Medium.performer, args)).start();
-			}
+		for (String name : layerNames) {
+			Performer performer = new Performer(path + "/" + title + "_" + name + ".wav");
+			performer.play(loadLayer(name));
 		}
 	}
 

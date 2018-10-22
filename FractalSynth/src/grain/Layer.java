@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import orc.Constant;
+import orc.Expression;
 import orc.Instrument;
 import orc.Opcode;
 import orc.Orchestra;
@@ -49,13 +51,13 @@ public class Layer implements Serializable, Performance {
 		for (Grain g : sequence) {
 			sco.addNote(g.getNote(paramMap));
 		}
-		return null;
+		return sco;
 	}
 
 	@Override
 	public Orchestra getOrchestra() {
 		Orchestra orc = new Orchestra(44100, 32, 2, 1);
-		
+
 		Instrument i1 = new Instrument(1);
 		Statement kamp = new Variable("k", "amp", "=", i1.p("amp"));
 		Statement irise = new Variable("i", "rise", "=", i1.p("rise"));
@@ -66,8 +68,23 @@ public class Layer implements Serializable, Performance {
 		Opcode asig = new Opcode("a", "sig", 1, "poscil", aenv, kcps);
 		i1.setOuts(asig);
 		orc.add(i1);
-		
+
 		Instrument i2 = new Instrument(2);
+		Statement kamp2 = new Variable("k", "amp", "=", i2.p("amp"));
+		Statement irise2 = new Variable("i", "rise", "=", i2.p("att"));
+		Statement idec2 = new Variable("i", "dec", "=", i2.p("dec"));
+		Statement kfreqratio = new Variable("k", "freqratio", "=", i2.p("fMod"));
+		Statement ifreq = new Variable("i", "freq", "=", i2.p("freq"));
+		Statement iband = new Variable("i", "band", "=", i2.p("band"));
+		Statement ifn = new Variable("i", "fn", "=", i2.p("fID"));
+		Statement iphs = new Variable("i", "phs", "=", new Expression("%s * %s", i2.p("sStrt"), orc.SR));
+		Opcode kenv = new Opcode("k", "env", 1, "linen", kamp, irise, i2.dur, idec);
+		Opcode asig2 = new Opcode("a", "sig", 1, "lposcil", kenv, kfreqratio, new Constant<Integer>(0),
+				new Constant<Integer>(0), ifn, iphs);
+		Opcode ares = new Opcode("a", "res", 1, "butterbp", asig, ifreq, iband);
+		i2.setOuts(ares);
+		orc.add(i2);
+
 		return orc;
 	}
 }

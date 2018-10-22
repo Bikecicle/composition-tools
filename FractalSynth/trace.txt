@@ -1,0 +1,31 @@
+[Performance 0]
+
+sr = 44100
+ksmps = 32
+nchnls = 2
+0dbfs = 1.0
+
+instr 1
+kamp = p4
+irise = p5
+idec = p6
+aenv linen kamp, irise, p3, idec
+kcps = p7
+asig poscil aenv, kcps
+outs asig
+endin
+
+
+f 1 0 0 1 "C:/Users/Griffin/Documents/GitHub/composition-tools/FractalSynth/samples/gate.wav" 0.0 0 0
+i 3
+i 3
+i 3
+i 3
+i 3
+i 3
+i 3
+i 3
+i 3
+i 3
+e
+

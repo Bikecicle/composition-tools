@@ -1,9 +1,12 @@
 package orc;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Instrument {
+public class Instrument implements Serializable {
+	
+	private static final long serialVersionUID = -4284762653198415691L;
 	
 	public Input inst;
 	public Input strt;
