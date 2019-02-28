@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import csnd6.Csound;
 import csnd6.csnd6;
+import orc.Orchestra;
 
 public class Performer {
 
@@ -71,5 +72,10 @@ public class Performer {
 			e.printStackTrace();
 		}
 		play(orc, sco);
+	}
+	
+	public static void debugOrc(String orc) {
+		Csound c = new Csound();
+		c.CompileOrc(orc);
 	}
 }

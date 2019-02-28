@@ -96,9 +96,8 @@ public class ScriptReader {
 					float dur = Float.parseFloat(cmd[8]);
 					Table tableP = fractalSynth.getTable(cmd[9]);
 					Table tableD = fractalSynth.getTable(cmd[10]);
-					int n = fractalSynth.generateGrains(new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD,
-							maxResD, dur, tableP, tableD));
-					
+					int n = fractalSynth.generateGrains(
+							new PulsarMatrix(fMinP, fMaxP, fResP, fMinD, fMaxD, minResD, maxResD, dur, tableP, tableD));
 				} else if (cmd[0].equals("matrix")) {
 					System.out.println("Generating simple matrix...");
 					int fMinP = Integer.parseInt(cmd[1]);
@@ -110,10 +109,12 @@ public class ScriptReader {
 					System.out.println("Generated matrix of size " + n);
 				} else if (cmd[0].equals("band") && !skip) {
 					System.out.println("Generating noise band...");
-					int n = fractalSynth.generateGrains(new NoiseBand(Integer.parseInt(cmd[1]),
-							Integer.parseInt(cmd[2]), Double.parseDouble(cmd[3]), Double.parseDouble(cmd[4])));
+					int fMin = Integer.parseInt(cmd[1]);
+					int fMax = Integer.parseInt(cmd[2]);
+					double density = Double.parseDouble(cmd[3]);
+					double duration = Double.parseDouble(cmd[4]);
+					int n = fractalSynth.generateGrains(new NoiseBand(fMin, fMax, density, duration));
 					System.out.println("Generated matrix of size " + n);
-
 				} else if (cmd[0].equals("noise") && !skip) {
 					System.out.println("Generating noise matrix...");
 					int fMin = Integer.parseInt(cmd[1]);
@@ -123,11 +124,10 @@ public class ScriptReader {
 					Table table = fractalSynth.getTable(cmd[5]);
 					int n = fractalSynth.generateGrains(new NoiseMatrix(fMin, fMax, density, duration, table));
 					System.out.println("Generated matrix of size " + n);
-					
 				} else if (cmd[0].equals("note") && !skip) {
 					System.out.println("Adding a note...");
-					fractalSynth.generateGrains(
-							new Single(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]), Integer.parseInt(cmd[3])));
+					fractalSynth.generateGrains(new Single(Double.parseDouble(cmd[1]), Double.parseDouble(cmd[2]),
+							Integer.parseInt(cmd[3])));
 				} else if (cmd[0].equals("shred") && !skip) {
 					System.out.println("Shredding sample " + cmd[9] + " using table " + cmd[8] + "...");
 					int bandCount = Integer.parseInt(cmd[1]);
@@ -225,6 +225,14 @@ public class ScriptReader {
 					replace = Boolean.parseBoolean(cmd[1]);
 				} else if (cmd[0].equals("clear")) {
 					fractalSynth.clear();
+				}
+				
+				// Debug
+				else if (cmd[0].equals("debug")) {
+					if (cmd[1].equals("orc")) {
+						System.out.println("Debugging orchestra...");
+						System.out.println(fractalSynth.debugOrc());
+					}
 				}
 			}
 		}

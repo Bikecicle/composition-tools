@@ -12,6 +12,7 @@ import grain.gen.Generator;
 import grain.gen.PulsarMatrix;
 import grain.mod.Modifier;
 import sco.FTable;
+import sound.Performer;
 import table.Filter;
 import table.FractalTable;
 import table.Table;
@@ -226,5 +227,11 @@ public class FractalSynth {
 
 	public void addFTable(FTable ft) {
 		grainManager.active.addFTable(ft);
+	}
+
+	public String debugOrc() {
+		String orc = grainManager.active.getOrchestra().toString();
+		Performer.debugOrc(orc);
+		return orc;
 	}
 }

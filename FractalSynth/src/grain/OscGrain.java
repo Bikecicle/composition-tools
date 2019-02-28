@@ -26,7 +26,7 @@ public class OscGrain extends Grain {
 	@Override
 	public Note getNote(ParamMap paramMap) {
 		Note note = super.getNote(paramMap);
-		note.add(new Param<Float>("att", att));
+		note.add(new Param<Float>("rise", att));
 		note.add(new Param<Float>("dec", dec));
 		note.add(new Param<Integer>("freq", freq));
 		return note;
